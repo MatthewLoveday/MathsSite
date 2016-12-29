@@ -17,7 +17,7 @@ var app = express();
 
 
 seedDB();
-mongoose.connect("mongodb://localhost/2ndTry");
+mongoose.connect("mongodb://localhost/MathsWebsite");
 
 app.set('view engine','ejs');
 app.use(bodyParser.urlencoded({extended:true}));
