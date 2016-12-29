@@ -1,0 +1,9 @@
+{
+  "name": "maths-website",
+  "version": "0.0.0",
+  "description": "MathsWebsite",
+  "main": "app.js",
+  "author": {
+    "name": "mattl"
+  }
+}
