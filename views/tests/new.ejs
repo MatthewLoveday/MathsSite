@@ -1,0 +1,21 @@
+<% include ../partials/header %>
+
+<h1>New test page</h1>
+<form action="/tests/new" method="POST">
+    <input type="number" name="time" placeholder="Time" required><br>
+    <input type="string" name="examBoardName" placeholder="Examboard" required><br>
+    <input type="string" name="moduleName" placeholder="Module" required><br>
+    <ul>
+        <li><input type="text" name="topic1" placeholder="topic 1"></li>
+        <li><input type="text" name="topic2" placeholder="topic 2"></li>
+        <li><input type="text" name="topic3" placeholder="topic 3"></li>
+        <li><input type="text" name="topic4" placeholder="topic 4"></li>
+        <li><input type="text" name="topic5" placeholder="topic 5"></li>
+        <li><input type="text" name="topic6" placeholder="topic 6"></li>
+        <li><input type="text" name="topic7" placeholder="topic 7"></li>
+        <li><input type="text" name="topic8" placeholder="topic 8"></li>
+    </ul>
+    <button>Submit</button>
+</form>
+
+<% include ../partials/footer %>

@@ -1,0 +1,541 @@
+<% include ../partials/header %>
+
+<h1>New question form</h1>
+
+<form action="/questions" method="POST">
+    <input type="text" name="examBoardName" placeholder="examBoardName"><br>
+    <input type="text" name="moduleName" placeholder="moduleName"><br>
+    <input type="number" name="numOfTopics" placeholder="numOfTopics"><br>
+    <ul>
+        <li><input type="text" name="topic1" placeholder="topic1"></li>
+        <li><input type="text" name="topic2" placeholder="topic2"></li>
+        <li><input type="text" name="topic3" placeholder="topic3"></li>
+        <li><input type="text" name="topic4" placeholder="topic4"></li>
+        <li><input type="text" name="topic5" placeholder="topic5"></li>
+    </ul>
+    <input type="text" name="content" placeholder="content"><br>
+    <input type="number" name="mark" placeholder="mark" min="1" max="25"><br>
+    <input type="number" name="numOfMethods" placeholder="numOfMethods" min="1" max="4"><br>
+    <ul>
+        <li>
+            <h2>Method 1</h2>
+            <input type="number" name="m1parts" placeholder="m1parts" min="0" max="10">
+            <ul>
+                <h3>Method 1 parts</h3>
+                <li>
+                    <p><span id="p1m1">0</span></p>
+                    <input id="p1m1i" type="string" name="p1m1i"><br>
+                    <input id="p1m1m" type="string" name="p1m1m">
+                </li>
+                <li>
+                    <p><span id="p2m1">0</span></p>
+                    <input id="p2m1i" type="string" name="p2m1i"><br>
+                    <input id="p2m1m" type="string" name="p2m1m">
+                </li>
+                <li>
+                    <p><span id="p3m1">0</span></p>
+                    <input id="p3m1i" type="string" name="p3m1i"><br>
+                    <input id="p3m1m" type="string" name="p3m1m">
+                </li>
+                <li>
+                    <p><span id="p4m1">0</span></p>
+                    <input id="p4m1i" type="string" name="p4m1i"><br>
+                    <input id="p4m1m" type="string" name="p4m1m">
+                </li>
+                <li>
+                    <p><span id="p5m1">0</span></p>
+                    <input id="p5m1i" type="string" name="p5m1i"><br>
+                    <input id="p5m1m" type="string" name="p5m1m">
+                </li>
+                <li>
+                    <p><span id="p6m1">0</span></p>
+                    <input id="p6m1i" type="string" name="p6m1i"><br>
+                    <input id="p6m1m" type="string" name="p6m1m">
+                </li>
+                <li>
+                    <p><span id="p7m1">0</span></p>
+                    <input id="p7m1i" type="string" name="p7m1i"><br>
+                    <input id="p7m1m" type="string" name="p7m1m">
+                </li>
+                <li>
+                    <p><span id="p8m1">0</span></p>
+                    <input id="p8m1i" type="string" name="p8m1i"><br>
+                    <input id="p8m1m" type="string" name="p8m1m">
+                </li>
+                <li>
+                    <p><span id="p9m1">0</span></p>
+                    <input id="p9m1i" type="string" name="p9m1i"><br>
+                    <input id="p9m1m" type="string" name="p9m1m">
+                </li>
+                <li>
+                    <p><span id="p10m1">0</span></p>
+                    <input id="p10m1i" type="string" name="p10m1i"><br>
+                    <input id="p10m1m" type="string" name="p10m1m">
+                </li>
+            </ul>
+        </li>
+        <script>
+            var p1m1 = MQ.MathField(document.getElementById("p1m1"), {
+                handlers: {
+                  edit: function() {
+                    document.getElementById("p1m1i").value = p1m1.latex(); // Get entered math in LaTeX format
+                  }
+                }
+              });
+            var p2m1 = MQ.MathField(document.getElementById("p2m1"), {
+                handlers: {
+                  edit: function() {
+                    document.getElementById("p2m1i").value = p2m1.latex(); // Get entered math in LaTeX format
+                  }
+                }
+              });
+            var p3m1 = MQ.MathField(document.getElementById("p3m1"), {
+                handlers: {
+                  edit: function() {
+                    document.getElementById("p3m1i").value = p3m1.latex(); // Get entered math in LaTeX format
+                  }
+                }
+              });
+            var p4m1 = MQ.MathField(document.getElementById("p4m1"), {
+                handlers: {
+                  edit: function() {
+                    document.getElementById("p4m1i").value = p4m1.latex(); // Get entered math in LaTeX format
+                  }
+                }
+              });
+            var p5m1 = MQ.MathField(document.getElementById("p5m1"), {
+                handlers: {
+                  edit: function() {
+                    document.getElementById("p5m1i").value = p5m1.latex(); // Get entered math in LaTeX format
+                  }
+                }
+              });
+            var p6m1 = MQ.MathField(document.getElementById("p6m1"), {
+                handlers: {
+                  edit: function() {
+                    document.getElementById("p6m1i").value = p6m1.latex(); // Get entered math in LaTeX format
+                  }
+                }
+              });
+            var p7m1 = MQ.MathField(document.getElementById("p7m1"), {
+                handlers: {
+                  edit: function() {
+                    document.getElementById("p7m1i").value = p7m1.latex(); // Get entered math in LaTeX format
+                  }
+                }
+              });
+            var p8m1 = MQ.MathField(document.getElementById("p8m1"), {
+                handlers: {
+                  edit: function() {
+                    document.getElementById("p8m1i").value = p8m1.latex(); // Get entered math in LaTeX format
+                  }
+                }
+              });
+            var p9m1 = MQ.MathField(document.getElementById("p9m1"), {
+                handlers: {
+                  edit: function() {
+                    document.getElementById("p9m1i").value = p9m1.latex(); // Get entered math in LaTeX format
+                  }
+                }
+              });
+            var p10m1 = MQ.MathField(document.getElementById("p10m1"), {
+                handlers: {
+                  edit: function() {
+                    document.getElementById("p10m1i").value = p10m1.latex(); // Get entered math in LaTeX format
+                  }
+                }
+              });
+        </script>
+        <li>
+            <h2>Method 2</h2>
+            <input type="number" name="m2parts" placeholder="m2parts" min="0" max="10">
+            <ul>
+                <h3>Method 2 parts</h3>
+                <li>
+                    <p><span id="p1m2">0</span></p>
+                    <input id="p1m2i" type="string" name="p1m2i"><br>
+                    <input id="p1m2m" type="string" name="p1m2m">
+                </li>
+                <li>
+                    <p><span id="p2m2">0</span></p>
+                    <input id="p2m2i" type="string" name="p2m2i"><br>
+                    <input id="p2m2m" type="string" name="p2m2m">
+                </li>
+                <li>
+                    <p><span id="p3m2">0</span></p>
+                    <input id="p3m2i" type="string" name="p3m2i"><br>
+                    <input id="p3m2m" type="string" name="p3m2m">
+                </li>
+                <li>
+                    <p><span id="p4m2">0</span></p>
+                    <input id="p4m2i" type="string" name="p4m2i"><br>
+                    <input id="p4m2m" type="string" name="p4m2m">
+                </li>
+                <li>
+                    <p><span id="p5m2">0</span></p>
+                    <input id="p5m2i" type="string" name="p5m2i"><br>
+                    <input id="p5m2m" type="string" name="p5m2m">
+                </li>
+                <li>
+                    <p><span id="p6m2">0</span></p>
+                    <input id="p6m2i" type="string" name="p6m2i"><br>
+                    <input id="p6m2m" type="string" name="p6m2m">
+                </li>
+                <li>
+                    <p><span id="p7m2">0</span></p>
+                    <input id="p7m2i" type="string" name="p7m2i"><br>
+                    <input id="p7m2m" type="string" name="p7m2m">
+                </li>
+                <li>
+                    <p><span id="p8m2">0</span></p>
+                    <input id="p8m2i" type="string" name="p8m2i"><br>
+                    <input id="p8m2m" type="string" name="p8m2m">
+                </li>
+                <li>
+                    <p><span id="p9m2">0</span></p>
+                    <input id="p9m2i" type="string" name="p9m2i"><br>
+                    <input id="p9m2m" type="string" name="p9m2m">
+                </li>
+                <li>
+                    <p><span id="p10m2">0</span></p>
+                    <input id="p10m2i" type="string" name="p10m2i"><br>
+                    <input id="p10m2m" type="string" name="p10m2m">
+                </li>
+            </ul>
+        </li>
+        <script>
+            var p1m2 = MQ.MathField(document.getElementById("p1m2"), {
+                handlers: {
+                  edit: function() {
+                    document.getElementById("p1m2i").value = p1m2.latex(); // Get entered math in LaTeX format
+                  }
+                }
+              });
+            var p2m2 = MQ.MathField(document.getElementById("p2m2"), {
+                handlers: {
+                  edit: function() {
+                    document.getElementById("p2m2i").value = p2m2.latex(); // Get entered math in LaTeX format
+                  }
+                }
+              });
+            var p3m2 = MQ.MathField(document.getElementById("p3m2"), {
+                handlers: {
+                  edit: function() {
+                    document.getElementById("p3m2i").value = p3m2.latex(); // Get entered math in LaTeX format
+                  }
+                }
+              });
+            var p4m2 = MQ.MathField(document.getElementById("p4m2"), {
+                handlers: {
+                  edit: function() {
+                    document.getElementById("p4m2i").value = p4m2.latex(); // Get entered math in LaTeX format
+                  }
+                }
+              });
+            var p5m2 = MQ.MathField(document.getElementById("p5m2"), {
+                handlers: {
+                  edit: function() {
+                    document.getElementById("p5m2i").value = p5m2.latex(); // Get entered math in LaTeX format
+                  }
+                }
+              });
+            var p6m2 = MQ.MathField(document.getElementById("p6m2"), {
+                handlers: {
+                  edit: function() {
+                    document.getElementById("p6m2i").value = p6m2.latex(); // Get entered math in LaTeX format
+                  }
+                }
+              });
+            var p7m2 = MQ.MathField(document.getElementById("p7m2"), {
+                handlers: {
+                  edit: function() {
+                    document.getElementById("p7m2i").value = p7m2.latex(); // Get entered math in LaTeX format
+                  }
+                }
+              });
+            var p8m2 = MQ.MathField(document.getElementById("p8m2"), {
+                handlers: {
+                  edit: function() {
+                    document.getElementById("p8m2i").value = p8m2.latex(); // Get entered math in LaTeX format
+                  }
+                }
+              });
+            var p9m2 = MQ.MathField(document.getElementById("p9m2"), {
+                handlers: {
+                  edit: function() {
+                    document.getElementById("p9m2i").value = p9m2.latex(); // Get entered math in LaTeX format
+                  }
+                }
+              });
+            var p10m2 = MQ.MathField(document.getElementById("p10m2"), {
+                handlers: {
+                  edit: function() {
+                    document.getElementById("p10m2i").value = p10m2.latex(); // Get entered math in LaTeX format
+                  }
+                }
+              });
+        </script>
+        <li>
+            <h2>Method 3</h2>
+            <input type="number" name="m3parts" placeholder="m3parts" min="0" max="10">
+            <ul>
+                <h3>Method 2 parts</h3>
+                <li>
+                    <p><span id="p1m3">0</span></p>
+                    <input id="p1m3i" type="string" name="p1m3i"><br>
+                    <input id="p1m3m" type="string" name="p1m3m">
+                </li>
+                <li>
+                    <p><span id="p2m3">0</span></p>
+                    <input id="p2m3i" type="string" name="p2m3i"><br>
+                    <input id="p2m3m" type="string" name="p2m3m">
+                </li>
+                <li>
+                    <p><span id="p3m3">0</span></p>
+                    <input id="p3m3i" type="string" name="p3m3i"><br>
+                    <input id="p3m3m" type="string" name="p3m3m">
+                </li>
+                <li>
+                    <p><span id="p4m3">0</span></p>
+                    <input id="p4m3i" type="string" name="p4m3i"><br>
+                    <input id="p4m3m" type="string" name="p4m3m">
+                </li>
+                <li>
+                    <p><span id="p5m3">0</span></p>
+                    <input id="p5m3i" type="string" name="p5m3i"><br>
+                    <input id="p5m3m" type="string" name="p5m3m">
+                </li>
+                <li>
+                    <p><span id="p6m3">0</span></p>
+                    <input id="p6m3i" type="string" name="p6m3i"><br>
+                    <input id="p6m3m" type="string" name="p6m3m">
+                </li>
+                <li>
+                    <p><span id="p7m3">0</span></p>
+                    <input id="p7m3i" type="string" name="p7m3i"><br>
+                    <input id="p7m3m" type="string" name="p7m3m">
+                </li>
+                <li>
+                    <p><span id="p8m3">0</span></p>
+                    <input id="p8m3i" type="string" name="p8m3i"><br>
+                    <input id="p8m3m" type="string" name="p8m3m">
+                </li>
+                <li>
+                    <p><span id="p9m3">0</span></p>
+                    <input id="p9m3i" type="string" name="p9m3i"><br>
+                    <input id="p9m3m" type="string" name="p9m3m">
+                </li>
+                <li>
+                    <p><span id="p10m3">0</span></p>
+                    <input id="p10m3i" type="string" name="p10m3i"><br>
+                    <input id="p10m3m" type="string" name="p10m3m">
+                </li>
+            </ul>
+        </li>
+        <script>
+            var p1m3 = MQ.MathField(document.getElementById("p1m3"), {
+                handlers: {
+                  edit: function() {
+                    document.getElementById("p1m3i").value = p1m3.latex(); // Get entered math in LaTeX format
+                  }
+                }
+              });
+            var p2m3 = MQ.MathField(document.getElementById("p2m3"), {
+                handlers: {
+                  edit: function() {
+                    document.getElementById("p2m3i").value = p2m3.latex(); // Get entered math in LaTeX format
+                  }
+                }
+              });
+            var p3m3 = MQ.MathField(document.getElementById("p3m3"), {
+                handlers: {
+                  edit: function() {
+                    document.getElementById("p3m3i").value = p3m3.latex(); // Get entered math in LaTeX format
+                  }
+                }
+              });
+            var p4m3 = MQ.MathField(document.getElementById("p4m3"), {
+                handlers: {
+                  edit: function() {
+                    document.getElementById("p4m3i").value = p4m3.latex(); // Get entered math in LaTeX format
+                  }
+                }
+              });
+            var p5m3 = MQ.MathField(document.getElementById("p5m3"), {
+                handlers: {
+                  edit: function() {
+                    document.getElementById("p5m3i").value = p5m3.latex(); // Get entered math in LaTeX format
+                  }
+                }
+              });
+            var p6m3 = MQ.MathField(document.getElementById("p6m3"), {
+                handlers: {
+                  edit: function() {
+                    document.getElementById("p6m3i").value = p6m3.latex(); // Get entered math in LaTeX format
+                  }
+                }
+              });
+            var p7m3 = MQ.MathField(document.getElementById("p7m3"), {
+                handlers: {
+                  edit: function() {
+                    document.getElementById("p7m3i").value = p7m3.latex(); // Get entered math in LaTeX format
+                  }
+                }
+              });
+            var p8m3 = MQ.MathField(document.getElementById("p8m3"), {
+                handlers: {
+                  edit: function() {
+                    document.getElementById("p8m3i").value = p8m3.latex(); // Get entered math in LaTeX format
+                  }
+                }
+              });
+            var p9m3 = MQ.MathField(document.getElementById("p9m3"), {
+                handlers: {
+                  edit: function() {
+                    document.getElementById("p9m3i").value = p9m3.latex(); // Get entered math in LaTeX format
+                  }
+                }
+              });
+            var p10m3 = MQ.MathField(document.getElementById("p10m3"), {
+                handlers: {
+                  edit: function() {
+                    document.getElementById("p10m3i").value = p10m3.latex(); // Get entered math in LaTeX format
+                  }
+                }
+              });
+        </script>
+        <li>
+            <h2>Method 4</h2>
+            <input type="number" name="m4parts" placeholder="m4parts" min="0" max="10">
+            <ul>
+                <h3>Method 2 parts</h3>
+                <li>
+                    <p><span id="p1m4">0</span></p>
+                    <input id="p1m4i" type="string" name="p1m4i"><br>
+                    <input id="p1m4m" type="string" name="p1m4m">
+                </li>
+                <li>
+                    <p><span id="p2m4">0</span></p>
+                    <input id="p2m4i" type="string" name="p2m4i"><br>
+                    <input id="p2m4m" type="string" name="p2m4m">
+                </li>
+                <li>
+                    <p><span id="p3m4">0</span></p>
+                    <input id="p3m4i" type="string" name="p3m4i"><br>
+                    <input id="p3m4m" type="string" name="p3m4m">
+                </li>
+                <li>
+                    <p><span id="p4m4">0</span></p>
+                    <input id="p4m4i" type="string" name="p4m4i"><br>
+                    <input id="p4m4m" type="string" name="p4m4m">
+                </li>
+                <li>
+                    <p><span id="p5m4">0</span></p>
+                    <input id="p5m4i" type="string" name="p5m4i"><br>
+                    <input id="p5m4m" type="string" name="p5m4m">
+                </li>
+                <li>
+                    <p><span id="p6m4">0</span></p>
+                    <input id="p6m4i" type="string" name="p6m4i"><br>
+                    <input id="p6m4m" type="string" name="p6m4m">
+                </li>
+                <li>
+                    <p><span id="p7m4">0</span></p>
+                    <input id="p7m4i" type="string" name="p7m4i"><br>
+                    <input id="p7m4m" type="string" name="p7m4m">
+                </li>
+                <li>
+                    <p><span id="p8m4">0</span></p>
+                    <input id="p8m4i" type="string" name="p8m4i"><br>
+                    <input id="p8m4m" type="string" name="p8m4m">
+                </li>
+                <li>
+                    <p><span id="p9m4">0</span></p>
+                    <input id="p9m4i" type="string" name="p9m4i"><br>
+                    <input id="p9m4m" type="string" name="p9m4m">
+                </li>
+                <li>
+                    <p><span id="p10m4">0</span></p>
+                    <input id="p10m4i" type="string" name="p10m4i"><br>
+                    <input id="p10m4m" type="string" name="p10m4m">
+                </li>
+            </ul>
+        </li>
+        <script>
+            var p1m4 = MQ.MathField(document.getElementById("p1m4"), {
+                handlers: {
+                  edit: function() {
+                    document.getElementById("p1m4i").value = p1m4.latex(); // Get entered math in LaTeX format
+                  }
+                }
+              });
+            var p2m4 = MQ.MathField(document.getElementById("p2m4"), {
+                handlers: {
+                  edit: function() {
+                    document.getElementById("p2m4i").value = p2m4.latex(); // Get entered math in LaTeX format
+                  }
+                }
+              });
+            var p3m4 = MQ.MathField(document.getElementById("p3m4"), {
+                handlers: {
+                  edit: function() {
+                    document.getElementById("p3m4i").value = p3m4.latex(); // Get entered math in LaTeX format
+                  }
+                }
+              });
+            var p4m4 = MQ.MathField(document.getElementById("p4m4"), {
+                handlers: {
+                  edit: function() {
+                    document.getElementById("p4m4i").value = p4m4.latex(); // Get entered math in LaTeX format
+                  }
+                }
+              });
+            var p5m4 = MQ.MathField(document.getElementById("p5m4"), {
+                handlers: {
+                  edit: function() {
+                    document.getElementById("p5m4i").value = p5m4.latex(); // Get entered math in LaTeX format
+                  }
+                }
+              });
+            var p6m4 = MQ.MathField(document.getElementById("p6m4"), {
+                handlers: {
+                  edit: function() {
+                    document.getElementById("p6m4i").value = p6m4.latex(); // Get entered math in LaTeX format
+                  }
+                }
+              });
+            var p7m4 = MQ.MathField(document.getElementById("p7m4"), {
+                handlers: {
+                  edit: function() {
+                    document.getElementById("p7m4i").value = p7m4.latex(); // Get entered math in LaTeX format
+                  }
+                }
+              });
+            var p8m4 = MQ.MathField(document.getElementById("p8m4"), {
+                handlers: {
+                  edit: function() {
+                    document.getElementById("p8m4i").value = p8m4.latex(); // Get entered math in LaTeX format
+                  }
+                }
+              });
+            var p9m4 = MQ.MathField(document.getElementById("p9m4"), {
+                handlers: {
+                  edit: function() {
+                    document.getElementById("p9m4i").value = p9m4.latex(); // Get entered math in LaTeX format
+                  }
+                }
+              });
+            var p10m4 = MQ.MathField(document.getElementById("p10m4"), {
+                handlers: {
+                  edit: function() {
+                    document.getElementById("p10m4i").value = p10m4.latex(); // Get entered math in LaTeX format
+                  }
+                }
+              });
+        </script>
+    </ul>
+    <input type="checkbox" required>I have made sure I'm not entering some bullshit that will most certainly fuck something up<br>
+    <button>Submit</button>
+</form>
+
+<% include ../partials/footer %>

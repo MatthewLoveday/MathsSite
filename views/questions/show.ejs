@@ -1,0 +1,16 @@
+<% include ../partials/header %>
+
+<p>Content: <%= question.content %></p>
+<p>Mark: <%= question.mark %></p>
+<% for(var i=0;i<question.methods.length;i++){ %>
+    <h4>Method <%= i %></h4>
+    <% for(var t=0;t<question.methods[i].length;t++){ %>
+        <h5>Part <%= t %></h5>
+            <ul>
+                <li>content: <%= question.methods[i][t].content %></li>
+                <li>mark: <%= question.methods[i][t].mark %></li>
+            </ul>       
+    <% } %>   
+<% } %>
+
+<% include ../partials/footer %>

@@ -1,0 +1,13 @@
+<% include ../partials/header %>
+
+<h3>Questions</h3>
+<% for(var i=0;i<questions.length;i++){ %>
+    <li>
+        <p>Question: <%= i %></p>
+        <p>Content: <%= questions[i].content %></p>
+        <a href="questions/<%= questions[i]._id %>">See methods</a>
+    </li>
+<% } %>
+
+
+<% include ../partials/footer %>

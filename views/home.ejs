@@ -1,0 +1,10 @@
+<% include ./partials/header %>
+
+<h1>Home page</h1>
+
+<h3>Examboard:<%=user.examBoard.name%></h3>
+<% for(var i=0;i<user.examBoard.modules.length;i++){ %>
+<li><%=user.examBoard.modules[i].name%>:<%=user.examBoard.modules[i].progress%></li>
+<% } %>
+<br>
+<% include ./partials/footer %>

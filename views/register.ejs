@@ -1,0 +1,24 @@
+<% include partials/header %>
+
+<h1>Sign up form</h1>
+
+<form action="/register" method="POST">
+    <input type="text" name="username" placeholder="Username" required><br>
+    <input type="password" name="password" placeholder="Password" required><br>
+    <input type="email" name="email" placeholder="Email" required><br>
+    <input type="text" name="targetGrade" placeholder="Target grade" required><br>
+    <input type="text" name="examBoard" placeholder="Examboard" required><br>
+    <ul>
+        <li><input type="text" name="module1" placeholder="Module 1"></li>
+        <li><input type="text" name="module2" placeholder="Module 2"></li>
+        <li><input type="text" name="module3" placeholder="Module 3"></li>
+        <li><input type="text" name="module4" placeholder="Module 4"></li>
+        <li><input type="text" name="module5" placeholder="Module 5"></li>
+        <li><input type="text" name="module6" placeholder="Module 6"></li>
+        <li><input type="text" name="module7" placeholder="Module 7"></li>
+        <li><input type="text" name="module8" placeholder="Module 8"></li>
+    </ul>
+    <button>Submit</button>
+</form>
+
+<% include partials/footer %>
