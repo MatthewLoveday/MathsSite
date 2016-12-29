@@ -5,5 +5,14 @@
   "main": "app.js",
   "author": {
     "name": "mattl"
+  },
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "mathquill": "^0.10.1-a",
+    "mongoose": "^4.7.5",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0",
+    "passport-local-mongoose": "^4.0.0"
   }
 }
