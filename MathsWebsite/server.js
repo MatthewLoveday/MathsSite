@@ -58,6 +58,7 @@ passport.deserializeUser(user.deserializeUser());
 
 app.get("/",function(req,res)
 {
+    console.log("test random number:" + Math.random());
     examBoard.find().exec()
     .then((exams) => {
     // Populate questions
@@ -425,20 +426,21 @@ function isLoggedIn(req,res,next)
 }
 
 //---------------------------------------------------------------------
-//test rand1 functions
+//test functions
 //---------------------------------------------------------------------
 
 function GenerateTest(time, topics) //Random Seed, Time of the Test, Array of the Topics
-{   
+{  
+    console.log("test random number in function:" + Math.random()); 
     var questions=[]; //Questions array to be returned.
 
     var topicTime = Math.floor(time / topics.length); //The time allocated to each topic the user has selected. 
-
+    console.log("topicTime:" + topicTime);
     //Loop through the questions in this topic
 
-    for (var i = 0; i < topics.length; i++)
+    for(var i = 0; i < topics.length; i++)
     {
-        questions.concat(GetTopicQuestion(topics[i]), topicTime);
+        questions.concat(GetTopicQuestion(topics[i], topicTime));
     }
 
     console.log("Questions\n" + questions);
@@ -454,7 +456,7 @@ function GetTopicQuestion(Topic, topicTime) //RecSize is the reccommended length
     var questionLow;
     var questionHigh;
     
-    if(topicTime > 60)
+    if(topicTime > 60)//making sure topic time is a reasonable number
     {
         console.log("Are you wet? (topicTime over 60)");    
         topicTime = 60;
@@ -464,28 +466,20 @@ function GetTopicQuestion(Topic, topicTime) //RecSize is the reccommended length
         console.log("This guy thinks he has something better to do? (topicTime less than 4)");    
         topicTime = 4;    
     }
-    
-    /*
- _______ _      _       _           _                 _     
- |__   __| |   (_)     (_)         | |               | |    
-    | |  | |__  _ ___   _ ___    __| |_   _ _ __ ___ | |__  
-    | |  | '_ \| / __| | / __|  / _` | | | | '_ ` _ \| '_ \ 
-    | |  | | | | \__ \ | \__ \ | (_| | |_| | | | | | | |_) |
-    |_|  |_| |_|_|___/ |_|___/  \__,_|\__,_|_| |_| |_|_.__/ 
-    */
-    
-    console.log("random: " + getRandomIntInclusive((1,3)));
-    
+
+
     if(topicTime < 12)//find the times of each question in this topic
     {
         timePerQuestion[0] = topicTime;
     }
     else
     {
+        console.log("Math.floor(topicTime / 2):" + Math.floor(topicTime / 2));
+
         var numberOfQuestions = Math.floor(topicTime / getRandomIntInclusive(4, (Math.floor(topicTime / 2))));
-        console.log("Math.floor(topicTime/getRandomIntInclusive(4, Math.floor(topicTime / 2))):" + Math.floor(topicTime / getRandomIntInclusive(4, (Math.floor(topicTime / 2)))));
+        
         console.log("numberOfQuestions:"+numberOfQuestions);
-        timePerQuestion[0]      = Math.floor(topicTime/numberOfQuestions);
+        timePerQuestion[0] = Math.floor(topicTime/numberOfQuestions);
         questionLow++;
         
         for(var i=1;i<numberOfQuestions-1;i++)
@@ -535,6 +529,7 @@ function GetTopicQuestion(Topic, topicTime) //RecSize is the reccommended length
     
     return questions;
 }
+
 
 function getRandomInt(min, max) {
     min = Math.ceil(min);
