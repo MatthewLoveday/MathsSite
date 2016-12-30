@@ -12,8 +12,6 @@
 
 var app = express();
 
-<script scr=""></script>
-
 seedDB();
 mongoose.connect("mongodb://localhost/MathsWebsite");
 
@@ -61,12 +59,7 @@ passport.deserializeUser(user.deserializeUser());
 app.get("/",function(req,res)
 {
 
-    var gen = require("random-seed");//THIS IS CANCER
-    var rand1 = gen.create();//reference the above scholarly article
-
-    console.log("random(base route): " + rand1.intBetween((1, 3)));
-
-    console.log("random" + Math.random());
+//    console.log("random" + Math.random());
     examBoard.find().exec()
     .then((exams) => {
     // Populate questions
@@ -241,7 +234,7 @@ app.post("/tests/new",function(req,res)//when seed program ready this should be 
                     }    
                 }
             }
-            rand1erateTest(0, req.body.time,topicsToBeParsed);
+            GenerateTest(req.body.time,topicsToBeParsed);
             // res.render("tests/show",{test:
             //     {
             //         time:req.body.time,
@@ -437,11 +430,8 @@ function isLoggedIn(req,res,next)
 //test rand1 functions
 //---------------------------------------------------------------------
 
-function GenerateTest(seed, time, topics) //Random Seed, Time of the Test, Array of the Topics
-{
-    
-    if(seed == 0) { rand1.seed(Math.random()) } else { rand1.seed(seed); } //If the seed passed is 0 (IE null) then rand1erate a new seed.
-    
+function GenerateTest(time, topics) //Random Seed, Time of the Test, Array of the Topics
+{   
     var questions=[]; //Questions array to be returned.
 
     var topicTime = Math.floor(time / topics.length); //The time allocated to each topic the user has selected. 
@@ -457,7 +447,6 @@ function GenerateTest(seed, time, topics) //Random Seed, Time of the Test, Array
 
     return questions;
 }
-
 
 //So this is used to get a question within a topic that I pass in.
 function GetTopicQuestion(Topic, topicTime) //RecSize is the reccommended length of the question. This should be either 1 or 0.  THIS IS DOCUMENTATION FOR A PARAMETER THAT DOESN'T EXIST. Brilliant.
@@ -487,7 +476,7 @@ function GetTopicQuestion(Topic, topicTime) //RecSize is the reccommended length
     |_|  |_| |_|_|___/ |_|___/  \__,_|\__,_|_| |_| |_|_.__/ 
     */
     
-    console.log("random: " + rand1.intBetween((1,3)));
+    console.log("random: " + getRandomIntInclusive((1,3)));
     
     if(topicTime < 12)//find the times of each question in this topic
     {
@@ -495,8 +484,8 @@ function GetTopicQuestion(Topic, topicTime) //RecSize is the reccommended length
     }
     else
     {
-        var numberOfQuestions   = Math.floor(topicTime/rand1.intBetween(4, (Math.floor(topicTime / 2))));
-        console.log("Math.floor(topicTime/rand1.intBetween(4, Math.floor(topicTime / 2))):"+Math.floor(topicTime/rand1.intBetween(4, (Math.floor(topicTime / 2)))));
+        var numberOfQuestions = Math.floor(topicTime / getRandomIntInclusive(4, (Math.floor(topicTime / 2))));
+        console.log("Math.floor(topicTime/getRandomIntInclusive(4, Math.floor(topicTime / 2))):" + Math.floor(topicTime / getRandomIntInclusive(4, (Math.floor(topicTime / 2)))));
         console.log("numberOfQuestions:"+numberOfQuestions);
         timePerQuestion[0]      = Math.floor(topicTime/numberOfQuestions);
         questionLow++;
@@ -538,24 +527,28 @@ function GetTopicQuestion(Topic, topicTime) //RecSize is the reccommended length
     
     for(var t=0;t<questionLow;t++)//push number of question that have the low mark value
     {
-        question.push(questionsOfProperLength[0][rand1.intBetween(0,questionsOfProperLength[0].length)]);
+        question.push(questionsOfProperLength[0][getRandomIntInclusive(0,questionsOfProperLength[0].length)]);
     }
     
     for(var t=0;t<questionHigh;t++)//push number of question that have the high mark value
     {
-        question.push(questionsOfProperLength[1][rand1.intBetween(0,questionsOfProperLength[1].length)]);
+        question.push(questionsOfProperLength[1][getRandomIntInclusive(0,questionsOfProperLength[1].length)]);
     }
     
     return questions;
 }
 
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min)) + min;
+}
 
-
-
-
-
-
-
+function getRandomIntInclusive(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 
 //---------------------------------------------------------------------
 //start server listening
