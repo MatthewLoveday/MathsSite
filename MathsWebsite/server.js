@@ -10,11 +10,9 @@
     examBoard               = require("./models/examBoard"),
     user                    = require("./models/user");
 
-
-var gen = require("random-seed");//THIS IS CANCER
-var rand1 = gen.create();//reference the above scholarly article
 var app = express();
 
+<script scr=""></script>
 
 seedDB();
 mongoose.connect("mongodb://localhost/MathsWebsite");
@@ -62,7 +60,13 @@ passport.deserializeUser(user.deserializeUser());
 
 app.get("/",function(req,res)
 {
-    console.log("random(base route): " + rand1.intBetween((1,3)));
+
+    var gen = require("random-seed");//THIS IS CANCER
+    var rand1 = gen.create();//reference the above scholarly article
+
+    console.log("random(base route): " + rand1.intBetween((1, 3)));
+
+    console.log("random" + Math.random());
     examBoard.find().exec()
     .then((exams) => {
     // Populate questions
