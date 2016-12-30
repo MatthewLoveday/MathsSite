@@ -453,8 +453,8 @@ function GetTopicQuestion(Topic, topicTime) //RecSize is the reccommended length
 {
     var timePerQuestion=[];
     var QuestionAmount = 0;
-    var questionLow;
-    var questionHigh;
+    var questionLow = 0;
+    var questionHigh = 0;
     
     if(topicTime > 60)//making sure topic time is a reasonable number
     {
