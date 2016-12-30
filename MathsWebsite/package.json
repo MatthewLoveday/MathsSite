@@ -11,7 +11,6 @@
     "ejs": "^2.5.5",
     "express": "^4.14.0",
     "express-session": "^1.14.2",
-    "mathquill": "^0.10.1-a",
     "mongoose": "^4.7.5",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
