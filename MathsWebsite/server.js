@@ -58,8 +58,6 @@ passport.deserializeUser(user.deserializeUser());
 
 app.get("/",function(req,res)
 {
-
-//    console.log("random" + Math.random());
     examBoard.find().exec()
     .then((exams) => {
     // Populate questions
