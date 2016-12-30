@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "body-parser": "^1.15.2",
+    "ejs": "^2.5.5",
     "express": "^4.14.0",
     "express-session": "^1.14.2",
     "mathquill": "^0.10.1-a",
