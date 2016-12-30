@@ -188,7 +188,7 @@ app.get("/tests/new",function(req,res)
     res.render("tests/new");    
 });
 
-app.post("/tests/new",function(req,res)//when seed program ready this should be hanged to "/tests" which should redirect to a "/tests/:seed" route 
+app.post("/tests",function(req,res)//when seed program ready this should be hanged to "/tests" which should redirect to a "/tests/:seed" route 
 {
     var topicsTemp = [req.body.topic1,req.body.topic2,req.body.topic3,req.body.topic4,req.body.topic5,req.body.topic6,req.body.topic7,req.body.topic8];
     var moduleIndex;//its chatting shit about topicsTemp, it is used
