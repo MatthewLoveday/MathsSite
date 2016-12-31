@@ -233,6 +233,11 @@ app.post("/tests",function(req,res)//when seed program ready this should be hang
                     }    
                 }
             }
+            for (var i = 0; i < topicsToBeParsed.length; i++)
+            {
+                console.log("topicsToBeParsed["+i+"].name:" + topicsToBeParsed[i].name);
+                console.log("topicsToBeParsed[" + i + "].questions.length:" + topicsToBeParsed[i].questions.length);
+            }
             GenerateTest(req.body.time,topicsToBeParsed);
             // res.render("tests/show",{test:
             //     {
@@ -451,6 +456,7 @@ function GenerateTest(time, topics) //Random Seed, Time of the Test, Array of th
 //So this is used to get a question within a topic that I pass in.
 function GetTopicQuestion(Topic, topicTime) //RecSize is the reccommended length of the question. This should be either 1 or 0.  THIS IS DOCUMENTATION FOR A PARAMETER THAT DOESN'T EXIST. Brilliant.
 {
+
     var timePerQuestion=[];
     var QuestionAmount = 0;
     var questionLow = 0;
@@ -502,31 +508,30 @@ function GetTopicQuestion(Topic, topicTime) //RecSize is the reccommended length
     console.log("questionLow:"+questionLow);
     
     var questionsOfProperLength=[[]];
-    
+    console.log("Topic.questions.length:" + Topic.questions.length);
     for(var i=0;i<Topic.questions.length;i++)//push all questions of appropriate lengths to 'questionsOfProperLength' array
     {
-        if(Topic.questions.mark==timePerQuestion[0])
+        if(Topic.questions[i].mark==timePerQuestion[0])
         {
             questionsOfProperLength[0].push(Topic.questions[i]);               
         }
-        else if(Topic.questions.mark==timePerQuestion[(timePerQuestion.length)-1])
+        else if(Topic.questions[i].mark==timePerQuestion[(timePerQuestion.length)-1])
         {
             questionsOfProperLength[1].push(Topic.questions[i]);    
         }
-    }
-    
+    }    
     var questions=[];
     
     for(var t=0;t<questionLow;t++)//push number of question that have the low mark value
     {
-        question.push(questionsOfProperLength[0][getRandomIntInclusive(0,questionsOfProperLength[0].length)]);
+        questions.push(questionsOfProperLength[0][getRandomIntInclusive(0,questionsOfProperLength[0].length)]);
     }
     
     for(var t=0;t<questionHigh;t++)//push number of question that have the high mark value
     {
-        question.push(questionsOfProperLength[1][getRandomIntInclusive(0,questionsOfProperLength[1].length)]);
+        questions.push(questionsOfProperLength[1][getRandomIntInclusive(0,questionsOfProperLength[1].length)]);
     }
-    
+    console.log("questions:\n" + questions);
     return questions;
 }
 
