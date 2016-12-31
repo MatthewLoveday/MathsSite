@@ -30,11 +30,32 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="other_modules\mathquill-0.10.1\mathquill-basic.js" />
+    <Compile Include="other_modules\mathquill-0.10.1\mathquill.js" />
+    <Compile Include="other_modules\mathquill-0.10.1\mathquill.min.js" />
+    <Compile Include="other_modules\mathquill-0.10.1\mathquill.test.js" />
+    <Compile Include="seed.js" />
     <Compile Include="server.js" />
+    <Content Include="other_modules\mathquill-0.10.1\.exists--used_by_Makefile" />
+    <Content Include="other_modules\mathquill-0.10.1\font\Symbola-basic.eot" />
+    <Content Include="other_modules\mathquill-0.10.1\font\Symbola-basic.ttf" />
+    <Content Include="other_modules\mathquill-0.10.1\font\Symbola-basic.woff" />
+    <Content Include="other_modules\mathquill-0.10.1\font\Symbola-basic.woff2" />
+    <Content Include="other_modules\mathquill-0.10.1\font\Symbola.eot" />
+    <Content Include="other_modules\mathquill-0.10.1\font\Symbola.otf" />
+    <Content Include="other_modules\mathquill-0.10.1\font\Symbola.svg" />
+    <Content Include="other_modules\mathquill-0.10.1\font\Symbola.ttf" />
+    <Content Include="other_modules\mathquill-0.10.1\font\Symbola.woff" />
+    <Content Include="other_modules\mathquill-0.10.1\font\Symbola.woff2" />
+    <Content Include="other_modules\mathquill-0.10.1\mathquill-basic.css" />
+    <Content Include="other_modules\mathquill-0.10.1\mathquill.css" />
     <Content Include="package.json" />
     <Content Include="README.md" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="other_modules\" />
+    <Folder Include="other_modules\mathquill-0.10.1\" />
+    <Folder Include="other_modules\mathquill-0.10.1\font\" />
     <Folder Include="typings\" />
     <Folder Include="typings\globals\" />
     <Folder Include="typings\globals\express-session\" />
