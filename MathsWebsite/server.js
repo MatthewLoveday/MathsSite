@@ -513,23 +513,27 @@ function GetTopicQuestion(Topic, topicTime) //RecSize is the reccommended length
     {
         if(Topic.questions[i].mark==timePerQuestion[0])
         {
+            console.log("pushed a question of lesser marks (" + i + ")");
             questionsOfProperLength[0].push(Topic.questions[i]);               
         }
         else if(Topic.questions[i].mark==timePerQuestion[(timePerQuestion.length)-1])
         {
+            console.log("pushed a question of greater marks (" + i + ")");
             questionsOfProperLength[1].push(Topic.questions[i]);    
         }
-    }    
+    }  
+    console.log("Finished adding questions to questionsOfProperLength")
+    console.log("questionsOfProperLength:" + questionsOfProperLength);  
     var questions=[];
     
-    for(var t=0;t<questionLow;t++)//push number of question that have the low mark value
+    for (var t = 0; t < questionsOfProperLength[0].length;t++)//push number of question that have the low mark value
     {
-        questions.push(questionsOfProperLength[0][getRandomIntInclusive(0,questionsOfProperLength[0].length)]);
+        questions.push(questionsOfProperLength[0][getRandomIntInclusive(0,(questionsOfProperLength[0].length))]);
     }
     
-    for(var t=0;t<questionHigh;t++)//push number of question that have the high mark value
+    for (var t = 0; t < questionsOfProperLength[1].length;t++)//push number of question that have the high mark value
     {
-        questions.push(questionsOfProperLength[1][getRandomIntInclusive(0,questionsOfProperLength[1].length)]);
+        questions.push(questionsOfProperLength[1][getRandomIntInclusive(0,(questionsOfProperLength[1].length))]);
     }
     console.log("questions:\n" + questions);
     return questions;

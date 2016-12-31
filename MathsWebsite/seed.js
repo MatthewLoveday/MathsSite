@@ -194,86 +194,79 @@ var questionData=
     }
 ];
 
-function seedDB()
-{
-    user.remove({},function(err)
-    {
-        if(err)
-        {
-            console.log("Could not remove user\n"+err);
+
+
+function seedDB() {
+    user.remove({}, function (err) {
+        if (err) {
+            console.log("Could not remove user\n" + err);
         }
-        else
-        {
+        else {
             console.log("Removed old user");
-            examBoard.remove({},function(err)
-            {
-                if(err)
-                {
-                    console.log("Could not remove examboards\n"+err);
+            examBoard.remove({}, function (err) {
+                if (err) {
+                    console.log("Could not remove examboards\n" + err);
                 }
-                else
-                {
+                else {
                     console.log("Removed old examboards");
-                    question.remove({},function(err)
-                    {
-                        if(err)
-                        {
-                            console.log("Could not remove questions\n"+err);
+                    question.remove({}, function (err) {
+                        if (err) {
+                            console.log("Could not remove questions\n" + err);
                         }
-                        else
-                        {
+                        else {
                             console.log("Removed old questions");
-                            examboardData.forEach(function(examSeed)
-                            {
-                                examBoard.create(examSeed,function(err,exam)
-                                {
+                            
+                            console.log("Finished creating all questions");
+                            examboardData.forEach(function (examSeed) {
+                                examBoard.create(examSeed, function (err, exam) {
                                     console.log("Creating new examboard");
-                                    if(err)
-                                    {
-                                        console.log("Could not create new examboard\n"+err);
+                                    if (err) {
+                                        console.log("Could not create new examboard\n" + err);
                                     }
-                                    else
-                                    {
-                                        questionData.forEach(function(questionSeed)
-                                        {
-                                            question.create(questionSeed,function(err,question)
-                                            {
-                                                if(err)
-                                                {
-                                                    console.log("Could not create new question\n"+err);
-                                                }    
-                                                else
-                                                {
-                                                    for(var i=0;i<3;i++)
-                                                    {
-                                                        for(var t=0;t<3;t++)
-                                                        {
-                                                            exam.modules[i].topics[t].questions.push(question);
-                                                            //console.log("exam.modules["+i+"].topics["+t+"].questions:\n"+exam.modules[i].topics[t].questions);
-                                                        }       
-                                                    }
-                                                    
-                                                }
-                                                exam.save();
-                                            });
-                                        });
-                                        // console.log("Created new examboard\n"+exam);
-                                        // console.log("exam.modules:\n"+exam.modules);
-                                        // console.log("exam.modules[0]:\n"+exam.modules[0]);
-                                        // console.log("exam.modules[0].topics:\n"+exam.modules[0].topics);
-                                        // console.log("exam.modules[0].topics[0]:\n"+exam.modules[0].topics[0]);
-                                        // console.log("exam.modules[0].topics[0].questions:\n"+exam.modules[0].topics[0].questions);
-                                        // console.log("exam.modules[0].topics[0].questions[0]:\n"+exam.modules[0].topics[0].questions[0]);
+                                    else {
+                                        console.log("Created examboard"); 
                                     }
                                     
                                 });
                             });
+                            questionData.forEach(function (questionSeed) {
+                                question.create(questionSeed, function (err, question) 
+                                {
+                                    if (err) {
+                                        console.log("Could not create new question\n" + err);
+                                    }    
+                                    else {
+                                        console.log("Created question");
+                                        examBoard.find({}, function (err, exams) {
+                                            for (var i = 0; i < exams.length; i++) {
+                                                for (var t = 0; t < exams[i].modules.length; t++) {
+                                                    for (var u = 0; u < exams[i].modules[t].topics.length; u++) {
+                                                        exams[i].modules[t].topics[u].questions.push(question);
+                                                    }
+                                                }
+                                                exams[i].save();
+                                            }
+                                            
+                                        });
+                                    }
+                                });
+                            });
                         }
-                    });                
+                    });
                 }
             });
         }
     });
 }
+
+
+
+
+
+
+
+
+
+
 
 module.exports = seedDB;
