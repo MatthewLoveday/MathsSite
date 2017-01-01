@@ -490,19 +490,13 @@ function GetTopicQuestion(Topic, topicTime) //RecSize is the reccommended length
         for (var i = 0; i < numberToRoundUp; i++)
         {
             timePerQuestion[i] = Math.ceil(topicTime / numberOfQuestions);
+            questionHigh++;
         }
 
         for (var i = numberToRoundUp; i < numberOfQuestions;i++)
         {
-            timePerQuestion[i] = Math.round(topicTime/numberOfQuestions);
-            if (numberToRoundUp > 0 && timePerQuestion[i] == timePerQuestion[0])
-            {
-                questionHigh++;
-            }
-            else
-            {
-                questionLow++;
-            }
+            timePerQuestion[i] = Math.floor(topicTime/numberOfQuestions);
+            questionLow++;
         }
         //timePerQuestion.push(Math.ceil(topicTime / numberOfQuestions));
         //if (Math.ceil(topicTime / numberOfQuestions) != timePerQuestion[0])
