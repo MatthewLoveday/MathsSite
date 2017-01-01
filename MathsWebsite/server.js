@@ -498,11 +498,6 @@ function GetTopicQuestion(Topic, topicTime) //RecSize is the reccommended length
             timePerQuestion[i] = Math.floor(topicTime/numberOfQuestions);
             questionLow++;
         }
-        //timePerQuestion.push(Math.ceil(topicTime / numberOfQuestions));
-        //if (Math.ceil(topicTime / numberOfQuestions) != timePerQuestion[0])
-        //{
-            //questionHigh++;    
-        //}
         console.log("timePerQuestion:\n"+timePerQuestion);
     }
     console.log("questionHigh:"+questionHigh);
