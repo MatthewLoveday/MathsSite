@@ -445,10 +445,10 @@ function GenerateTest(time, topics) //Random Seed, Time of the Test, Array of th
 
     for(var i = 0; i < topics.length; i++)
     {
-        questions.concat(GetTopicQuestion(topics[i], topicTime));
+        questions=questions.concat(GetTopicQuestion(topics[i], topicTime));
     }
 
-    console.log("Questions\n" + questions);
+    console.log("\n\nquestions (outside function)\n" + questions);
 
     return questions;
 }
@@ -480,18 +480,22 @@ function GetTopicQuestion(Topic, topicTime) //RecSize is the reccommended length
     }
     else
     {
-        console.log("Math.floor(topicTime / 2):" + Math.floor(topicTime / 2));
 
         var numberOfQuestions = Math.floor(topicTime / getRandomIntInclusive(4, (Math.floor(topicTime / 2))));
-        
+        var numberToRoundUp = ((topicTime / numberOfQuestions) % 1) * numberOfQuestions;
+
         console.log("numberOfQuestions:"+numberOfQuestions);
-        timePerQuestion[0] = Math.floor(topicTime/numberOfQuestions);
-        questionLow++;
-        
-        for(var i=1;i<numberOfQuestions-1;i++)
+        console.log("numberToRoundUp:" + numberToRoundUp);
+
+        for (var i = 0; i < numberToRoundUp; i++)
+        {
+            timePerQuestion[i] = Math.ceil(topicTime / numberOfQuestions);
+        }
+
+        for (var i = numberToRoundUp; i < numberOfQuestions;i++)
         {
             timePerQuestion[i] = Math.round(topicTime/numberOfQuestions);
-            if(timePerQuestion[i] > timePerQuestion[0])
+            if (numberToRoundUp > 0 && timePerQuestion[i] == timePerQuestion[0])
             {
                 questionHigh++;
             }
@@ -500,42 +504,73 @@ function GetTopicQuestion(Topic, topicTime) //RecSize is the reccommended length
                 questionLow++;
             }
         }
-        timePerQuestion.push(Math.ceil(topicTime/numberOfQuestions));
-        questionHigh++;
+        //timePerQuestion.push(Math.ceil(topicTime / numberOfQuestions));
+        //if (Math.ceil(topicTime / numberOfQuestions) != timePerQuestion[0])
+        //{
+            //questionHigh++;    
+        //}
         console.log("timePerQuestion:\n"+timePerQuestion);
     }
     console.log("questionHigh:"+questionHigh);
     console.log("questionLow:"+questionLow);
     
-    var questionsOfProperLength=[[]];
+    var questionsOfProperLengthLower = [];
+    var questionsOfProperLengthHigher = [];
     console.log("Topic.questions.length:" + Topic.questions.length);
     for(var i=0;i<Topic.questions.length;i++)//push all questions of appropriate lengths to 'questionsOfProperLength' array
     {
+        console.log("i = " + i);
         if(Topic.questions[i].mark==timePerQuestion[0])
         {
             console.log("pushed a question of lesser marks (" + i + ")");
-            questionsOfProperLength[0].push(Topic.questions[i]);               
+            questionsOfProperLengthLower.push(Topic.questions[i]);               
         }
         else if(Topic.questions[i].mark==timePerQuestion[(timePerQuestion.length)-1])
         {
             console.log("pushed a question of greater marks (" + i + ")");
-            questionsOfProperLength[1].push(Topic.questions[i]);    
+            questionsOfProperLengthHigher.push(Topic.questions[i]);    
         }
     }  
-    console.log("Finished adding questions to questionsOfProperLength")
-    console.log("questionsOfProperLength:" + questionsOfProperLength);  
+    console.log("Finished adding questions to questionsOfProperLengthLower and questionsOfProperLengthHigher ")
+    console.log("questionsOfProperLengthLower:" + questionsOfProperLengthLower);
+    console.log("questionsOfProperLengthHigher:" + questionsOfProperLengthHigher);  
     var questions=[];
     
-    for (var t = 0; t < questionsOfProperLength[0].length;t++)//push number of question that have the low mark value
+
+    var questionsAlreadyPickedLow = [];
+    var questionsAlreadyPickedHigh = [];
+
+    var random;
+    console.log("check 1");
+    console.log("questionLow:" + questionLow);
+    for (var i = 0; i < questionLow; i++)
     {
-        questions.push(questionsOfProperLength[0][getRandomIntInclusive(0,(questionsOfProperLength[0].length))]);
+        random = getRandomIntInclusive(0, ((questionsOfProperLengthLower.length)-1));
+        if (searchArray(questionsAlreadyPickedLow, random))
+        {
+            i--;
+            continue;    
+        }
+        questionsAlreadyPickedLow[i] = random;
+        questions.push(questionsOfProperLengthLower[random]);        
     }
+    console.log("check 2");
+    console.log("questionHigh:" + questionHigh);
+    for(var i = 0; i < questionHigh; i++)
+    {
+        random = getRandomIntInclusive(0, ((questionsOfProperLengthHigher.length)-1));
+        if (searchArray(questionsAlreadyPickedHigh, random)) {
+            i--;
+            continue;
+        }
+        questionsAlreadyPickedHigh[i] = random;
+        questions.push(questionsOfProperLengthHigher[random]);
+    }
+    console.log("check 3");
     
-    for (var t = 0; t < questionsOfProperLength[1].length;t++)//push number of question that have the high mark value
-    {
-        questions.push(questionsOfProperLength[1][getRandomIntInclusive(0,(questionsOfProperLength[1].length))]);
-    }
-    console.log("questions:\n" + questions);
+
+    console.log("\n\n\n\nquestions:\n" + questions + "\n\n");
+    console.log("check 2");
     return questions;
 }
 
@@ -550,6 +585,22 @@ function getRandomIntInclusive(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+//---------------------------------------------------------------------
+//JWL functions
+//---------------------------------------------------------------------
+
+function searchArray(array, value)
+{
+    for (var i = 0; i <= array.length; i++)
+    {
+        if (array[i] == value)
+        {
+            return true;
+        }
+    }
+    return false;
 }
 
 //---------------------------------------------------------------------
