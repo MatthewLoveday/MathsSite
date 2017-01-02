@@ -4,7 +4,7 @@
   "description": "MathsWebsite",
   "main": "server.js",
   "author": {
-    "name": "mattl"
+    "name": "eddy wally"
   },
   "dependencies": {
     "body-parser": "^1.15.2",
