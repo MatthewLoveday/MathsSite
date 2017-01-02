@@ -238,7 +238,8 @@ app.post("/tests",function(req,res)//when seed program ready this should be hang
                 console.log("topicsToBeParsed["+i+"].name:" + topicsToBeParsed[i].name);
                 console.log("topicsToBeParsed[" + i + "].questions.length:" + topicsToBeParsed[i].questions.length);
             }
-            GenerateTest(req.body.time,topicsToBeParsed);
+            var questions = GenerateTest(req.body.time, topicsToBeParsed);
+            res.redirect("/tests/show", {testQuestions:questions});
             // res.render("tests/show",{test:
             //     {
             //         time:req.body.time,
@@ -482,8 +483,9 @@ function GetTopicQuestion(Topic, topicTime) //RecSize is the reccommended length
     {
 
         var numberOfQuestions = Math.floor(topicTime / getRandomIntInclusive(4, (Math.floor(topicTime / 2))));
-        var numberToRoundUp = ((topicTime / numberOfQuestions) % 1) * numberOfQuestions;
+        var numberToRoundUp = Math.round(((topicTime / numberOfQuestions) % 1) * numberOfQuestions);
 
+        console.log("topicTime:" + topicTime);
         console.log("numberOfQuestions:"+numberOfQuestions);
         console.log("numberToRoundUp:" + numberToRoundUp);
 
