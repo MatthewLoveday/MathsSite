@@ -190,7 +190,7 @@ app.get("/tests/new",function(req,res)
 app.post("/tests",function(req,res)//when seed program ready this should be hanged to "/tests" which should redirect to a "/tests/:seed" route 
 {
     var topicsTemp = [req.body.topic1,req.body.topic2,req.body.topic3,req.body.topic4,req.body.topic5,req.body.topic6,req.body.topic7,req.body.topic8];
-    var moduleIndex;//its chatting shit about topicsTemp, it is used
+    var moduleIndex;
     var topicsToBeParsed=[];
     examBoard.find({name:req.body.examBoardName},function(err,examBoard)
     {
@@ -213,13 +213,11 @@ app.post("/tests",function(req,res)//when seed program ready this should be hang
     
     examBoard.find({name:req.body.examBoardName}).exec()
     .then((exams) => {
-    // Populate questions
         examBoard.populate(exams, {
             path: 'modules.topics.questions',
             model: 'question'
         })
         .then((populatedExams) => {
-            // Do something with populated exams
             for(var i=0;i<topicsTemp.length;i++)
             {
                 if(topicsTemp[i])
