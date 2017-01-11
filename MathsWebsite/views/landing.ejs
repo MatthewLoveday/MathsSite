@@ -1,5 +1,5 @@
 <% include ./partials/header %>
-
+	
 	<p>test</p>
 	<!-- static stuff -->
 	<p>Solve <span id="problem">ax^2 + bx + c = 0</span>.</p>
@@ -10,18 +10,46 @@
 	</script>
 	<!-- dynamic stuff -->
 	<p><span id="answer">x=</span></p>
-
-	
+	<input id="stuff" type="string">
+	<input id="stuff2" type="string">
 	<script>
-	  var answerSpan = document.getElementById('answer');
-	  var answerMathField = MQ.MathField(answerSpan, {
-	    handlers: {
-	      edit: function() {
-	        var enteredMath = answerMathField.latex(); // Get entered math in LaTeX format
-	        checkAnswer(enteredMath);
-	      }
-	    }
-	  });
+		var counter = 0
+		var answerSpan = document.getElementById('answer');
+		var answerMathField = MQ.MathField(answerSpan, {
+			handlers: {
+				edit: function(){
+					document.getElementById("stuff").value = answerMathField.latex();
+				},
+				enter: function() {
+					var enteredMath = answerMathField.latex(); // Get entered math in LaTeX format
+					counter++
+					window.alert(counter);
+					newInp(counter);
+				}
+			}
+		});
+		function newInp(count)
+		{
+			window.alert(count);
+			var newP = document.createElement("p");
+			var newSpan = document.createElement("span");
+			newSpan.id = "answer"+count;
+			newP.appendChild(newSpan);
+			document.body.appendChild(newP);
+
+			var newMathField = MQ.MathField(document.getElementById("answer"+count), {
+				handlers: {
+					edit: function(){
+						document.getElementById("stuff2").value = newMathField.latex();
+					},
+					enter: function() {
+						count++
+						window.alert(count);
+						newInp(count);
+					}
+                }
+            });
+		}
 	</script>
 
 <% include ./partials/footer %>
