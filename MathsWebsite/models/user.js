@@ -1,10 +1,17 @@
 var mongoose = require("mongoose");
 var passportLocalMongoose = require("passport-local-mongoose");
 
+var userTopicsSchema = new mongoose.Schema
+({
+        name: String,
+        progress: Number
+});
+
 var userModulesSchema = new mongoose.Schema
 ({
     name:String,
-    progress:Number
+    progress: Number,
+    topics:[userTopicsSchema]
 });
 
 var userExamBoardSchema = new mongoose.Schema

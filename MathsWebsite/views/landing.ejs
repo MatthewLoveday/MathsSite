@@ -9,47 +9,5 @@
 		MQ.StaticMath(problemSpan);
 	</script>
 	<!-- dynamic stuff -->
-	<p><span id="answer">x=</span></p>
-	<input id="stuff" type="string">
-	<input id="stuff1" type="string">
-	<input id="stuff2" type="string">
-	<script>
-		var newInputs=[];
-		var counter = 0
-		var answerSpan = document.getElementById('answer');
-		var answerMathField = MQ.MathField(answerSpan, {
-			handlers: {
-				edit: function(){
-					document.getElementById("stuff").value = answerMathField.latex();
-				},
-				enter: function() {
-					var enteredMath = answerMathField.latex(); // Get entered math in LaTeX format
-					counter++
-					newInp(counter);
-				}
-			}
-		});
-		function newInp(count)
-		{
-			var newP = document.createElement("p");
-			var newSpan = document.createElement("span");
-			newSpan.id = "answer"+count;
-			newP.appendChild(newSpan);
-			document.body.appendChild(newP);
-
-			newInputs[count] = MQ.MathField(document.getElementById("answer"+count), {
-				handlers: {
-					edit: function(){
-						document.getElementById("stuff"+count).value = newInputs[count].latex();
-					},
-					enter: function() {
-						count++
-						newInp(count);
-					}
-                }
-            });
-			newInputs[count].focus();
-		}
-	</script>
 
 <% include ./partials/footer %>

@@ -3,5 +3,46 @@
 <h1>Show test page</h1>
 
 
+<script>
+	var newInputs=[];
+<% for(var i=0;i< testQuestions.length;i++){ %>
+
+	var newH3 = document.createElement("h3");
+	var h3Content = document.createTextNode("<%= testQuestions[i].name %>");
+	newH3.appendChild(h3Content);
+	document.body.appendChild(newH3); 
+	newInputs.push([]);
+
+	<% for(var t=0;t< testQuestions[i].questions.length;t++){ %>
+
+		var newLi = document.createElement("LI");
+		var liContent = document.createTextNode("<%= testQuestions[i].questions[t].content %>");
+		newLi.appendChild(liContent);
+		document.body.appendChild(newLi); 
+		
+		newInputs[<%= i %>].push([]);
+		newInp(<%= i %>,<%= t %>,0);
+	<% } %> 
+<% } %>
+		function newInp(i,t,count)
+		{
+			var newP = document.createElement("p");
+			var newSpan = document.createElement("span");
+			newSpan.id = "topic"+i+"question"+t+"part"+count;
+			newP.appendChild(newSpan);
+			document.body.appendChild(newP);
+
+			newInputs[i][t][count] = MQ.MathField(document.getElementById("topic"+i+"question"+t+"part"+count), {
+				handlers: {
+					enter: function() {
+						count++;
+						newInp(i,t,count);
+					}
+                }
+            });
+			newInputs[i][t][count].focus();
+		}
+	</script>
+
 
 <% include ../partials/footer %>

@@ -237,7 +237,7 @@ app.post("/tests",function(req,res)//when seed program ready this should be hang
                 console.log("topicsToBeParsed[" + i + "].questions.length:" + topicsToBeParsed[i].questions.length);
             }
             var questions = GenerateTest(req.body.time, topicsToBeParsed);
-            res.redirect("/tests/show", {testQuestions:questions});
+            res.render("tests/show", {testQuestions:questions});
             // res.render("tests/show",{test:
             //     {
             //         time:req.body.time,
@@ -434,8 +434,7 @@ function isLoggedIn(req,res,next)
 //---------------------------------------------------------------------
 
 function GenerateTest(time, topics) //Random Seed, Time of the Test, Array of the Topics
-{  
-    console.log("test random number in function:" + Math.random()); 
+{ 
     var questions=[]; //Questions array to be returned.
 
     var topicTime = Math.floor(time / topics.length); //The time allocated to each topic the user has selected. 
@@ -444,7 +443,7 @@ function GenerateTest(time, topics) //Random Seed, Time of the Test, Array of th
 
     for(var i = 0; i < topics.length; i++)
     {
-        questions=questions.concat(GetTopicQuestion(topics[i], topicTime));
+        questions.push({ name:topics[i].name, questions:GetTopicQuestion(topics[i], topicTime) });
     }
 
     console.log("\n\nquestions (outside function)\n" + questions);
