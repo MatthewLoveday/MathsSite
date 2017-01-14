@@ -19,30 +19,58 @@
 		var liContent = document.createTextNode("<%= testQuestions[i].questions[t].content %>");
 		newLi.appendChild(liContent);
 		document.body.appendChild(newLi); 
-		
 		newInputs[<%= i %>].push([]);
-		newInp(<%= i %>,<%= t %>,0);
+
+		var newP = document.createElement("p");
+		var newSpan = document.createElement("span");
+		newSpan.id = "topic"+<%= i %>+"question"+<%= t %>+"part"+0;
+		newP.appendChild(newSpan);
+		document.body.appendChild(newP);
+		newInputs[<%= i %>][<%= t %>][0] = MQ.MathField(document.getElementById("topic"+<%= i %>+"question"+<%= t %>+"part"+0), {
+			handlers: {
+				enter: function() {
+					if(!(newInputs[<%= i %>][<%= t %>][1])){
+						newInp(<%= i %>,<%= t %>,1);
+					}
+					else{
+						newInputs[<%= i %>][<%= t %>][1].focus()	
+					}
+				},
+            }
+        });
+
 	<% } %> 
 <% } %>
-		function newInp(i,t,count)
-		{
-			var newP = document.createElement("p");
-			var newSpan = document.createElement("span");
-			newSpan.id = "topic"+i+"question"+t+"part"+count;
-			newP.appendChild(newSpan);
-			document.body.appendChild(newP);
+	function newInp(i,t,count)
+	{
+		var id = "topic"+i+"question"+t+"part"+count;
+		var tester = $("<p></p>").html("<span id='"+id+"'></span>");
+		var tests2 = count - 1;
+		$("#topic"+i+"question"+t+"part"+tests2).after(tester);
 
-			newInputs[i][t][count] = MQ.MathField(document.getElementById("topic"+i+"question"+t+"part"+count), {
-				handlers: {
-					enter: function() {
-						count++;
-						newInp(i,t,count);
+		newInputs[i][t][count] = MQ.MathField(document.getElementById("topic"+i+"question"+t+"part"+count), {
+			handlers: {
+				enter: function() {
+					if(!(newInputs[i][t][count+1])){
+						newInp(i,t,(count+1));
 					}
-                }
-            });
-			newInputs[i][t][count].focus();
-		}
-	</script>
+					else{
+						newInputs[i][t][count+1].focus()	
+					}
+				},
+				edit: function() {
+					if(!(newInputs[i][t][count].latex()) && !(newInputs[i][t][count+1])){
+						$("#"+id).parent().remove();
+						newInputs[i][t].splice(count,1);
+						newInputs[i][t][count-1].focus();
+					}
+				}
+			}
+		});
+		newInputs[i][t][count].focus();
+
+	}
+</script>
 
 
 <% include ../partials/footer %>
