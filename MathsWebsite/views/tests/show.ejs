@@ -6,26 +6,26 @@
 <script>
 	var newInputs=[];
 <% for(var i=0;i< testQuestions.length;i++){ %>
+	
+	var topicName = "<%= testQuestions[i].name %>";
+	var newDiv = $("<div></div>").html("<h3>"+topicName+"</h3>")
+	$("body").append(newDiv);
 
-	var newH3 = document.createElement("h3");
-	var h3Content = document.createTextNode("<%= testQuestions[i].name %>");
-	newH3.appendChild(h3Content);
-	document.body.appendChild(newH3); 
 	newInputs.push([]);
 
 	<% for(var t=0;t< testQuestions[i].questions.length;t++){ %>
+		
+		var src = "<%= testQuestions[i].questions[t].content %>";
+		var newImg = $("<img>").attr("src",src);
+		$("div:last").append(newImg);
 
-		var newLi = document.createElement("LI");
-		var liContent = document.createTextNode("<%= testQuestions[i].questions[t].content %>");
-		newLi.appendChild(liContent);
-		document.body.appendChild(newLi); 
+		
 		newInputs[<%= i %>].push([]);
 
-		var newP = document.createElement("p");
-		var newSpan = document.createElement("span");
-		newSpan.id = "topic"+<%= i %>+"question"+<%= t %>+"part"+0;
-		newP.appendChild(newSpan);
-		document.body.appendChild(newP);
+		var id = "topic"+<%= i %>+"question"+<%= t %>+"part"+0;
+		var newP = $("<p></p>").html("<span id="+id+"></span>")
+		$("div:last").append(newP);
+
 		newInputs[<%= i %>][<%= t %>][0] = MQ.MathField(document.getElementById("topic"+<%= i %>+"question"+<%= t %>+"part"+0), {
 			handlers: {
 				enter: function() {
