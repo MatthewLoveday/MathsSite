@@ -44,9 +44,9 @@
 	function newInp(i,t,count)
 	{
 		var id = "topic"+i+"question"+t+"part"+count;
-		var tester = $("<p></p>").html("<span id='"+id+"'></span>");
-		var tests2 = count - 1;
-		$("#topic"+i+"question"+t+"part"+tests2).after(tester);
+		var newP = $("<p></p>").html("<span id='"+id+"'></span>");
+		var temp = count - 1;
+		$("#topic"+i+"question"+t+"part"+temp).after(newP);
 
 		newInputs[i][t][count] = MQ.MathField(document.getElementById("topic"+i+"question"+t+"part"+count), {
 			handlers: {
