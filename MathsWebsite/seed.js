@@ -15,182 +15,182 @@ var questionData=
     {
         content: "http://www.christchurch.esussex.dbprimary.com/esussex/primary/christchurch/web/maths2-big[1].png",
         mark: 4,
-        methods: [[{mark:4,content:"one"}],[{mark:2,content:"one"}, {mark:2,content:"two"}]]
+        methods: [[{ mark: 4, content: "x=\frac{y}{2}" }], [{ mark: 2, content: "y=2x" }, { mark: 2, content:"x=\frac{y}{2}"}]]
     },
     {
         content: "http://www.christchurch.esussex.dbprimary.com/esussex/primary/christchurch/web/maths2-big[1].png",
         mark: 4,
-        methods: [[{ mark: 4, content: "one" }], [{ mark: 2, content: "one" }, { mark: 2, content: "two" }]]
+        methods: [[{ mark: 4, content: "x=\frac{y}{2}" }], [{ mark: 2, content: "y=2x" }, { mark: 2, content: "x=\frac{y}{2}" }]]
     },
     {
         content: "http://www.christchurch.esussex.dbprimary.com/esussex/primary/christchurch/web/maths2-big[1].png",
         mark: 4,
-        methods: [[{ mark: 4, content: "one" }], [{ mark: 2, content: "one" }, { mark: 2, content: "two" }]]
+        methods: [[{ mark: 4, content: "x=\frac{y}{2}" }], [{ mark: 2, content: "y=2x" }, { mark: 2, content:"x=\frac{y}{2}"}]]
     },
     {
         content: "http://www.christchurch.esussex.dbprimary.com/esussex/primary/christchurch/web/maths2-big[1].png",
         mark: 5,
-        methods: [[{ mark: 5, content: "one" }], [{ mark: 3, content: "one" }, { mark: 2, content: "two" }]]
+        methods: [[{ mark: 5, content: "x=-2^{-\frac{1}{2}}" }], [{ mark: 3, content: "2^{\frac{1}{2}}x=-1" }, { mark: 2, content: "x=-2^{-\frac{1}{2}}" }]]
     },
     {
         content: "http://www.christchurch.esussex.dbprimary.com/esussex/primary/christchurch/web/maths2-big[1].png",
         mark: 5,
-        methods: [[{ mark: 5, content: "one" }], [{ mark: 3, content: "one" }, { mark: 2, content: "two" }]]
+        methods: [[{ mark: 5, content: "x=-2^{-\frac{1}{2}}" }], [{ mark: 3, content: "2^{\frac{1}{2}}x=-1" }, { mark: 2, content: "x=-2^{-\frac{1}{2}}" }]]
     },
     {
         content: "http://www.christchurch.esussex.dbprimary.com/esussex/primary/christchurch/web/maths2-big[1].png",
         mark: 5,
-        methods: [[{ mark: 5, content: "one" }], [{ mark: 3, content: "one" }, { mark: 2, content: "two" }]]
+        methods: [[{ mark: 5, content: "x=-2^{-\frac{1}{2}}" }], [{ mark: 3, content: "2^{\frac{1}{2}}x=-1" }, { mark: 2, content: "x=-2^{-\frac{1}{2}}" }]]
     },
     {
         content: "http://www.christchurch.esussex.dbprimary.com/esussex/primary/christchurch/web/maths2-big[1].png",
         mark: 6,
-        methods: [[{ mark: 6, content: "one" }], [{ mark: 3, content: "one" }, { mark: 3, content: "two" }]]
+        methods: [[{ mark: 6, content: "x=-2^{-\frac{1}{2}}" }], [{ mark: 3, content: "2^{\frac{1}{2}}x=-1" }, { mark: 3, content: "x=-2^{-\frac{1}{2}}" }]]
     },
     {
         content: "http://www.christchurch.esussex.dbprimary.com/esussex/primary/christchurch/web/maths2-big[1].png",
         mark: 6,
-        methods: [[{ mark: 6, content: "one" }], [{ mark: 3, content: "one" }, { mark: 3, content: "two" }]]
+        methods: [[{ mark: 6, content: "x=-2^{-\frac{1}{2}}" }], [{ mark: 3, content: "2^{\frac{1}{2}}x=-1" }, { mark: 3, content: "x=-2^{-\frac{1}{2}}" }]]
     },
     {
         content: "http://www.christchurch.esussex.dbprimary.com/esussex/primary/christchurch/web/maths2-big[1].png",
         mark: 6,
-        methods: [[{ mark: 6, content: "one" }], [{ mark: 3, content: "one" }, { mark: 3, content: "two" }]]
+        methods: [[{ mark: 6, content: "x=-2^{-\frac{1}{2}}" }], [{ mark: 3, content: "2^{\frac{1}{2}}x=-1" }, { mark: 3, content: "x=-2^{-\frac{1}{2}}" }]]
     },
     {
         content: "http://www.christchurch.esussex.dbprimary.com/esussex/primary/christchurch/web/maths2-big[1].png",
         mark: 7,
-        methods: [[{ mark: 7, content: "one" }], [{ mark: 4, content: "one" }, { mark: 3, content: "two" }]]
+        methods: [[{ mark: 7, content: "x=-2^{-\frac{1}{2}}" }], [{ mark: 4, content: "2^{\frac{1}{2}}x=-1" }, { mark: 3, content: "x=-2^{-\frac{1}{2}}" }]]
     },
     {
         content: "http://www.christchurch.esussex.dbprimary.com/esussex/primary/christchurch/web/maths2-big[1].png",
         mark: 7,
-        methods: [[{ mark: 7, content: "one" }], [{ mark: 4, content: "one" }, { mark: 3, content: "two" }]]
+        methods: [[{ mark: 7, content: "x=-2^{-\frac{1}{2}}" }], [{ mark: 4, content: "2^{\frac{1}{2}}x=-1" }, { mark: 3, content: "x=-2^{-\frac{1}{2}}" }]]
     },
     {
         content: "http://www.christchurch.esussex.dbprimary.com/esussex/primary/christchurch/web/maths2-big[1].png",
         mark: 7,
-        methods: [[{ mark: 7, content: "one" }], [{ mark: 4, content: "one" }, { mark: 3, content: "two" }]]
+        methods: [[{ mark: 7, content: "x=-2^{-\frac{1}{2}}" }], [{ mark: 4, content: "2^{\frac{1}{2}}x=-1" }, { mark: 3, content: "x=-2^{-\frac{1}{2}}" }]]
     },
     {
         content: "http://www.christchurch.esussex.dbprimary.com/esussex/primary/christchurch/web/maths2-big[1].png",
         mark: 8,
-        methods: [[{ mark: 8, content: "one" }], [{ mark: 4, content: "one" }, { mark: 4, content: "two" }]]
+        methods: [[{ mark: 8, content: "x=-2^{-\frac{1}{2}}" }], [{ mark: 4, content: "2^{\frac{1}{2}}x=-1" }, { mark: 4, content: "x=-2^{-\frac{1}{2}}" }]]
     },
     {
         content: "http://www.christchurch.esussex.dbprimary.com/esussex/primary/christchurch/web/maths2-big[1].png",
         mark: 8,
-        methods: [[{ mark: 8, content: "one" }], [{ mark: 4, content: "one" }, { mark: 4, content: "two" }]]
+        methods: [[{ mark: 8, content: "x=-2^{-\frac{1}{2}}" }], [{ mark: 4, content: "2^{\frac{1}{2}}x=-1" }, { mark: 4, content: "x=-2^{-\frac{1}{2}}" }]]
     },
     {
         content: "http://www.christchurch.esussex.dbprimary.com/esussex/primary/christchurch/web/maths2-big[1].png",
         mark: 8,
-        methods: [[{ mark: 8, content: "one" }], [{ mark: 4, content: "one" }, { mark: 4, content: "two" }]]
+        methods: [[{ mark: 8, content: "x=-2^{-\frac{1}{2}}" }], [{ mark: 4, content: "2^{\frac{1}{2}}x=-1" }, { mark: 4, content: "x=-2^{-\frac{1}{2}}" }]]
     },
     {
         content: "http://www.christchurch.esussex.dbprimary.com/esussex/primary/christchurch/web/maths2-big[1].png",
         mark: 9,
-        methods: [[{ mark: 9, content: "one" }], [{ mark: 5, content: "one" }, { mark: 4, content: "two" }]]
+        methods: [[{ mark: 9, content: "x=-2^{-\frac{1}{2}}" }], [{ mark: 5, content: "2^{\frac{1}{2}}x=-1" }, { mark: 4, content: "x=-2^{-\frac{1}{2}}" }]]
     },
     {
         content: "http://www.christchurch.esussex.dbprimary.com/esussex/primary/christchurch/web/maths2-big[1].png",
         mark: 9,
-        methods: [[{ mark: 9, content: "one" }], [{ mark: 5, content: "one" }, { mark: 4, content: "two" }]]
+        methods: [[{ mark: 9, content: "x=-2^{-\frac{1}{2}}" }], [{ mark: 5, content: "2^{\frac{1}{2}}x=-1" }, { mark: 4, content: "x=-2^{-\frac{1}{2}}" }]]
     },
     {
         content: "http://www.christchurch.esussex.dbprimary.com/esussex/primary/christchurch/web/maths2-big[1].png",
         mark: 9,
-        methods: [[{ mark: 9, content: "one" }], [{ mark: 5, content: "one" }, { mark: 4, content: "two" }]]
+        methods: [[{ mark: 9, content: "x=-2^{-\frac{1}{2}}" }], [{ mark: 5, content: "2^{\frac{1}{2}}x=-1" }, { mark: 4, content: "x=-2^{-\frac{1}{2}}" }]]
     },
     {
         content: "http://www.christchurch.esussex.dbprimary.com/esussex/primary/christchurch/web/maths2-big[1].png",
         mark: 10,
-        methods: [[{ mark: 10, content: "one" }], [{ mark: 5, content: "one" }, { mark: 5, content: "two" }]]
+        methods: [[{ mark: 10, content: "x=-2^{-\frac{1}{2}}" }], [{ mark: 5, content: "2^{\frac{1}{2}}x=-1" }, { mark: 5, content: "x=-2^{-\frac{1}{2}}" }]]
     },
     {
         content: "http://www.christchurch.esussex.dbprimary.com/esussex/primary/christchurch/web/maths2-big[1].png",
         mark: 10,
-        methods: [[{ mark: 10, content: "one" }], [{ mark: 5, content: "one" }, { mark: 5, content: "two" }]]
+        methods: [[{ mark: 10, content: "x=-2^{-\frac{1}{2}}" }], [{ mark: 5, content: "2^{\frac{1}{2}}x=-1" }, { mark: 5, content: "x=-2^{-\frac{1}{2}}" }]]
     },
     {
         content: "http://www.christchurch.esussex.dbprimary.com/esussex/primary/christchurch/web/maths2-big[1].png",
         mark: 10,
-        methods: [[{ mark: 10, content: "one" }], [{ mark: 5, content: "one" }, { mark: 5, content: "two" }]]
+        methods: [[{ mark: 10, content: "x=-2^{-\frac{1}{2}}" }], [{ mark: 5, content: "2^{\frac{1}{2}}x=-1" }, { mark: 5, content: "x=-2^{-\frac{1}{2}}" }]]
     },
     {
         content: "http://www.christchurch.esussex.dbprimary.com/esussex/primary/christchurch/web/maths2-big[1].png",
         mark: 11,
-        methods: [[{ mark: 11, content: "one" }], [{ mark: 6, content: "one" }, { mark: 5, content: "two" }]]
+        methods: [[{ mark: 11, content: "x=-2^{-\frac{1}{2}}" }], [{ mark: 6, content: "2^{\frac{1}{2}}x=-1" }, { mark: 5, content: "x=-2^{-\frac{1}{2}}" }]]
     },
     {
         content: "http://www.christchurch.esussex.dbprimary.com/esussex/primary/christchurch/web/maths2-big[1].png",
         mark: 11,
-        methods: [[{ mark: 11, content: "one" }], [{ mark: 6, content: "one" }, { mark: 5, content: "two" }]]
+        methods: [[{ mark: 11, content: "x=-2^{-\frac{1}{2}}" }], [{ mark: 6, content: "2^{\frac{1}{2}}x=-1" }, { mark: 5, content: "x=-2^{-\frac{1}{2}}" }]]
     },
     {
         content: "pStart of question 8c/phttp://www.christchurch.esussex.dbprimary.com/esussex/primary/christchurch/web/maths2-big[1].png",
         mark: 11,
-        methods: [[{ mark: 11, content: "one" }], [{ mark: 6, content: "one" }, { mark: 5, content: "two" }]]
+        methods: [[{ mark: 11, content: "x=-2^{-\frac{1}{2}}" }], [{ mark: 6, content: "2^{\frac{1}{2}}x=-1" }, { mark: 5, content: "x=-2^{-\frac{1}{2}}" }]]
     },
     {
         content: "http://www.christchurch.esussex.dbprimary.com/esussex/primary/christchurch/web/maths2-big[1].png",
         mark: 12,
-        methods: [[{ mark: 12, content: "one" }], [{ mark: 6, content: "one" }, { mark: 6, content: "two" }]]
+        methods: [[{ mark: 12, content: "x=-2^{-\frac{1}{2}}" }], [{ mark: 6, content: "2^{\frac{1}{2}}x=-1" }, { mark: 6, content: "x=-2^{-\frac{1}{2}}" }]]
     },
     {
         content: "http://www.christchurch.esussex.dbprimary.com/esussex/primary/christchurch/web/maths2-big[1].png",
         mark: 12,
-        methods: [[{ mark: 12, content: "one" }], [{ mark: 6, content: "one" }, { mark: 6, content: "two" }]]
+        ethods: [[{ mark: 12, content: "x=-2^{-\frac{1}{2}}" }], [{ mark: 6, content: "2^{\frac{1}{2}}x=-1" }, { mark: 6, content: "x=-2^{-\frac{1}{2}}" }]]
     },
     {
         content: "http://www.christchurch.esussex.dbprimary.com/esussex/primary/christchurch/web/maths2-big[1].png",
         mark: 12,
-        methods: [[{ mark: 12, content: "one" }], [{ mark: 6, content: "one" }, { mark: 6, content: "two" }]]
+        ethods: [[{ mark: 12, content: "x=-2^{-\frac{1}{2}}" }], [{ mark: 6, content: "2^{\frac{1}{2}}x=-1" }, { mark: 6, content: "x=-2^{-\frac{1}{2}}" }]]
     },
     {
         content: "http://www.christchurch.esussex.dbprimary.com/esussex/primary/christchurch/web/maths2-big[1].png",
         mark: 13,
-        methods: [[{ mark: 13, content: "one" }], [{ mark: 7, content: "one" }, { mark: 6, content: "two" }]]
+        methods: [[{ mark: 13, content: "x=-2^{-\frac{1}{2}}" }], [{ mark: 7, content: "2^{\frac{1}{2}}x=-1" }, { mark: 6, content: "x=-2^{-\frac{1}{2}}" }]]
     },
     {
         content: "http://www.christchurch.esussex.dbprimary.com/esussex/primary/christchurch/web/maths2-big[1].png",
         mark: 13,
-        methods: [[{ mark: 13, content: "one" }], [{ mark: 7, content: "one" }, { mark: 6, content: "two" }]]
+        methods: [[{ mark: 13, content: "x=-2^{-\frac{1}{2}}" }], [{ mark: 7, content: "2^{\frac{1}{2}}x=-1" }, { mark: 6, content: "x=-2^{-\frac{1}{2}}" }]]
     },
     {
         content: "http://www.christchurch.esussex.dbprimary.com/esussex/primary/christchurch/web/maths2-big[1].png",
         mark: 13,
-        methods: [[{ mark: 13, content: "one" }], [{ mark: 7, content: "one" }, { mark: 6, content: "two" }]]
+        methods: [[{ mark: 13, content: "x=-2^{-\frac{1}{2}}" }], [{ mark: 7, content: "2^{\frac{1}{2}}x=-1" }, { mark: 6, content: "x=-2^{-\frac{1}{2}}" }]]
     },
     {
         content: "http://www.christchurch.esussex.dbprimary.com/esussex/primary/christchurch/web/maths2-big[1].png",
         mark: 14,
-        methods: [[{ mark: 14, content: "one" }], [{ mark: 7, content: "one" }, { mark: 7, content: "two" }]]
+        methods: [[{ mark: 14, content: "x=-2^{-\frac{1}{2}}" }], [{ mark: 7, content: "2^{\frac{1}{2}}x=-1" }, { mark: 7, content: "x=-2^{-\frac{1}{2}}" }]]
     },
     {
         content: "http://www.christchurch.esussex.dbprimary.com/esussex/primary/christchurch/web/maths2-big[1].png",
         mark: 14,
-        methods: [[{ mark: 14, content: "one" }], [{ mark: 7, content: "one" }, { mark: 7, content: "two" }]]
+        methods: [[{ mark: 14, content: "x=-2^{-\frac{1}{2}}" }], [{ mark: 7, content: "2^{\frac{1}{2}}x=-1" }, { mark: 7, content: "x=-2^{-\frac{1}{2}}" }]]
     },
     {
         content: "http://www.christchurch.esussex.dbprimary.com/esussex/primary/christchurch/web/maths2-big[1].png",
         mark: 14,
-        methods: [[{ mark: 14, content: "one" }], [{ mark: 7, content: "one" }, { mark: 7, content: "two" }]]
+        methods: [[{ mark: 14, content: "x=-2^{-\frac{1}{2}}" }], [{ mark: 7, content: "2^{\frac{1}{2}}x=-1" }, { mark: 7, content: "x=-2^{-\frac{1}{2}}" }]]
     },
     {
         content: "http://www.christchurch.esussex.dbprimary.com/esussex/primary/christchurch/web/maths2-big[1].png",
         mark: 15,
-        methods: [[{ mark: 15, content: "one" }], [{ mark: 8, content: "one" }, { mark: 7, content: "two" }]]
+        methods: [[{ mark: 15, content: "x=-2^{-\frac{1}{2}}" }], [{ mark: 8, content: "2^{\frac{1}{2}}x=-1" }, { mark: 7, content: "x=-2^{-\frac{1}{2}}" }]]
     },
     {
         content: "http://www.christchurch.esussex.dbprimary.com/esussex/primary/christchurch/web/maths2-big[1].png",
         mark: 15,
-        methods: [[{ mark: 15, content: "one" }], [{ mark: 8, content: "one" }, { mark: 7, content: "two" }]]
+        methods: [[{ mark: 15, content: "x=-2^{-\frac{1}{2}}" }], [{ mark: 8, content: "2^{\frac{1}{2}}x=-1" }, { mark: 7, content: "x=-2^{-\frac{1}{2}}" }]]
     },
     {
         content: "http://www.christchurch.esussex.dbprimary.com/esussex/primary/christchurch/web/maths2-big[1].png",
         mark: 15,
-        methods: [[{ mark: 15, content: "one" }], [{ mark: 8, content: "one" }, { mark: 7, content: "two" }]]
+        methods: [[{ mark: 15, content: "x=-2^{-\frac{1}{2}}" }], [{ mark: 8, content: "2^{\frac{1}{2}}x=-1" }, { mark: 7, content: "x=-2^{-\frac{1}{2}}" }]]
     }
 ];
 
