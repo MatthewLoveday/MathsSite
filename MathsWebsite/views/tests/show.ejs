@@ -16,16 +16,26 @@
 		
 		var src = "<%= testQuestions[i].questions[t].content %>";
 		var newImg = $("<img>").attr("src",src);
-		$("div:last").append(newImg);
+		var newDiv = $("<div></div>").html(newImg);
+		$("body > div:last").append(newDiv);
 
 		
 		newInputs[<%= i %>].push([]);
 
-		var id = "topic"+<%= i %>+"question"+<%= t %>+"part"+0;
+		var id = "topic<%= i %>question<%= t %>part"+0;
 		var newP = $("<p></p>").html("<span id="+id+"></span>")
-		$("div:last").append(newP);
+		$("body > div:last > div:last").append(newP);
+		
+		var inpId = "itopic<%= i %>question<%= t %>part"+0;
+		var newTxtInp = $("<input>").attr({
+			id:inpId,
+			name:inpId,
+			type:"text"
+		});
+		$("body > div:last > div:last").append(newTxtInp);
+		
 
-		newInputs[<%= i %>][<%= t %>][0] = MQ.MathField(document.getElementById("topic"+<%= i %>+"question"+<%= t %>+"part"+0), {
+		newInputs[<%= i %>][<%= t %>][0] = MQ.MathField(document.getElementById("topic<%= i %>question<%= t %>part"+0), {
 			handlers: {
 				enter: function() {
 					if(!(newInputs[<%= i %>][<%= t %>][1])){
@@ -35,6 +45,9 @@
 						newInputs[<%= i %>][<%= t %>][1].focus()	
 					}
 				},
+				edit: function() {
+					$("#itopic<%= i %>question<%= t %>part"+0).val(newInputs[<%= i %>][<%= t %>][0].latex());
+				}
             }
         });
 
@@ -45,7 +58,15 @@
 		var id = "topic"+i+"question"+t+"part"+count;
 		var newP = $("<p></p>").html("<span id='"+id+"'></span>");
 		var temp = count - 1;
-		$("#topic"+i+"question"+t+"part"+temp).after(newP);
+		$("#itopic"+i+"question"+t+"part"+temp).after(newP);
+
+		var inpId = "itopic"+i+"question"+t+"part"+count;
+		var newTxtInp = $("<input>").attr({
+			id:inpId,
+			name:inpId,
+			type:"text"
+		});
+		$("#topic"+i+"question"+t+"part"+count).after(newTxtInp);
 
 		newInputs[i][t][count] = MQ.MathField(document.getElementById("topic"+i+"question"+t+"part"+count), {
 			handlers: {
@@ -58,6 +79,7 @@
 					}
 				},
 				edit: function() {
+					$("#"+inpId).val(newInputs[i][t][count].latex());
 					if(!(newInputs[i][t][count].latex()) && !(newInputs[i][t][count+1])){
 						$("#"+id).parent().remove();
 						newInputs[i][t].splice(count,1);
@@ -67,9 +89,8 @@
 			}
 		});
 		newInputs[i][t][count].focus();
-
+	
 	}
 </script>
-
 
 <% include ../partials/footer %>

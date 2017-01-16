@@ -79,7 +79,7 @@ app.get("/",function(req,res)
 //home route
 //----------------------------------------------
 
-app.get("/users/:id",function(req,res)
+app.get("/users/:id", isLoggedIn, function(req,res)
 {
     user.findById(req.params.id,function(err,userData)
     {
@@ -182,9 +182,16 @@ app.post("/register",function(req,res)
 //test routes
 //----------------------------------------------
 
-app.get("/tests/new",function(req,res)
+app.get("/users/:id/tests/new", isLoggedIn,function(req,res)
 {
-    res.render("tests/new");    
+    user.find({ _id: req.params.id }, function (err, userData) {
+        if (err) {
+            console.log("Could not find user data\n" + err);
+        }
+        else {
+            res.render("tests/new", { user: userData });
+        }
+    });  
 });
 
 app.post("/tests",function(req,res)//when seed program ready this should be hanged to "/tests" which should redirect to a "/tests/:seed" route 
@@ -524,7 +531,7 @@ function GetTopicQuestion(Topic, topicTime) //RecSize is the reccommended length
     console.log("questionsOfProperLengthHigher:" + questionsOfProperLengthHigher);  
     var questions=[];
     
-
+    
     var questionsAlreadyPickedLow = [];
     var questionsAlreadyPickedHigh = [];
 
