@@ -2,6 +2,14 @@
 
 <h1>Show test page</h1>
 
+
+<form action="/users/:id/tests/new" method="POST">
+
+	<button class="btn waves-effect waves-light" type="submit" name="action">Submit
+		<i class="material-icons right">send</i>
+	</button>
+</form>
+
 <script>
 	var newInputs=[];
 <% for(var i=0;i< testQuestions.length;i++){ %>
@@ -22,23 +30,25 @@
 		
 		newInputs[<%= i %>].push([]);
 
-		var id = "topic<%= i %>question<%= t %>part"+0;
+		var id = "topic<%= i %>question<%= t %>part0";
 		var newP = $("<p></p>").html("<span id="+id+"></span>")
 		$("body > div:last > div:last").append(newP);
 		
-		var inpId = "itopic<%= i %>question<%= t %>part"+0;
+		var inpId = "itopic<%= i %>question<%= t %>part0";
 		var newTxtInp = $("<input>").attr({
 			id:inpId,
 			name:inpId,
 			type:"text"
 		});
-		$("body > div:last > div:last").append(newTxtInp);
+		$("form button").before(newTxtInp);
 		
 
-		newInputs[<%= i %>][<%= t %>][0] = MQ.MathField(document.getElementById("topic<%= i %>question<%= t %>part"+0), {
+		newInputs[<%= i %>][<%= t %>][0] = MQ.MathField(document.getElementById("topic<%= i %>question<%= t %>part0"), {
 			handlers: {
 				enter: function() {
-					if(!(newInputs[<%= i %>][<%= t %>][1])){
+					alert("hit this i = <%= i %> t = <%= t %>");
+					if(newInputs[<%= i %>][<%= t %>].length == 1){
+						alert("check this");
 						newInp(<%= i %>,<%= t %>,1);
 					}
 					else{
@@ -46,7 +56,7 @@
 					}
 				},
 				edit: function() {
-					$("#itopic<%= i %>question<%= t %>part"+0).val(newInputs[<%= i %>][<%= t %>][0].latex());
+					$("#itopic<%= i %>question<%= t %>part0").val(newInputs[<%= i %>][<%= t %>][0].latex());
 				}
             }
         });
@@ -57,8 +67,8 @@
 	{
 		var id = "topic"+i+"question"+t+"part"+count;
 		var newP = $("<p></p>").html("<span id='"+id+"'></span>");
-		var temp = count - 1;
-		$("#itopic"+i+"question"+t+"part"+temp).after(newP);
+		var temp = count-1;
+		$("#topic"+i+"question"+t+"part"+temp).after(newP);
 
 		var inpId = "itopic"+i+"question"+t+"part"+count;
 		var newTxtInp = $("<input>").attr({
@@ -66,12 +76,16 @@
 			name:inpId,
 			type:"text"
 		});
-		$("#topic"+i+"question"+t+"part"+count).after(newTxtInp);
+		$("form button").before(newTxtInp);
+
+		alert("hit this BOI");
 
 		newInputs[i][t][count] = MQ.MathField(document.getElementById("topic"+i+"question"+t+"part"+count), {
 			handlers: {
 				enter: function() {
-					if(!(newInputs[i][t][count+1])){
+					alert("hit this");
+					if(newInputs[i][t].length == count+1){
+						alert("check this");
 						newInp(i,t,(count+1));
 					}
 					else{
@@ -79,11 +93,12 @@
 					}
 				},
 				edit: function() {
-					$("#"+inpId).val(newInputs[i][t][count].latex());
+					$("#itopic"+i+"question"+t+"part"+count).val(newInputs[i][t][count].latex());
 					if(!(newInputs[i][t][count].latex()) && !(newInputs[i][t][count+1])){
-						$("#"+id).parent().remove();
+						$("#topic"+i+"question"+t+"part"+count).parent().remove();
+						$("#itopic"+i+"question"+t+"part"+count).remove();
 						newInputs[i][t].splice(count,1);
-						newInputs[i][t][count-1].focus();
+						newInputs[i][t][(count-1)].focus();
 					}
 				}
 			}
