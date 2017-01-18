@@ -184,17 +184,18 @@ app.post("/register",function(req,res)
 
 app.get("/users/:id/tests/new", isLoggedIn,function(req,res)
 {
-    user.find({ _id: req.params.id }, function (err, userData) {
+    user.findById(req.params.id, function (err, userData) {
         if (err) {
             console.log("Could not find user data\n" + err);
         }
         else {
+            console.log(userData);
             res.render("tests/new", { user: userData });
         }
     });  
 });
 
-app.post("/tests",function(req,res)//when seed program ready this should be hanged to "/tests" which should redirect to a "/tests/:seed" route 
+app.post("/users/:id/tests",function(req,res)//when seed program ready this should be hanged to "/tests" which should redirect to a "/tests/:seed" route 
 {
     var topicsTemp = [req.body.topic1,req.body.topic2,req.body.topic3,req.body.topic4,req.body.topic5,req.body.topic6,req.body.topic7,req.body.topic8];
     var moduleIndex;

@@ -1,7 +1,12 @@
 <% include ../partials/header %>
 
 <h1>New test page</h1>
-<form action="/tests" method="POST">
+
+<script>
+	alert("<%= user._id %>");
+</script>
+
+<form action="/users/<%= user._id %>/tests" method="POST">
     <input type="number" name="time" placeholder="Time" required><br>
     <input type="text" name="examBoardName" placeholder="Examboard" required><br>
     <input type="text" name="moduleName" placeholder="Module" required><br>
