@@ -2,9 +2,6 @@
 
 <h1>New test page</h1>
 
-<script>
-	alert("<%= user._id %>");
-</script>
 
 <form action="/users/<%= user._id %>/tests" method="POST">
     <input type="number" name="time" placeholder="Time" required><br>

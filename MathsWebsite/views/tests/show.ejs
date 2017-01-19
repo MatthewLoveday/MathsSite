@@ -11,46 +11,80 @@
 </form>
 
 <script>
-	var newInputs=[];
-<% for(var i=0;i< testData.topics.length;i++){ %>
+	var newInputs = [];
+
+	var numberOfTopics = $("<input>").attr({
+		name: "numberOfTopics",
+		type: "text",
+		value: "<%= testData.topics.length %>"
+	});
+	$("form button").before(numberOfTopics);
+
+<% for(var i = 0;i < testData.topics.length;i++){ %>
 	
-	var topicName = "<%= testData.topics[i].name %>";
-	var newDiv = $("<div></div>").html("<h3>"+topicName+"</h3>")
+	var newDiv = $("<div></div>").html("<h3><%= testData.topics[i].name %></h3>")
 	$("body").append(newDiv);
+	
+	var newTopic = $("<input>").attr({
+		name: "topic<%= i %>",
+		type:  "text",
+		value: "<%= testData.topics[i].name %>"
+	});
+	$("form button").before(newTopic);
 
 	newInputs.push([]);
 
+	var numberOfQuestions = $("<input>").attr({
+		name: "topic<%= i %>numberOfQuestions",
+		type: "text",
+		value: "<%= testData.topics[i].questions.length %>"
+	});
+	$("form button").before(numberOfQuestions);
+
 	<% for(var t=0;t< testData.topics[i].questions.length;t++){ %>
 		
-		var src = "<%= testData.topics[i].questions[t].content %>";
-		var newImg = $("<img>").attr("src",src);
+		var newImg = $("<img>").attr("src","<%= testData.topics[i].questions[t].content %>");
 		var newDiv = $("<div></div>").html(newImg);
 		$("body > div:last").append(newDiv);
 
+		var newQuestion = $("<input>").attr({
+			name:"question<%= t %>",
+			type:"text",
+			value:"<%= testData.topics[i].questions[t]._id %>"
+		});
+		$("form button").before(newQuestion);
 		
 		newInputs[<%= i %>].push([]);
 
-		var id = "topic<%= i %>question<%= t %>part0";
-		var newP = $("<p></p>").html("<span id="+id+"></span>")
+		var numberOfParts = $("<input>").attr({
+			id: "topic<%= i %>question<%= t %>numberOfParts",
+			name: "topic<%= i %>question<%= t %>numberOfParts",
+			type: "number",
+			value: "1"
+		});
+		$("form button").before(numberOfParts);
+
+		var newP = $("<p></p>").html("<span id='topic<%= i %>question<%= t %>part0'></span>");
 		$("body > div:last > div:last").append(newP);
 		
-		var inpId = "itopic<%= i %>question<%= t %>part0";
 		var newTxtInp = $("<input>").attr({
-			id:inpId,
-			name:inpId,
+			id:"itopic<%= i %>question<%= t %>part0",
+			name:"itopic<%= i %>question<%= t %>part0",
 			type:"text"
 		});
 		$("form button").before(newTxtInp);
-		
 
 		newInputs[<%= i %>][<%= t %>][0] = MQ.MathField(document.getElementById("topic<%= i %>question<%= t %>part0"), {
 			handlers: {
 				enter: function() {
-					if(newInputs[<%= i %>][<%= t %>].length == 1){
+					if(newInputs[<%= i %>][<%= t %>].length == 1)
+					{
+						$("#topic<%= i %>question<%= t %>numberOfParts").val(2);
 						newInp(<%= i %>,<%= t %>,1);
 					}
-					else{
-						newInputs[<%= i %>][<%= t %>][1].focus()	
+					else
+					{
+						newInputs[<%= i %>][<%= t %>][1].focus();
 					}
 				},
 				edit: function() {
@@ -63,24 +97,29 @@
 <% } %>
 	function newInp(i,t,count)
 	{
+		
 		var id = "topic"+i+"question"+t+"part"+count;
 		var newP = $("<p></p>").html("<span id='"+id+"'></span>");
 		var temp = count-1;
 		$("#topic"+i+"question"+t+"part"+temp).after(newP);
 
+		var inpName = "part"+count;
 		var inpId = "itopic"+i+"question"+t+"part"+count;
+		var lInpId = "itopic"+i+"question"+t+"part"+(count-1);
 		var newTxtInp = $("<input>").attr({
 			id:inpId,
-			name:inpId,
+			name:inpName,
 			type:"text"
 		});
-		$("form button").before(newTxtInp);
+		$("#"+lInpId).after(newTxtInp);
 
 		newInputs[i][t][count] = MQ.MathField(document.getElementById("topic"+i+"question"+t+"part"+count), {
 			handlers: {
 				enter: function() {
-					alert("hit this");
 					if(newInputs[i][t].length == count+1){
+						$("#topic"+i+"question"+t+"numberOfParts").val(function( i, val ) {
+							return +val+1;
+						});
 						newInp(i,t,(count+1));
 					}
 					else{
@@ -92,6 +131,9 @@
 					if(!(newInputs[i][t][count].latex()) && !(newInputs[i][t][count+1])){
 						$("#topic"+i+"question"+t+"part"+count).parent().remove();
 						$("#itopic"+i+"question"+t+"part"+count).remove();
+						$("#topic"+i+"question"+t+"numberOfParts").val(function( i, val ) {
+							return +val-1;
+						});
 						newInputs[i][t].splice(count,1);
 						newInputs[i][t][(count-1)].focus();
 					}
