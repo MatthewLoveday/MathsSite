@@ -3,7 +3,7 @@
 <h1>Show test page</h1>
 
 
-<form action="/users/:id/tests/new" method="POST">
+<form action="/users/<%= testData.user._id %>/tests/edit" method="POST">
 
 	<button class="btn waves-effect waves-light" type="submit" name="action">Submit
 		<i class="material-icons right">send</i>
@@ -12,17 +12,17 @@
 
 <script>
 	var newInputs=[];
-<% for(var i=0;i< testQuestions.length;i++){ %>
+<% for(var i=0;i< testData.topics.length;i++){ %>
 	
-	var topicName = "<%= testQuestions[i].name %>";
+	var topicName = "<%= testData.topics[i].name %>";
 	var newDiv = $("<div></div>").html("<h3>"+topicName+"</h3>")
 	$("body").append(newDiv);
 
 	newInputs.push([]);
 
-	<% for(var t=0;t< testQuestions[i].questions.length;t++){ %>
+	<% for(var t=0;t< testData.topics[i].questions.length;t++){ %>
 		
-		var src = "<%= testQuestions[i].questions[t].content %>";
+		var src = "<%= testData.topics[i].questions[t].content %>";
 		var newImg = $("<img>").attr("src",src);
 		var newDiv = $("<div></div>").html(newImg);
 		$("body > div:last").append(newDiv);
@@ -46,9 +46,7 @@
 		newInputs[<%= i %>][<%= t %>][0] = MQ.MathField(document.getElementById("topic<%= i %>question<%= t %>part0"), {
 			handlers: {
 				enter: function() {
-					alert("hit this i = <%= i %> t = <%= t %>");
 					if(newInputs[<%= i %>][<%= t %>].length == 1){
-						alert("check this");
 						newInp(<%= i %>,<%= t %>,1);
 					}
 					else{
@@ -78,14 +76,11 @@
 		});
 		$("form button").before(newTxtInp);
 
-		alert("hit this BOI");
-
 		newInputs[i][t][count] = MQ.MathField(document.getElementById("topic"+i+"question"+t+"part"+count), {
 			handlers: {
 				enter: function() {
 					alert("hit this");
 					if(newInputs[i][t].length == count+1){
-						alert("check this");
 						newInp(i,t,(count+1));
 					}
 					else{

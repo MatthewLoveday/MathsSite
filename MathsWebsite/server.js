@@ -88,9 +88,6 @@ app.get("/users/:id", isLoggedIn, function(req,res)
             console.log("Could not find user data\n"+err);
         }else
         {
-            console.log(userData);
-            console.log(userData.examBoard);
-            console.log(userData.examBoard.modules[0]);
             res.render("home",{user:userData});
         }
     });
@@ -244,8 +241,17 @@ app.post("/users/:id/tests",function(req,res)//when seed program ready this shou
                 console.log("topicsToBeParsed["+i+"].name:" + topicsToBeParsed[i].name);
                 console.log("topicsToBeParsed[" + i + "].questions.length:" + topicsToBeParsed[i].questions.length);
             }
-            var questions = GenerateTest(req.body.time, topicsToBeParsed);
-            res.render("tests/show", {testQuestions:questions});
+            var topicsData = GenerateTest(req.body.time, topicsToBeParsed);
+
+            user.findById(req.params.id, function (err, userData) {
+                if (err) {
+                    console.log("Could not find user data\n" + err);
+                }
+                else {
+                    var objectToBeParsed = { user: userData, topics: topicsData };
+                    res.render("tests/show", { testData: objectToBeParsed });
+                }
+            });
             // res.render("tests/show",{test:
             //     {
             //         time:req.body.time,
