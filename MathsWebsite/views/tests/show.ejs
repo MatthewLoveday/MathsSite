@@ -3,7 +3,7 @@
 <h1>Show test page</h1>
 
 
-<form action="/users/<%= testData.user._id %>/tests/edit" method="POST">
+<form action="/users/<%= testData.userID %>/tests/edit" method="POST">
 
 	<button class="btn waves-effect waves-light" type="submit" name="action">Submit
 		<i class="material-icons right">send</i>
@@ -13,10 +13,27 @@
 <script>
 	var newInputs = [];
 
+	var examBoard = $("<input>").attr({
+		name: "examBoard",
+		type: "text",
+		value: "<%= testData.examBoard %>",
+		readonly: "true"
+	});
+	$("form button").before(examBoard);
+
+	var module = $("<input>").attr({
+		name: "module",
+		type: "text",
+		value: "<%= testData.module %>",
+		readonly: "true"
+	});
+	$("form button").before(module);
+
 	var numberOfTopics = $("<input>").attr({
 		name: "numberOfTopics",
 		type: "text",
-		value: "<%= testData.topics.length %>"
+		value: "<%= testData.topics.length %>",
+		readonly: "true"
 	});
 	$("form button").before(numberOfTopics);
 
@@ -28,7 +45,8 @@
 	var newTopic = $("<input>").attr({
 		name: "topic<%= i %>",
 		type:  "text",
-		value: "<%= testData.topics[i].name %>"
+		value: "<%= testData.topics[i].name %>",
+		readonly: "true"
 	});
 	$("form button").before(newTopic);
 
@@ -37,7 +55,8 @@
 	var numberOfQuestions = $("<input>").attr({
 		name: "topic<%= i %>numberOfQuestions",
 		type: "text",
-		value: "<%= testData.topics[i].questions.length %>"
+		value: "<%= testData.topics[i].questions.length %>",
+		readonly: "true"
 	});
 	$("form button").before(numberOfQuestions);
 
@@ -48,9 +67,10 @@
 		$("body > div:last").append(newDiv);
 
 		var newQuestion = $("<input>").attr({
-			name:"question<%= t %>",
+			name:"topic<%= i %>question<%= t %>",
 			type:"text",
-			value:"<%= testData.topics[i].questions[t]._id %>"
+			value:"<%= testData.topics[i].questions[t]._id %>",
+			readonly: "true"
 		});
 		$("form button").before(newQuestion);
 		
@@ -60,7 +80,8 @@
 			id: "topic<%= i %>question<%= t %>numberOfParts",
 			name: "topic<%= i %>question<%= t %>numberOfParts",
 			type: "number",
-			value: "1"
+			value: "1",
+			readonly: "true"
 		});
 		$("form button").before(numberOfParts);
 
@@ -70,7 +91,8 @@
 		var newTxtInp = $("<input>").attr({
 			id:"itopic<%= i %>question<%= t %>part0",
 			name:"itopic<%= i %>question<%= t %>part0",
-			type:"text"
+			type:"text",
+			readonly: "true"
 		});
 		$("form button").before(newTxtInp);
 
@@ -109,14 +131,15 @@
 		var newTxtInp = $("<input>").attr({
 			id:inpId,
 			name:inpName,
-			type:"text"
+			type:"text",
+			readonly: "true"
 		});
 		$("#"+lInpId).after(newTxtInp);
 
 		newInputs[i][t][count] = MQ.MathField(document.getElementById("topic"+i+"question"+t+"part"+count), {
 			handlers: {
 				enter: function() {
-					if(newInputs[i][t].length == count+1){
+					if(newInputs[i][t].length == count+1 && newInputs[i][t].length <= 60){
 						$("#topic"+i+"question"+t+"numberOfParts").val(function( i, val ) {
 							return +val+1;
 						});
