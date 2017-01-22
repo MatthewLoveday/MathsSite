@@ -1371,15 +1371,13 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
             } 
         }
     }
-    //varaibles needed in future
-    var methods = [];
-    var answerLocations = [];
 
     //temp varaibles
     var answerLocationsTemp = [];
     var methodMarks = [];
     var highestMark;
     var index;
+    var startIndex;
     console.log("req.body.examBoard:" + req.body.examBoard);
     examBoard.find({ name: req.body.examBoard }).exec().then((exams) => {
         examBoard.populate(exams, {
@@ -1401,7 +1399,6 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                             if (testData.topics[z].name == populatedExams[0].modules[i].topics[t].name)
                             {
                                 console.log("topic:" + testData.topics[z].name);
-                                methods.push([0,0,0,0,0,0,0,0,0,0]);
                                 for (var q = 0; q < testData.topics[z].questions.length; q++)//finding questions
                                 {
                                     console.log("q:" + q);
@@ -1414,16 +1411,25 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                                             for (var x = 0; x < populatedExams[0].modules[i].topics[t].questions[p].methods.length; x++)//iterating through answer methods
                                             {
                                                 answerLocationsTemp.push([]);
+                                                methodMarks = [0, 0, 0, 0, 0, 0];
+                                                console.log("x:" + x);
                                                 for (var c = 0; c < populatedExams[0].modules[i].topics[t].questions[p].methods[x].length; c++)//iterating through parts in answer methods
                                                 {
+                                                    console.log("c:" + c);
                                                     for (var e = 0; e < testData.topics[z].questions[q].parts.length; e++)//iterating through user parts
                                                     {
-                                                        var startIndex = testData.topics[z].questions[q].parts[e].search(populatedExams[0].modules[i].topics[t].questions[p].methods[x][c]);//searching user part for answer part
-                                                        if (startIndex > -1)//startIndex will be -1 if not found and index on start of string if found
+                                                        console.log("e:" + e);
+                                                        var posOfAnswer = markPart(testData.topics[z].questions[q].parts[e], populatedExams[0].modules[i].topics[t].questions[p].methods[x][c].content);
+                                                        console.log("posOfAnswer:" + posOfAnswer);
+                                                        console.log("end");
+                                                        if (posOfAnswer > -1)//startIndex will be -1 if not found and index on start of string if found
                                                         {
-                                                            console.log("startIndex:" + startIndex);
+                                                            console.log("posOfAnswer > -1");
                                                             methodMarks[x] += populatedExams[0].modules[i].topics[t].questions[p].methods[x][c].mark;
-                                                            answerLocationsTemp[x][c].push({ partNumber: e, index: startIndex, mark: populatedExams[0].modules[i].topics[t].questions[p].methods[x][c].mark}); 
+                                                            console.log("methodMarks[" + x + "]:" + methodMarks[x]);
+                                                            answerLocationsTemp[x][c] = { partNumber: e, index: posOfAnswer };
+                                                            console.log("answerLocationsTemp[" + x + "][" + c + "].partNumber:" + answerLocationsTemp[x][c].partNumber);
+                                                            console.log("answerLocationsTemp[" + x + "][" + c + "].index:" + answerLocationsTemp[x][c].index);
                                                         }
                                                     }
                                                 }
@@ -1436,8 +1442,9 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                                                     highestMark = methodMarks[x];
                                                 }    
                                             }
-                                            methods[z][q] = populatedExams[0].modules[i].topics[t].questions[p].methods[index];
-                                            answerLocations[z][q] = answerLocationsTemp[index];          
+                                            testData.topics[z].questions[q].solution = populatedExams[0].modules[i].topics[t].questions[p].methods[index];
+                                            testData.topics[z].questions[q].answers = answerLocationsTemp[index];
+                                            console.log("testData.topics["+z+"].questions["+q+"].solution:\n" + testData.topics[z].questions[q].solution);    
                                         }
                                     }
                                 }
@@ -1446,9 +1453,6 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                     }       
                 }        
             }
-            console.log("methods:\n" + methods);
-            console.log("methods[0][0]:\n" + methods[0][0]);
-            console.log("answerLocations[0][0]:\n" + answerLocations[0][0]);
         });
     });
 });
@@ -1618,6 +1622,29 @@ function isLoggedIn(req,res,next)
 //---------------------------------------------------------------------
 //test functions
 //---------------------------------------------------------------------
+
+function markPart(part, answer)//had to write this since base string search function has problems with escape characters
+{
+    var t = 0;
+    console.log("part:" + part);
+    console.log("answer:" + answer+"\n");
+    for (var i = 0; i < part.length; i++)
+    {
+        if (t == (answer.length -1))
+        {
+            return (i-t);
+        }
+        else if (part.charAt(i) == answer.charAt(t))
+        {
+            t++;    
+        }
+        else
+        {
+            t = 0;
+        }
+    }
+    return -1;
+}
 
 function GenerateTest(time, topics) //Random Seed, Time of the Test, Array of the Topics
 { 
