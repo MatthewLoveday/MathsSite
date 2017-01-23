@@ -1400,24 +1400,22 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                                         if (populatedExams[0].modules[i].topics[t].questions[p]._id == testData.topics[z].questions[q].id)
                                         {
                                             methodMarks = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+                                            answerLocationsTemp = [];
                                             for (var x = 0; x < populatedExams[0].modules[i].topics[t].questions[p].methods.length; x++)//iterating through answer methods
                                             {
-                                                console.log("x:" + x);
                                                 answerLocationsTemp.push([]);
                                                 for (var c = 0; c < populatedExams[0].modules[i].topics[t].questions[p].methods[x].length; c++)//iterating through parts in answer methods
                                                 {
-                                                    console.log("c:" + c);
                                                     for (var e = 0; e < testData.topics[z].questions[q].parts.length; e++)//iterating through user parts
                                                     {
-                                                        console.log("e:" + e);
                                                         console.log("\n\n");
                                                         console.log("testData.topics[z].questions[q].parts[e]:" + testData.topics[z].questions[q].parts[e]);
                                                         var posOfAnswer = markPart(testData.topics[z].questions[q].parts[e], populatedExams[0].modules[i].topics[t].questions[p].methods[x][c].content);
                                                         console.log("posOfAnswer:" + posOfAnswer);
-                                                        if (posOfAnswer > -1)//startIndex will be -1 if not found and index on start of string if found
+                                                        if (posOfAnswer > -1)//startIndex will be -1 if not found and index of start of string if found
                                                         {
                                                             methodMarks[x] += populatedExams[0].modules[i].topics[t].questions[p].methods[x][c].mark;
-                                                            answerLocationsTemp[x][c] = { partNumber: e, index: posOfAnswer};
+                                                            answerLocationsTemp[x][c] = { partNumber: e, index: posOfAnswer, mark: populatedExams[0].modules[i].topics[t].questions[p].methods[x][c].mark};
                                                         }
                                                     }
                                                 }
