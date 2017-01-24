@@ -271,7 +271,7 @@ app.post("/users/:id/tests",function(req,res)//when seed program ready this shou
     //     }
     // });
 });
-app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
+app.post("/users/:id/tests/results", isLoggedIn, function (req, res) {
 
     var testData = {
         numberOfTopics: req.body.numberOfTopics,
@@ -283,6 +283,7 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                     {
                         id: req.body.topic0question0,
                         numberOfParts: req.body.topic0question0numberOfParts,
+                        content: req.body.topic0question0content,
                         parts:
                         [
                             req.body.itopic0question0part0, req.body.itopic0question0part1, req.body.itopic0question0part2, req.body.itopic0question0part3, req.body.itopic0question0part4, req.body.itopic0question0part5, req.body.itopic0question0part6, req.body.itopic0question0part7, req.body.itopic0question0part8, req.body.itopic0question0part9,
@@ -296,6 +297,7 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                     {
                         id: req.body.topic0question1,
                         numberOfParts: req.body.topic0question1numberOfParts,
+                        content: req.body.topic0question1content,
                         parts:
                         [
                             req.body.itopic0question1part0, req.body.itopic0question1part1, req.body.itopic0question1part2, req.body.itopic0question1part3, req.body.itopic0question1part4, req.body.itopic0question1part5, req.body.itopic0question1part6, req.body.itopic0question1part7, req.body.itopic0question1part8, req.body.itopic0question1part9,
@@ -309,6 +311,7 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                     {
                         id: req.body.topic0question2,
                         numberOfParts: req.body.topic0question2numberOfParts,
+                        content: req.body.topic0question2content,
                         parts:
                         [
                             req.body.itopic0question2part0, req.body.itopic0question2part1, req.body.itopic0question2part2, req.body.itopic0question2part3, req.body.itopic0question2part4, req.body.itopic0question2part5, req.body.itopic0question2part6, req.body.itopic0question2part7, req.body.itopic0question2part8, req.body.itopic0question2part9,
@@ -322,6 +325,7 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                     {
                         id: req.body.topic0question3,
                         numberOfParts: req.body.topic0question3numberOfParts,
+                        content: req.body.topic0question3content,
                         parts:
                         [
                             req.body.itopic0question3part0, req.body.itopic0question3part1, req.body.itopic0question3part2, req.body.itopic0question3part3, req.body.itopic0question3part4, req.body.itopic0question3part5, req.body.itopic0question3part6, req.body.itopic0question3part7, req.body.itopic0question3part8, req.body.itopic0question3part9,
@@ -335,6 +339,7 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                     {
                         id: req.body.topic0question4,
                         numberOfParts: req.body.topic0question4numberOfParts,
+                        content: req.body.topic0question4content,
                         parts:
                         [
                             req.body.itopic0question4part0, req.body.itopic0question4part1, req.body.itopic0question4part2, req.body.itopic0question4part3, req.body.itopic0question4part4, req.body.itopic0question4part5, req.body.itopic0question4part6, req.body.itopic0question4part7, req.body.itopic0question4part8, req.body.itopic0question4part9,
@@ -348,6 +353,7 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                     {
                         id: req.body.topic0question5,
                         numberOfParts: req.body.topic0question5numberOfParts,
+                        content: req.body.topic0question5content,
                         parts:
                         [
                             req.body.itopic0question5part0, req.body.itopic0question5part1, req.body.itopic0question5part2, req.body.itopic0question5part3, req.body.itopic0question5part4, req.body.itopic0question5part5, req.body.itopic0question5part6, req.body.itopic0question5part7, req.body.itopic0question5part8, req.body.itopic0question5part9,
@@ -361,6 +367,7 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                     {
                         id: req.body.topic0question6,
                         numberOfParts: req.body.topic0question6numberOfParts,
+                        content: req.body.topic0question6content,
                         parts:
                         [
                             req.body.itopic0question6part0, req.body.itopic0question6part1, req.body.itopic0question6part2, req.body.itopic0question6part3, req.body.itopic0question6part4, req.body.itopic0question6part5, req.body.itopic0question6part6, req.body.itopic0question6part7, req.body.itopic0question6part8, req.body.itopic0question6part9,
@@ -374,6 +381,7 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                     {
                         id: req.body.topic0question7,
                         numberOfParts: req.body.topic0question7numberOfParts,
+                        content: req.body.topic0question7content,
                         parts:
                         [
                             req.body.itopic0question7part0, req.body.itopic0question7part1, req.body.itopic0question7part2, req.body.itopic0question7part3, req.body.itopic0question7part4, req.body.itopic0question7part5, req.body.itopic0question7part6, req.body.itopic0question7part7, req.body.itopic0question7part8, req.body.itopic0question7part9,
@@ -387,6 +395,7 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                     {
                         id: req.body.topic0question8,
                         numberOfParts: req.body.topic0question8numberOfParts,
+                        content: req.body.topic0question8content,
                         parts:
                         [
                             req.body.itopic0question8part0, req.body.itopic0question8part1, req.body.itopic0question8part2, req.body.itopic0question8part3, req.body.itopic0question8part4, req.body.itopic0question8part5, req.body.itopic0question8part6, req.body.itopic0question8part7, req.body.itopic0question8part8, req.body.itopic0question8part9,
@@ -400,6 +409,7 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                     {
                         id: req.body.topic0question9,
                         numberOfParts: req.body.topic0question9numberOfParts,
+                        content: req.body.topic0question9content,
                         parts:
                         [
                             req.body.itopic0question9part0, req.body.itopic0question9part1, req.body.itopic0question9part2, req.body.itopic0question9part3, req.body.itopic0question9part4, req.body.itopic0question9part5, req.body.itopic0question9part6, req.body.itopic0question9part7, req.body.itopic0question9part8, req.body.itopic0question9part9,
@@ -413,6 +423,7 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                     {
                         id: req.body.topic0question10,
                         numberOfParts: req.body.topic0question10numberOfParts,
+                        content: req.body.topic0question10content,
                         parts:
                         [
                             req.body.itopic0question10part0, req.body.itopic0question10part1, req.body.itopic0question10part2, req.body.itopic0question10part3, req.body.itopic0question10part4, req.body.itopic0question10part5, req.body.itopic0question10part6, req.body.itopic0question10part7, req.body.itopic0question10part8, req.body.itopic0question10part9,
@@ -426,6 +437,7 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                     {
                         id: req.body.topic0question11,
                         numberOfParts: req.body.topic0question11numberOfParts,
+                        content: req.body.topic0question11content,
                         parts:
                         [
                             req.body.itopic0question11part0, req.body.itopic0question11part1, req.body.itopic0question11part2, req.body.itopic0question11part3, req.body.itopic0question11part4, req.body.itopic0question11part5, req.body.itopic0question11part6, req.body.itopic0question11part7, req.body.itopic0question11part8, req.body.itopic0question11part9,
@@ -439,6 +451,7 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                     {
                         id: req.body.topic0question12,
                         numberOfParts: req.body.topic0question12numberOfParts,
+                        content: req.body.topic0question12content,
                         parts:
                         [
                             req.body.itopic0question12part0, req.body.itopic0question12part1, req.body.itopic0question12part2, req.body.itopic0question12part3, req.body.itopic0question12part4, req.body.itopic0question12part5, req.body.itopic0question12part6, req.body.itopic0question12part7, req.body.itopic0question12part8, req.body.itopic0question12part9,
@@ -452,6 +465,7 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                     {
                         id: req.body.topic0question13,
                         numberOfParts: req.body.topic0question13numberOfParts,
+                        content: req.body.topic0question13content,
                         parts:
                         [
                             req.body.itopic0question13part0, req.body.itopic0question13part1, req.body.itopic0question13part2, req.body.itopic0question13part3, req.body.itopic0question13part4, req.body.itopic0question13part5, req.body.itopic0question13part6, req.body.itopic0question13part7, req.body.itopic0question13part8, req.body.itopic0question13part9,
@@ -465,6 +479,7 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                     {
                         id: req.body.topic0question14,
                         numberOfParts: req.body.topic0question14numberOfParts,
+                        content: req.body.topic0question14content,
                         parts:
                         [
                             req.body.itopic0question14part0, req.body.itopic0question14part1, req.body.itopic0question14part2, req.body.itopic0question14part3, req.body.itopic0question14part4, req.body.itopic0question14part5, req.body.itopic0question14part6, req.body.itopic0question14part7, req.body.itopic0question14part8, req.body.itopic0question14part9,
@@ -478,6 +493,7 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                     {
                         id: req.body.topic0question15,
                         numberOfParts: req.body.topic0question15numberOfParts,
+                        content: req.body.topic0question15content,
                         parts:
                         [
                             req.body.itopic0question15part0, req.body.itopic0question15part1, req.body.itopic0question15part2, req.body.itopic0question15part3, req.body.itopic0question15part4, req.body.itopic0question15part5, req.body.itopic0question15part6, req.body.itopic0question15part7, req.body.itopic0question15part8, req.body.itopic0question15part9,
@@ -497,6 +513,7 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                     {
                         id: req.body.topic1question0,
                         numberOfParts: req.body.topic1question0numberOfParts,
+                        content: req.body.topic1question0content,
                         parts:
                         [
                             req.body.itopic1question0part0, req.body.itopic1question0part1, req.body.itopic1question0part2, req.body.itopic1question0part3, req.body.itopic1question0part4, req.body.itopic1question0part5, req.body.itopic1question0part6, req.body.itopic1question0part7, req.body.itopic1question0part8, req.body.itopic1question0part9,
@@ -510,6 +527,7 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                     {
                         id: req.body.topic1question1,
                         numberOfParts: req.body.topic1question1numberOfParts,
+                        content: req.body.topic1question1content,
                         parts:
                         [
                             req.body.itopic1question1part0, req.body.itopic1question1part1, req.body.itopic1question1part2, req.body.itopic1question1part3, req.body.itopic1question1part4, req.body.itopic1question1part5, req.body.itopic1question1part6, req.body.itopic1question1part7, req.body.itopic1question1part8, req.body.itopic1question1part9,
@@ -523,6 +541,7 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                     {
                         id: req.body.topic1question2,
                         numberOfParts: req.body.topic1question2numberOfParts,
+                        content: req.body.topic1question2content,
                         parts:
                         [
                             req.body.itopic1question2part0, req.body.itopic1question2part1, req.body.itopic1question2part2, req.body.itopic1question2part3, req.body.itopic1question2part4, req.body.itopic1question2part5, req.body.itopic1question2part6, req.body.itopic1question2part7, req.body.itopic1question2part8, req.body.itopic1question2part9,
@@ -536,6 +555,7 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                     {
                         id: req.body.topic1question3,
                         numberOfParts: req.body.topic1question3numberOfParts,
+                        content: req.body.topic1question3content,
                         parts:
                         [
                             req.body.itopic1question3part0, req.body.itopic1question3part1, req.body.itopic1question3part2, req.body.itopic1question3part3, req.body.itopic1question3part4, req.body.itopic1question3part5, req.body.itopic1question3part6, req.body.itopic1question3part7, req.body.itopic1question3part8, req.body.itopic1question3part9,
@@ -549,6 +569,7 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                     {
                         id: req.body.topic1question4,
                         numberOfParts: req.body.topic1question4numberOfParts,
+                        content: req.body.topic1question4content,
                         parts:
                         [
                             req.body.itopic1question4part0, req.body.itopic1question4part1, req.body.itopic1question4part2, req.body.itopic1question4part3, req.body.itopic1question4part4, req.body.itopic1question4part5, req.body.itopic1question4part6, req.body.itopic1question4part7, req.body.itopic1question4part8, req.body.itopic1question4part9,
@@ -562,6 +583,7 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                     {
                         id: req.body.topic1question5,
                         numberOfParts: req.body.topic1question5numberOfParts,
+                        content: req.body.topic1question5content,
                         parts:
                         [
                             req.body.itopic1question5part0, req.body.itopic1question5part1, req.body.itopic1question5part2, req.body.itopic1question5part3, req.body.itopic1question5part4, req.body.itopic1question5part5, req.body.itopic1question5part6, req.body.itopic1question5part7, req.body.itopic1question5part8, req.body.itopic1question5part9,
@@ -575,6 +597,7 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                     {
                         id: req.body.topic1question6,
                         numberOfParts: req.body.topic1question6numberOfParts,
+                        content: req.body.topic1question6content,
                         parts:
                         [
                             req.body.itopic1question6part0, req.body.itopic1question6part1, req.body.itopic1question6part2, req.body.itopic1question6part3, req.body.itopic1question6part4, req.body.itopic1question6part5, req.body.itopic1question6part6, req.body.itopic1question6part7, req.body.itopic1question6part8, req.body.itopic1question6part9,
@@ -588,6 +611,7 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                     {
                         id: req.body.topic1question7,
                         numberOfParts: req.body.topic1question7numberOfParts,
+                        content: req.body.topic1question7content,
                         parts:
                         [
                             req.body.itopic1question7part0, req.body.itopic1question7part1, req.body.itopic1question7part2, req.body.itopic1question7part3, req.body.itopic1question7part4, req.body.itopic1question7part5, req.body.itopic1question7part6, req.body.itopic1question7part7, req.body.itopic1question7part8, req.body.itopic1question7part9,
@@ -601,6 +625,7 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                     {
                         id: req.body.topic1question8,
                         numberOfParts: req.body.topic1question8numberOfParts,
+                        content: req.body.topic1question8content,
                         parts:
                         [
                             req.body.itopic1question8part0, req.body.itopic1question8part1, req.body.itopic1question8part2, req.body.itopic1question8part3, req.body.itopic1question8part4, req.body.itopic1question8part5, req.body.itopic1question8part6, req.body.itopic1question8part7, req.body.itopic1question8part8, req.body.itopic1question8part9,
@@ -614,6 +639,7 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                     {
                         id: req.body.topic1question9,
                         numberOfParts: req.body.topic1question9numberOfParts,
+                        content: req.body.topic1question9content,
                         parts:
                         [
                             req.body.itopic1question9part0, req.body.itopic1question9part1, req.body.itopic1question9part2, req.body.itopic1question9part3, req.body.itopic1question9part4, req.body.itopic1question9part5, req.body.itopic1question9part6, req.body.itopic1question9part7, req.body.itopic1question9part8, req.body.itopic1question9part9,
@@ -627,6 +653,7 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                     {
                         id: req.body.topic1question10,
                         numberOfParts: req.body.topic1question10numberOfParts,
+                        content: req.body.topic1question10content,
                         parts:
                         [
                             req.body.itopic1question10part0, req.body.itopic1question10part1, req.body.itopic1question10part2, req.body.itopic1question10part3, req.body.itopic1question10part4, req.body.itopic1question10part5, req.body.itopic1question10part6, req.body.itopic1question10part7, req.body.itopic1question10part8, req.body.itopic1question10part9,
@@ -640,6 +667,7 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                     {
                         id: req.body.topic1question11,
                         numberOfParts: req.body.topic1question11numberOfParts,
+                        content: req.body.topic1question11content,
                         parts:
                         [
                             req.body.itopic1question11part0, req.body.itopic1question11part1, req.body.itopic1question11part2, req.body.itopic1question11part3, req.body.itopic1question11part4, req.body.itopic1question11part5, req.body.itopic1question11part6, req.body.itopic1question11part7, req.body.itopic1question11part8, req.body.itopic1question11part9,
@@ -653,6 +681,7 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                     {
                         id: req.body.topic1question12,
                         numberOfParts: req.body.topic1question12numberOfParts,
+                        content: req.body.topic1question12content,
                         parts:
                         [
                             req.body.itopic1question12part0, req.body.itopic1question12part1, req.body.itopic1question12part2, req.body.itopic1question12part3, req.body.itopic1question12part4, req.body.itopic1question12part5, req.body.itopic1question12part6, req.body.itopic1question12part7, req.body.itopic1question12part8, req.body.itopic1question12part9,
@@ -666,6 +695,7 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                     {
                         id: req.body.topic1question13,
                         numberOfParts: req.body.topic1question13numberOfParts,
+                        content: req.body.topic1question13content,
                         parts:
                         [
                             req.body.itopic1question13part0, req.body.itopic1question13part1, req.body.itopic1question13part2, req.body.itopic1question13part3, req.body.itopic1question13part4, req.body.itopic1question13part5, req.body.itopic1question13part6, req.body.itopic1question13part7, req.body.itopic1question13part8, req.body.itopic1question13part9,
@@ -679,6 +709,7 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                     {
                         id: req.body.topic1question14,
                         numberOfParts: req.body.topic1question14numberOfParts,
+                        content: req.body.topic1question14content,
                         parts:
                         [
                             req.body.itopic1question14part0, req.body.itopic1question14part1, req.body.itopic1question14part2, req.body.itopic1question14part3, req.body.itopic1question14part4, req.body.itopic1question14part5, req.body.itopic1question14part6, req.body.itopic1question14part7, req.body.itopic1question14part8, req.body.itopic1question14part9,
@@ -692,6 +723,7 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                     {
                         id: req.body.topic1question15,
                         numberOfParts: req.body.topic1question15numberOfParts,
+                        content: req.body.topic1question15content,
                         parts:
                         [
                             req.body.itopic1question15part0, req.body.itopic1question15part1, req.body.itopic1question15part2, req.body.itopic1question15part3, req.body.itopic1question15part4, req.body.itopic1question15part5, req.body.itopic1question15part6, req.body.itopic1question15part7, req.body.itopic1question15part8, req.body.itopic1question15part9,
@@ -711,6 +743,7 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                     {
                         id: req.body.topic2question0,
                         numberOfParts: req.body.topic2question0numberOfParts,
+                        content: req.body.topic2question0content,
                         parts:
                         [
                             req.body.itopic2question0part0, req.body.itopic2question0part1, req.body.itopic2question0part2, req.body.itopic2question0part3, req.body.itopic2question0part4, req.body.itopic2question0part5, req.body.itopic2question0part6, req.body.itopic2question0part7, req.body.itopic2question0part8, req.body.itopic2question0part9,
@@ -724,6 +757,7 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                     {
                         id: req.body.topic2question1,
                         numberOfParts: req.body.topic2question1numberOfParts,
+                        content: req.body.topic2question1content,
                         parts:
                         [
                             req.body.itopic2question1part0, req.body.itopic2question1part1, req.body.itopic2question1part2, req.body.itopic2question1part3, req.body.itopic2question1part4, req.body.itopic2question1part5, req.body.itopic2question1part6, req.body.itopic2question1part7, req.body.itopic2question1part8, req.body.itopic2question1part9,
@@ -737,6 +771,7 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                     {
                         id: req.body.topic2question2,
                         numberOfParts: req.body.topic2question2numberOfParts,
+                        content: req.body.topic2question2content,
                         parts:
                         [
                             req.body.itopic2question2part0, req.body.itopic2question2part1, req.body.itopic2question2part2, req.body.itopic2question2part3, req.body.itopic2question2part4, req.body.itopic2question2part5, req.body.itopic2question2part6, req.body.itopic2question2part7, req.body.itopic2question2part8, req.body.itopic2question2part9,
@@ -750,6 +785,7 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                     {
                         id: req.body.topic2question3,
                         numberOfParts: req.body.topic2question3numberOfParts,
+                        content: req.body.topic2question3content,
                         parts:
                         [
                             req.body.itopic2question3part0, req.body.itopic2question3part1, req.body.itopic2question3part2, req.body.itopic2question3part3, req.body.itopic2question3part4, req.body.itopic2question3part5, req.body.itopic2question3part6, req.body.itopic2question3part7, req.body.itopic2question3part8, req.body.itopic2question3part9,
@@ -763,6 +799,7 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                     {
                         id: req.body.topic2question4,
                         numberOfParts: req.body.topic2question4numberOfParts,
+                        content: req.body.topic2question4content,
                         parts:
                         [
                             req.body.itopic2question4part0, req.body.itopic2question4part1, req.body.itopic2question4part2, req.body.itopic2question4part3, req.body.itopic2question4part4, req.body.itopic2question4part5, req.body.itopic2question4part6, req.body.itopic2question4part7, req.body.itopic2question4part8, req.body.itopic2question4part9,
@@ -776,6 +813,7 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                     {
                         id: req.body.topic2question5,
                         numberOfParts: req.body.topic2question5numberOfParts,
+                        content: req.body.topic2question5content,
                         parts:
                         [
                             req.body.itopic2question5part0, req.body.itopic2question5part1, req.body.itopic2question5part2, req.body.itopic2question5part3, req.body.itopic2question5part4, req.body.itopic2question5part5, req.body.itopic2question5part6, req.body.itopic2question5part7, req.body.itopic2question5part8, req.body.itopic2question5part9,
@@ -789,6 +827,7 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                     {
                         id: req.body.topic2question6,
                         numberOfParts: req.body.topic2question6numberOfParts,
+                        content: req.body.topic2question6content,
                         parts:
                         [
                             req.body.itopic2question6part0, req.body.itopic2question6part1, req.body.itopic2question6part2, req.body.itopic2question6part3, req.body.itopic2question6part4, req.body.itopic2question6part5, req.body.itopic2question6part6, req.body.itopic2question6part7, req.body.itopic2question6part8, req.body.itopic2question6part9,
@@ -802,6 +841,7 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                     {
                         id: req.body.topic2question7,
                         numberOfParts: req.body.topic2question7numberOfParts,
+                        content: req.body.topic2question7content,
                         parts:
                         [
                             req.body.itopic2question7part0, req.body.itopic2question7part1, req.body.itopic2question7part2, req.body.itopic2question7part3, req.body.itopic2question7part4, req.body.itopic2question7part5, req.body.itopic2question7part6, req.body.itopic2question7part7, req.body.itopic2question7part8, req.body.itopic2question7part9,
@@ -815,6 +855,7 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                     {
                         id: req.body.topic2question8,
                         numberOfParts: req.body.topic2question8numberOfParts,
+                        content: req.body.topic2question8content,
                         parts:
                         [
                             req.body.itopic2question8part0, req.body.itopic2question8part1, req.body.itopic2question8part2, req.body.itopic2question8part3, req.body.itopic2question8part4, req.body.itopic2question8part5, req.body.itopic2question8part6, req.body.itopic2question8part7, req.body.itopic2question8part8, req.body.itopic2question8part9,
@@ -828,6 +869,7 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                     {
                         id: req.body.topic2question9,
                         numberOfParts: req.body.topic2question9numberOfParts,
+                        content: req.body.topic2question9content,
                         parts:
                         [
                             req.body.itopic2question9part0, req.body.itopic2question9part1, req.body.itopic2question9part2, req.body.itopic2question9part3, req.body.itopic2question9part4, req.body.itopic2question9part5, req.body.itopic2question9part6, req.body.itopic2question9part7, req.body.itopic2question9part8, req.body.itopic2question9part9,
@@ -841,6 +883,7 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                     {
                         id: req.body.topic2question10,
                         numberOfParts: req.body.topic2question10numberOfParts,
+                        content: req.body.topic2question10content,
                         parts:
                         [
                             req.body.itopic2question10part0, req.body.itopic2question10part1, req.body.itopic2question10part2, req.body.itopic2question10part3, req.body.itopic2question10part4, req.body.itopic2question10part5, req.body.itopic2question10part6, req.body.itopic2question10part7, req.body.itopic2question10part8, req.body.itopic2question10part9,
@@ -854,6 +897,7 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                     {
                         id: req.body.topic2question11,
                         numberOfParts: req.body.topic2question11numberOfParts,
+                        content: req.body.topic2question11content,
                         parts:
                         [
                             req.body.itopic2question11part0, req.body.itopic2question11part1, req.body.itopic2question11part2, req.body.itopic2question11part3, req.body.itopic2question11part4, req.body.itopic2question11part5, req.body.itopic2question11part6, req.body.itopic2question11part7, req.body.itopic2question11part8, req.body.itopic2question11part9,
@@ -867,6 +911,7 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                     {
                         id: req.body.topic2question12,
                         numberOfParts: req.body.topic2question12numberOfParts,
+                        content: req.body.topic2question12content,
                         parts:
                         [
                             req.body.itopic2question12part0, req.body.itopic2question12part1, req.body.itopic2question12part2, req.body.itopic2question12part3, req.body.itopic2question12part4, req.body.itopic2question12part5, req.body.itopic2question12part6, req.body.itopic2question12part7, req.body.itopic2question12part8, req.body.itopic2question12part9,
@@ -880,6 +925,7 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                     {
                         id: req.body.topic2question13,
                         numberOfParts: req.body.topic2question13numberOfParts,
+                        content: req.body.topic2question13content,
                         parts:
                         [
                             req.body.itopic2question13part0, req.body.itopic2question13part1, req.body.itopic2question13part2, req.body.itopic2question13part3, req.body.itopic2question13part4, req.body.itopic2question13part5, req.body.itopic2question13part6, req.body.itopic2question13part7, req.body.itopic2question13part8, req.body.itopic2question13part9,
@@ -893,6 +939,7 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                     {
                         id: req.body.topic2question14,
                         numberOfParts: req.body.topic2question14numberOfParts,
+                        content: req.body.topic2question14content,
                         parts:
                         [
                             req.body.itopic2question14part0, req.body.itopic2question14part1, req.body.itopic2question14part2, req.body.itopic2question14part3, req.body.itopic2question14part4, req.body.itopic2question14part5, req.body.itopic2question14part6, req.body.itopic2question14part7, req.body.itopic2question14part8, req.body.itopic2question14part9,
@@ -906,6 +953,7 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                     {
                         id: req.body.topic2question15,
                         numberOfParts: req.body.topic2question15numberOfParts,
+                        content: req.body.topic2question15content,
                         parts:
                         [
                             req.body.itopic2question15part0, req.body.itopic2question15part1, req.body.itopic2question15part2, req.body.itopic2question15part3, req.body.itopic2question15part4, req.body.itopic2question15part5, req.body.itopic2question15part6, req.body.itopic2question15part7, req.body.itopic2question15part8, req.body.itopic2question15part9,
@@ -925,6 +973,7 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                     {
                         id: req.body.topic3question0,
                         numberOfParts: req.body.topic3question0numberOfParts,
+                        content: req.body.topic3question0content,
                         parts:
                         [
                             req.body.itopic3question0part0, req.body.itopic3question0part1, req.body.itopic3question0part2, req.body.itopic3question0part3, req.body.itopic3question0part4, req.body.itopic3question0part5, req.body.itopic3question0part6, req.body.itopic3question0part7, req.body.itopic3question0part8, req.body.itopic3question0part9,
@@ -938,6 +987,7 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                     {
                         id: req.body.topic3question1,
                         numberOfParts: req.body.topic3question1numberOfParts,
+                        content: req.body.topic3question1content,
                         parts:
                         [
                             req.body.itopic3question1part0, req.body.itopic3question1part1, req.body.itopic3question1part2, req.body.itopic3question1part3, req.body.itopic3question1part4, req.body.itopic3question1part5, req.body.itopic3question1part6, req.body.itopic3question1part7, req.body.itopic3question1part8, req.body.itopic3question1part9,
@@ -951,6 +1001,7 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                     {
                         id: req.body.topic3question2,
                         numberOfParts: req.body.topic3question2numberOfParts,
+                        content: req.body.topic3question2content,
                         parts:
                         [
                             req.body.itopic3question2part0, req.body.itopic3question2part1, req.body.itopic3question2part2, req.body.itopic3question2part3, req.body.itopic3question2part4, req.body.itopic3question2part5, req.body.itopic3question2part6, req.body.itopic3question2part7, req.body.itopic3question2part8, req.body.itopic3question2part9,
@@ -964,6 +1015,7 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                     {
                         id: req.body.topic3question3,
                         numberOfParts: req.body.topic3question3numberOfParts,
+                        content: req.body.topic3question3content,
                         parts:
                         [
                             req.body.itopic3question3part0, req.body.itopic3question3part1, req.body.itopic3question3part2, req.body.itopic3question3part3, req.body.itopic3question3part4, req.body.itopic3question3part5, req.body.itopic3question3part6, req.body.itopic3question3part7, req.body.itopic3question3part8, req.body.itopic3question3part9,
@@ -977,6 +1029,7 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                     {
                         id: req.body.topic3question4,
                         numberOfParts: req.body.topic3question4numberOfParts,
+                        content: req.body.topic3question4content,
                         parts:
                         [
                             req.body.itopic3question4part0, req.body.itopic3question4part1, req.body.itopic3question4part2, req.body.itopic3question4part3, req.body.itopic3question4part4, req.body.itopic3question4part5, req.body.itopic3question4part6, req.body.itopic3question4part7, req.body.itopic3question4part8, req.body.itopic3question4part9,
@@ -990,6 +1043,7 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                     {
                         id: req.body.topic3question5,
                         numberOfParts: req.body.topic3question5numberOfParts,
+                        content: req.body.topic3question5content,
                         parts:
                         [
                             req.body.itopic3question5part0, req.body.itopic3question5part1, req.body.itopic3question5part2, req.body.itopic3question5part3, req.body.itopic3question5part4, req.body.itopic3question5part5, req.body.itopic3question5part6, req.body.itopic3question5part7, req.body.itopic3question5part8, req.body.itopic3question5part9,
@@ -1003,6 +1057,7 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                     {
                         id: req.body.topic3question6,
                         numberOfParts: req.body.topic3question6numberOfParts,
+                        content: req.body.topic3question6content,
                         parts:
                         [
                             req.body.itopic3question6part0, req.body.itopic3question6part1, req.body.itopic3question6part2, req.body.itopic3question6part3, req.body.itopic3question6part4, req.body.itopic3question6part5, req.body.itopic3question6part6, req.body.itopic3question6part7, req.body.itopic3question6part8, req.body.itopic3question6part9,
@@ -1016,6 +1071,7 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                     {
                         id: req.body.topic3question7,
                         numberOfParts: req.body.topic3question7numberOfParts,
+                        content: req.body.topic3question7content,
                         parts:
                         [
                             req.body.itopic3question7part0, req.body.itopic3question7part1, req.body.itopic3question7part2, req.body.itopic3question7part3, req.body.itopic3question7part4, req.body.itopic3question7part5, req.body.itopic3question7part6, req.body.itopic3question7part7, req.body.itopic3question7part8, req.body.itopic3question7part9,
@@ -1029,6 +1085,7 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                     {
                         id: req.body.topic3question8,
                         numberOfParts: req.body.topic3question8numberOfParts,
+                        content: req.body.topic3question8content,
                         parts:
                         [
                             req.body.itopic3question8part0, req.body.itopic3question8part1, req.body.itopic3question8part2, req.body.itopic3question8part3, req.body.itopic3question8part4, req.body.itopic3question8part5, req.body.itopic3question8part6, req.body.itopic3question8part7, req.body.itopic3question8part8, req.body.itopic3question8part9,
@@ -1042,6 +1099,7 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                     {
                         id: req.body.topic3question9,
                         numberOfParts: req.body.topic3question9numberOfParts,
+                        content: req.body.topic3question9content,
                         parts:
                         [
                             req.body.itopic3question9part0, req.body.itopic3question9part1, req.body.itopic3question9part2, req.body.itopic3question9part3, req.body.itopic3question9part4, req.body.itopic3question9part5, req.body.itopic3question9part6, req.body.itopic3question9part7, req.body.itopic3question9part8, req.body.itopic3question9part9,
@@ -1055,6 +1113,7 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                     {
                         id: req.body.topic3question10,
                         numberOfParts: req.body.topic3question10numberOfParts,
+                        content: req.body.topic3question10content,
                         parts:
                         [
                             req.body.itopic3question10part0, req.body.itopic3question10part1, req.body.itopic3question10part2, req.body.itopic3question10part3, req.body.itopic3question10part4, req.body.itopic3question10part5, req.body.itopic3question10part6, req.body.itopic3question10part7, req.body.itopic3question10part8, req.body.itopic3question10part9,
@@ -1068,6 +1127,7 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                     {
                         id: req.body.topic3question11,
                         numberOfParts: req.body.topic3question11numberOfParts,
+                        content: req.body.topic3question11content,
                         parts:
                         [
                             req.body.itopic3question11part0, req.body.itopic3question11part1, req.body.itopic3question11part2, req.body.itopic3question11part3, req.body.itopic3question11part4, req.body.itopic3question11part5, req.body.itopic3question11part6, req.body.itopic3question11part7, req.body.itopic3question11part8, req.body.itopic3question11part9,
@@ -1081,6 +1141,7 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                     {
                         id: req.body.topic3question12,
                         numberOfParts: req.body.topic3question12numberOfParts,
+                        content: req.body.topic3question12content,
                         parts:
                         [
                             req.body.itopic3question12part0, req.body.itopic3question12part1, req.body.itopic3question12part2, req.body.itopic3question12part3, req.body.itopic3question12part4, req.body.itopic3question12part5, req.body.itopic3question12part6, req.body.itopic3question12part7, req.body.itopic3question12part8, req.body.itopic3question12part9,
@@ -1094,6 +1155,7 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                     {
                         id: req.body.topic3question13,
                         numberOfParts: req.body.topic3question13numberOfParts,
+                        content: req.body.topic3question13content,
                         parts:
                         [
                             req.body.itopic3question13part0, req.body.itopic3question13part1, req.body.itopic3question13part2, req.body.itopic3question13part3, req.body.itopic3question13part4, req.body.itopic3question13part5, req.body.itopic3question13part6, req.body.itopic3question13part7, req.body.itopic3question13part8, req.body.itopic3question13part9,
@@ -1107,6 +1169,7 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                     {
                         id: req.body.topic3question14,
                         numberOfParts: req.body.topic3question14numberOfParts,
+                        content: req.body.topic3question14content,
                         parts:
                         [
                             req.body.itopic3question14part0, req.body.itopic3question14part1, req.body.itopic3question14part2, req.body.itopic3question14part3, req.body.itopic3question14part4, req.body.itopic3question14part5, req.body.itopic3question14part6, req.body.itopic3question14part7, req.body.itopic3question14part8, req.body.itopic3question14part9,
@@ -1120,6 +1183,7 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                     {
                         id: req.body.topic3question15,
                         numberOfParts: req.body.topic3question15numberOfParts,
+                        content: req.body.topic3question15content,
                         parts:
                         [
                             req.body.itopic3question15part0, req.body.itopic3question15part1, req.body.itopic3question15part2, req.body.itopic3question15part3, req.body.itopic3question15part4, req.body.itopic3question15part5, req.body.itopic3question15part6, req.body.itopic3question15part7, req.body.itopic3question15part8, req.body.itopic3question15part9,
@@ -1139,6 +1203,7 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                     {
                         id: req.body.topic4question0,
                         numberOfParts: req.body.topic4question0numberOfParts,
+                        content: req.body.topic4question0content,
                         parts:
                         [
                             req.body.itopic4question0part0, req.body.itopic4question0part1, req.body.itopic4question0part2, req.body.itopic4question0part3, req.body.itopic4question0part4, req.body.itopic4question0part5, req.body.itopic4question0part6, req.body.itopic4question0part7, req.body.itopic4question0part8, req.body.itopic4question0part9,
@@ -1152,6 +1217,7 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                     {
                         id: req.body.topic4question1,
                         numberOfParts: req.body.topic4question1numberOfParts,
+                        content: req.body.topic4question1content,
                         parts:
                         [
                             req.body.itopic4question1part0, req.body.itopic4question1part1, req.body.itopic4question1part2, req.body.itopic4question1part3, req.body.itopic4question1part4, req.body.itopic4question1part5, req.body.itopic4question1part6, req.body.itopic4question1part7, req.body.itopic4question1part8, req.body.itopic4question1part9,
@@ -1165,6 +1231,7 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                     {
                         id: req.body.topic4question2,
                         numberOfParts: req.body.topic4question2numberOfParts,
+                        content: req.body.topic4question2content,
                         parts:
                         [
                             req.body.itopic4question2part0, req.body.itopic4question2part1, req.body.itopic4question2part2, req.body.itopic4question2part3, req.body.itopic4question2part4, req.body.itopic4question2part5, req.body.itopic4question2part6, req.body.itopic4question2part7, req.body.itopic4question2part8, req.body.itopic4question2part9,
@@ -1178,6 +1245,7 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                     {
                         id: req.body.topic4question3,
                         numberOfParts: req.body.topic4question3numberOfParts,
+                        content: req.body.topic4question3content,
                         parts:
                         [
                             req.body.itopic4question3part0, req.body.itopic4question3part1, req.body.itopic4question3part2, req.body.itopic4question3part3, req.body.itopic4question3part4, req.body.itopic4question3part5, req.body.itopic4question3part6, req.body.itopic4question3part7, req.body.itopic4question3part8, req.body.itopic4question3part9,
@@ -1191,6 +1259,7 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                     {
                         id: req.body.topic4question4,
                         numberOfParts: req.body.topic4question4numberOfParts,
+                        content: req.body.topic4question4content,
                         parts:
                         [
                             req.body.itopic4question4part0, req.body.itopic4question4part1, req.body.itopic4question4part2, req.body.itopic4question4part3, req.body.itopic4question4part4, req.body.itopic4question4part5, req.body.itopic4question4part6, req.body.itopic4question4part7, req.body.itopic4question4part8, req.body.itopic4question4part9,
@@ -1204,6 +1273,7 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                     {
                         id: req.body.topic4question5,
                         numberOfParts: req.body.topic4question5numberOfParts,
+                        content: req.body.topic4question5content,
                         parts:
                         [
                             req.body.itopic4question5part0, req.body.itopic4question5part1, req.body.itopic4question5part2, req.body.itopic4question5part3, req.body.itopic4question5part4, req.body.itopic4question5part5, req.body.itopic4question5part6, req.body.itopic4question5part7, req.body.itopic4question5part8, req.body.itopic4question5part9,
@@ -1217,6 +1287,7 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                     {
                         id: req.body.topic4question6,
                         numberOfParts: req.body.topic4question6numberOfParts,
+                        content: req.body.topic4question6content,
                         parts:
                         [
                             req.body.itopic4question6part0, req.body.itopic4question6part1, req.body.itopic4question6part2, req.body.itopic4question6part3, req.body.itopic4question6part4, req.body.itopic4question6part5, req.body.itopic4question6part6, req.body.itopic4question6part7, req.body.itopic4question6part8, req.body.itopic4question6part9,
@@ -1230,6 +1301,7 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                     {
                         id: req.body.topic4question7,
                         numberOfParts: req.body.topic4question7numberOfParts,
+                        content: req.body.topic4question7content,
                         parts:
                         [
                             req.body.itopic4question7part0, req.body.itopic4question7part1, req.body.itopic4question7part2, req.body.itopic4question7part3, req.body.itopic4question7part4, req.body.itopic4question7part5, req.body.itopic4question7part6, req.body.itopic4question7part7, req.body.itopic4question7part8, req.body.itopic4question7part9,
@@ -1243,6 +1315,7 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                     {
                         id: req.body.topic4question8,
                         numberOfParts: req.body.topic4question8numberOfParts,
+                        content: req.body.topic4question8content,
                         parts:
                         [
                             req.body.itopic4question8part0, req.body.itopic4question8part1, req.body.itopic4question8part2, req.body.itopic4question8part3, req.body.itopic4question8part4, req.body.itopic4question8part5, req.body.itopic4question8part6, req.body.itopic4question8part7, req.body.itopic4question8part8, req.body.itopic4question8part9,
@@ -1256,6 +1329,7 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                     {
                         id: req.body.topic4question9,
                         numberOfParts: req.body.topic4question9numberOfParts,
+                        content: req.body.topic4question9content,
                         parts:
                         [
                             req.body.itopic4question9part0, req.body.itopic4question9part1, req.body.itopic4question9part2, req.body.itopic4question9part3, req.body.itopic4question9part4, req.body.itopic4question9part5, req.body.itopic4question9part6, req.body.itopic4question9part7, req.body.itopic4question9part8, req.body.itopic4question9part9,
@@ -1269,6 +1343,7 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                     {
                         id: req.body.topic4question10,
                         numberOfParts: req.body.topic4question10numberOfParts,
+                        content: req.body.topic4question10content,
                         parts:
                         [
                             req.body.itopic4question10part0, req.body.itopic4question10part1, req.body.itopic4question10part2, req.body.itopic4question10part3, req.body.itopic4question10part4, req.body.itopic4question10part5, req.body.itopic4question10part6, req.body.itopic4question10part7, req.body.itopic4question10part8, req.body.itopic4question10part9,
@@ -1282,6 +1357,7 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                     {
                         id: req.body.topic4question11,
                         numberOfParts: req.body.topic4question11numberOfParts,
+                        content: req.body.topic4question11content,
                         parts:
                         [
                             req.body.itopic4question11part0, req.body.itopic4question11part1, req.body.itopic4question11part2, req.body.itopic4question11part3, req.body.itopic4question11part4, req.body.itopic4question11part5, req.body.itopic4question11part6, req.body.itopic4question11part7, req.body.itopic4question11part8, req.body.itopic4question11part9,
@@ -1295,6 +1371,7 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                     {
                         id: req.body.topic4question12,
                         numberOfParts: req.body.topic4question12numberOfParts,
+                        content: req.body.topic4question12content,
                         parts:
                         [
                             req.body.itopic4question12part0, req.body.itopic4question12part1, req.body.itopic4question12part2, req.body.itopic4question12part3, req.body.itopic4question12part4, req.body.itopic4question12part5, req.body.itopic4question12part6, req.body.itopic4question12part7, req.body.itopic4question12part8, req.body.itopic4question12part9,
@@ -1308,6 +1385,7 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                     {
                         id: req.body.topic4question13,
                         numberOfParts: req.body.topic4question13numberOfParts,
+                        content: req.body.topic4question13content,
                         parts:
                         [
                             req.body.itopic4question13part0, req.body.itopic4question13part1, req.body.itopic4question13part2, req.body.itopic4question13part3, req.body.itopic4question13part4, req.body.itopic4question13part5, req.body.itopic4question13part6, req.body.itopic4question13part7, req.body.itopic4question13part8, req.body.itopic4question13part9,
@@ -1321,6 +1399,7 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                     {
                         id: req.body.topic4question14,
                         numberOfParts: req.body.topic4question14numberOfParts,
+                        content: req.body.topic4question14content,
                         parts:
                         [
                             req.body.itopic4question14part0, req.body.itopic4question14part1, req.body.itopic4question14part2, req.body.itopic4question14part3, req.body.itopic4question14part4, req.body.itopic4question14part5, req.body.itopic4question14part6, req.body.itopic4question14part7, req.body.itopic4question14part8, req.body.itopic4question14part9,
@@ -1334,6 +1413,7 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                     {
                         id: req.body.topic4question15,
                         numberOfParts: req.body.topic4question15numberOfParts,
+                        content: req.body.topic4question15content,
                         parts:
                         [
                             req.body.itopic4question15part0, req.body.itopic4question15part1, req.body.itopic4question15part2, req.body.itopic4question15part3, req.body.itopic4question15part4, req.body.itopic4question15part5, req.body.itopic4question15part6, req.body.itopic4question15part7, req.body.itopic4question15part8, req.body.itopic4question15part9,
@@ -1348,30 +1428,35 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
             }
         ]
     }
+    console.log("testData.topics[0].questions[0].parts[0]:" + testData.topics[0].questions[2].parts[1]);
+    console.log("testData.topics[0].numberOfQuestions:" + testData.topics[0].numberOfQuestions);
+    console.log("testData.topics[0].questions[0].numberOfParts:" + testData.topics[0].questions[2].numberOfParts+"\n\n\n\n");
     //removing NULL topics
-    for (var i = testData.topics.length - 1; i >= testData.numberOfTopics; i--)
+    for (var i = testData.topics.length; i > testData.numberOfTopics; i--)
     {
-        testData.topics.splice(i, 1);
+        testData.topics.splice((i-1), 1);
     }
     //removing NULL questions
     for (var i = 0; i < testData.topics.length; i++)
     {
-        for (var t = testData.topics[i].questions.length - 1; t >= testData.topics[i].numberOfQuestions; t--)
+        for (var t = testData.topics[i].questions.length; t > testData.topics[i].numberOfQuestions; t--)
         {
-            testData.topics[i].questions.splice(t, 1);
+            testData.topics[i].questions.splice((t-1), 1);
         }
     }
     //removing NULL parts
     for (var i = 0; i < testData.topics.length; i++) {
         for (var t = 0; t < testData.topics[i].questions.length; t++)
         {
-            for (var z = testData.topics[i].questions[t].parts.length; z >= testData.topics[i].questions[t].numberOfParts; z--)
+            for (var z = testData.topics[i].questions[t].parts.length; z > testData.topics[i].questions[t].numberOfParts; z--)
             {
-                testData.topics[i].questions[t].parts.splice(z, 1);
+                testData.topics[i].questions[t].parts.splice((z-1), 1);
             } 
         }
     }
-
+    console.log("testData.topics[0].questions[0].parts[1]:" + testData.topics[0].questions[0].parts[1]);
+    console.log("testData.topics[0].numberOfQuestions:" + testData.topics[0].numberOfQuestions);
+    console.log("testData.topics[0].questions[0].numberOfParts:" + testData.topics[0].questions[0].numberOfParts+"\n\n\n\n");
     //temp varaibles
     var answerLocationsTemp = [];
     var methodMarks = [];
@@ -1389,37 +1474,54 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                 {
                     for (var z = 0; z < testData.topics.length; z++)//finding topics
                     {
+                        console.log("z:" + z);
                         for (var t = 0; t < populatedExams[0].modules[i].topics.length; t++)
                         {
+                            console.log("t:" + t);
                             if (testData.topics[z].name == populatedExams[0].modules[i].topics[t].name)
                             {
+                                console.log("topic:" + testData.topics[z].name);
                                 for (var q = 0; q < testData.topics[z].questions.length; q++)//finding questions
                                 {
+                                    console.log("q:" + q);
                                     for (var p = 0; p < populatedExams[0].modules[i].topics[t].questions.length; p++)
                                     {
+                                        console.log("p:" + p);
+                                        console.log("\npopulatedExams[0].modules[" + i + "].topics[" + t + "].questions[" + p + "]._id : " + populatedExams[0].modules[i].topics[t].questions[p]._id);
+                                        console.log("testData.topics[" + z + "].questions[" + q + "].id : " + testData.topics[z].questions[q].id + "\n");
                                         if (populatedExams[0].modules[i].topics[t].questions[p]._id == testData.topics[z].questions[q].id)
                                         {
+                                            console.log("testData.topics[" + z + "].questions[" + q + "].id : " + testData.topics[z].questions[q].id);
+                                            console.log("q in if:" + q);
+                                            console.log("p in if:" + p);
                                             methodMarks = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
                                             answerLocationsTemp = [];
                                             for (var x = 0; x < populatedExams[0].modules[i].topics[t].questions[p].methods.length; x++)//iterating through answer methods
                                             {
+                                                console.log("x:" + x);
                                                 answerLocationsTemp.push([]);
                                                 for (var c = 0; c < populatedExams[0].modules[i].topics[t].questions[p].methods[x].length; c++)//iterating through parts in answer methods
                                                 {
+                                                    console.log("c:" + c);
                                                     for (var e = 0; e < testData.topics[z].questions[q].parts.length; e++)//iterating through user parts
                                                     {
-                                                        console.log("\n\n");
-                                                        console.log("testData.topics[z].questions[q].parts[e]:" + testData.topics[z].questions[q].parts[e]);
+                                                        console.log("e:" + e);
+                                                        console.log("testData.topics[" + z + "].questions[" + q + "].parts[" + e + "]:" + testData.topics[z].questions[q].parts[e]);
+                                                        console.log("populatedExams[0].modules["+i+"].topics["+t+"].questions["+p+"].methods["+x+"]["+c+"].content:" + populatedExams[0].modules[i].topics[t].questions[p].methods[x][c].content);
                                                         var posOfAnswer = markPart(testData.topics[z].questions[q].parts[e], populatedExams[0].modules[i].topics[t].questions[p].methods[x][c].content);
                                                         console.log("posOfAnswer:" + posOfAnswer);
                                                         if (posOfAnswer > -1)//startIndex will be -1 if not found and index of start of string if found
                                                         {
+                                                            console.log("posOfAnswer > -1");
                                                             methodMarks[x] += populatedExams[0].modules[i].topics[t].questions[p].methods[x][c].mark;
-                                                            answerLocationsTemp[x][c] = { partNumber: e, index: posOfAnswer, mark: populatedExams[0].modules[i].topics[t].questions[p].methods[x][c].mark};
+                                                            answerLocationsTemp[x][c] = { partNumber: e, startIndex: posOfAnswer, endIndex: posOfAnswer + (testData.topics[z].questions[q].parts[e].length), mark: populatedExams[0].modules[i].topics[t].questions[p].methods[x][c].mark };
                                                         }
                                                     }
+                                                    console.log("finished looping through user parts");
                                                 }
+                                                console.log("finished looping through parts in method");
                                             }
+                                            console.log("finished looping through methods");
                                             index = 0;
                                             for (var x = 0; x < methodMarks.length; x++)//finding method with highest marks
                                             {
@@ -1428,24 +1530,29 @@ app.post("/users/:id/tests/edit", isLoggedIn, function (req, res) {
                                                     index = x;
                                                 }    
                                             }
-                                            console.log("index:"+index);
+                                            console.log("method (" + index + ") has the highest marks");
                                             if (methodMarks[index] > 0)
                                             {
+                                                console.log("\nindex:" + index);
                                                 testData.topics[z].questions[q].solution = populatedExams[0].modules[i].topics[t].questions[p].methods[index];
                                                 console.log("testData.topics[" + z + "].questions[" + q + "].solution:\n" + testData.topics[z].questions[q].solution);
                                                 testData.topics[z].questions[q].answers = answerLocationsTemp[index];
                                                 console.log("testData.topics[" + z + "].questions[" + q + "].answers[0].partNumber:" + testData.topics[z].questions[q].answers[0].partNumber);
-                                                console.log("testData.topics[" + z + "].questions[" + q + "].answers[0].index:" + testData.topics[z].questions[q].answers[0].index);
-                                                console.log("\n\n");
+                                                console.log("testData.topics[" + z + "].questions[" + q + "].answers[0].startIndex:" + testData.topics[z].questions[q].answers[0].startIndex+"\n");
                                             }
+                                            break;
                                         }
                                     }
                                 }
+                                console.log("finished looping through questions in topic");
                             }
                         }       
-                    }       
+                    }
+                    console.log("finished looping through topics");       
                 }        
             }
+            console.log("finished setting stuff");
+            res.render("tests/results", { markingData: testData });
         });
     });
 });
@@ -1806,5 +1913,3 @@ app.listen(process.env.PORT, process.env.IP,function()
 {
     console.log("Server started");
 });
-
-

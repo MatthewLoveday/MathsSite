@@ -3,7 +3,7 @@
 <h1>Show test page</h1>
 
 
-<form action="/users/<%= testData.userID %>/tests/edit" method="POST">
+<form action="/users/<%= testData.userID %>/tests/results" method="POST">
 
 	<button class="btn waves-effect waves-light" type="submit" name="action">Submit
 		<i class="material-icons right">send</i>
@@ -73,6 +73,14 @@
 			readonly: "true"
 		});
 		$("form button").before(newQuestion);
+
+		var newQuestionContent = $("<input>").attr({
+			name:"topic<%= i %>question<%= t %>content",
+			type:"text",
+			value:"<%= testData.topics[i].questions[t].content %>",
+			readonly: "true"
+		});
+		$("form button").before(newQuestionContent);
 		
 		newInputs[<%= i %>].push([]);
 
@@ -125,12 +133,11 @@
 		var temp = count-1;
 		$("#topic"+i+"question"+t+"part"+temp).after(newP);
 
-		var inpName = "part"+count;
 		var inpId = "itopic"+i+"question"+t+"part"+count;
 		var lInpId = "itopic"+i+"question"+t+"part"+(count-1);
 		var newTxtInp = $("<input>").attr({
 			id:inpId,
-			name:inpName,
+			name:inpId,
 			type:"text",
 			readonly: "true"
 		});
