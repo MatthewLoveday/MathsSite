@@ -195,8 +195,8 @@ app.get("/users/:id/tests/new", isLoggedIn,function(req,res)
 app.post("/users/:id/tests",function(req,res)//when seed program ready this should be hanged to "/tests" which should redirect to a "/tests/:seed" route 
 {
     var topicsTemp = [req.body.topic1,req.body.topic2,req.body.topic3,req.body.topic4,req.body.topic5,req.body.topic6,req.body.topic7,req.body.topic8];
-    var moduleIndex;
-    var topicsToBeParsed=[];
+    var topicsToBeParsed = [];
+    var moduleIndex; 
     examBoard.find({name:req.body.examBoardName},function(err,examBoard)
     {
         if(err)
@@ -215,7 +215,7 @@ app.post("/users/:id/tests",function(req,res)//when seed program ready this shou
             }     
         } 
     });
-    
+
     examBoard.find({ name: req.body.examBoardName }).exec().then((exams) => {
         examBoard.populate(exams, {
             path: 'modules.topics.questions',
@@ -244,33 +244,10 @@ app.post("/users/:id/tests",function(req,res)//when seed program ready this shou
 
             var objectToBeParsed = { userID: req.params.id, topics: topicsData, examBoard: req.body.examBoardName, module:req.body.moduleName};
             res.render("tests/show", { testData: objectToBeParsed });
-            // res.render("tests/show",{test:
-            //     {
-            //         time:req.body.time,
-            //         examBoard:req.body.examBoardName,
-            //         module:req.body.moduleName,
-            //         topics:topicsToBeParsed
-            //     }
-            // });
         });
     });
-    
-    // var testData=
-    // {
-    //     time:req.body.time,
-    //     examBoard:req.body.examBoardName,
-    //     module:req.body.moduleName,
-    //     topics:topics
-    // };
-    // res.render("tests/show",{test:
-    //     {
-    //         time:req.body.time,
-    //         examBoard:req.body.examBoardName,
-    //         module:req.body.moduleName,
-    //         topics:topics
-    //     }
-    // });
 });
+
 app.post("/users/:id/tests/results", isLoggedIn, function (req, res) {
 
     var testData = {
@@ -1714,9 +1691,9 @@ function markPart(part, answer)//had to write this since base string search func
 
 function GenerateTest(time, topics) //Random Seed, Time of the Test, Array of the Topics
 { 
-    var returnTopics=[]; //Questions array to be returned.
+    var returnTopics=[]; //Topics array to be returned.
 
-    var topicTime = Math.floor(time / topics.length); //The time allocated to each topic the user has selected. 
+    var topicTime = Math.floor(time / topics.length); //Time for each topic
     console.log("topicTime:" + topicTime);
     //Loop through the questions in this topic
 
@@ -1725,7 +1702,7 @@ function GenerateTest(time, topics) //Random Seed, Time of the Test, Array of th
         returnTopics.push({ name:topics[i].name, questions:GetTopicQuestion(topics[i], topicTime) });
     }
 
-    console.log("\n\nquestions (outside function)\n" + returnTopics);
+    console.log("\n\nquestions (outside function):\n" + returnTopics);
 
     return returnTopics;
 }
@@ -1750,7 +1727,7 @@ function GetTopicQuestion(Topic, topicTime)
     }
 
 
-    if(topicTime < 12)//find the times of each question in this topic
+    if(topicTime < 12)//Find the times of each question in this topic
     {
         timePerQuestion[0] = topicTime;
     }
@@ -1783,7 +1760,7 @@ function GetTopicQuestion(Topic, topicTime)
     var questionsOfProperLengthLower = [];
     var questionsOfProperLengthHigher = [];
     console.log("Topic.questions.length:" + Topic.questions.length);
-    for(var i=0;i<Topic.questions.length;i++)//push all questions of appropriate lengths to 'questionsOfProperLength' array
+    for(var i=0;i<Topic.questions.length;i++)//push all questions of appropriate lengths to the 'questionsOfProperLength's arrays
     {
         console.log("i = " + i);
         if(Topic.questions[i].mark==timePerQuestion[0])
@@ -1799,15 +1776,13 @@ function GetTopicQuestion(Topic, topicTime)
     }  
     console.log("Finished adding questions to questionsOfProperLengthLower and questionsOfProperLengthHigher ")
     console.log("questionsOfProperLengthLower:" + questionsOfProperLengthLower);
-    console.log("questionsOfProperLengthHigher:" + questionsOfProperLengthHigher);  
+    console.log("questionsOfProperLengthHigher:" + questionsOfProperLengthHigher);
+
     var questions=[];
-    
-    
     var questionsAlreadyPickedLow = [];
     var questionsAlreadyPickedHigh = [];
-
     var random;
-    console.log("check 1");
+
     console.log("questionLow:" + questionLow);
     for (var i = 0; i < questionLow; i++)
     {
@@ -1820,7 +1795,6 @@ function GetTopicQuestion(Topic, topicTime)
         questionsAlreadyPickedLow[i] = random;
         questions.push(questionsOfProperLengthLower[random]);        
     }
-    console.log("check 2");
     console.log("questionHigh:" + questionHigh);
     for(var i = 0; i < questionHigh; i++)
     {
@@ -1832,11 +1806,9 @@ function GetTopicQuestion(Topic, topicTime)
         questionsAlreadyPickedHigh[i] = random;
         questions.push(questionsOfProperLengthHigher[random]);
     }
-    console.log("check 3");
     
 
     console.log("\n\n\n\nquestions:\n" + questions + "\n\n");
-    console.log("check 2");
     return questions;
 }
 
