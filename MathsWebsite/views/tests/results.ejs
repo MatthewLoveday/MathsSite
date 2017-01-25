@@ -1,24 +1,5 @@
 <% include ../partials/header %>
 
-<% for(var i = 0; i < markingData.numberOfTopics; i++){ %>
-	<h2><%= markingData.topics[i].name %></h2>
-	<% for(var t = 0; t < markingData.topics[i].numberOfQuestions; t++){ %>
-		<h3><%= markingData.topics[i].questions[t].id %></h3>
-		<h4>Answers</h4>
-		<% for(var x = 0; x < markingData.topics[i].questions[t].answers.length; x++){ %>
-			<h5><%= x %></h5>
-			<li>Line: <%= markingData.topics[i].questions[t].answers[x].partNumber %></li>
-			<li>Start Index: <%= markingData.topics[i].questions[t].answers[x].startIndex %></li>
-			<li>End Index: <%= markingData.topics[i].questions[t].answers[x].endIndex %></li>
-			<li>Mark: <%= markingData.topics[i].questions[t].answers[x].mark %></li>
-	    <% } %>
-		<h4>Parts</h4>
-		<% for(var x = 0; x < markingData.topics[i].questions[t].numberOfParts; x++){ %>
-			<li><%= markingData.topics[i].questions[t].parts[x] %></li>
-	    <% } %>
-	<% } %>
-<% } %>
-
 
 <h2>Output</h2>
 <% var checked = 0 %>
@@ -38,7 +19,7 @@
 					<% if(markingData.topics[i].questions[t].answers[e].startIndex == 0 && markingData.topics[i].questions[t].answers[e].endIndex == markingData.topics[i].questions[t].parts[x].length){ %>
 						<p class="answer"><%= markingData.topics[i].questions[t].parts[x] %></p>					
 					<% } else { %>
-						<p><%= markingData.topics[i].questions[t].parts[x].slice(0,markingData.topics[i].questions[t].answers[e].startIndex) %><span class="answer"><%= markingData.topics[i].questions[t].parts[x].slice(markingData.topics[i].questions[t].answers[e].startIndex,markingData.topics[i].questions[t].answers[e].endIndex) %></span><%= markingData.topics[i].questions[t].parts[x].slice(markingData.topics[i].questions[t].answers[e].endIndex) %></p>		
+						<p><%= markingData.topics[i].questions[t].parts[x].slice(0,markingData.topics[i].questions[t].answers[e].startIndex) %><span class="answer"><%= markingData.topics[i].questions[t].parts[x].slice(markingData.topics[i].questions[t].answers[e].startIndex, markingData.topics[i].questions[t].answers[e].endIndex + 1) %></span><%= markingData.topics[i].questions[t].parts[x].slice(markingData.topics[i].questions[t].answers[e].endIndex + 1) %></p>		
 					<% } %>	
 					<% break; %>					
 				<% } %>
@@ -51,5 +32,11 @@
 		<% } %>
 	<% } %>
 <% } %>
+
+<style>
+	.answer{
+		background-color: green;
+	}
+</style>
 
 <% include ../partials/footer %>
