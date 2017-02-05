@@ -124,6 +124,11 @@ app.post('/login', function(req, res, next)
     })(req, res, next);
 });
 
+app.get("/logout", function (req, res) {
+    req.logout();
+    res.redirect("/")
+});
+
 //----------------------------------------------
 //register routes
 //----------------------------------------------
@@ -155,7 +160,8 @@ app.post("/register",function(req,res)
             progress:0,
             modules:modules
         },
-        score:0
+        score: 0,
+        role: "user"
     }),
     req.body.password,function(err,user)
     {
@@ -179,7 +185,7 @@ app.post("/register",function(req,res)
 //test routes
 //----------------------------------------------
 
-app.get("/users/:id/tests/new", isLoggedIn,function(req,res)
+app.get("/users/:id/tests/new", isLoggedIn, function(req,res)
 {
     user.findById(req.params.id, function (err, userData) {
         if (err) {
@@ -192,7 +198,7 @@ app.get("/users/:id/tests/new", isLoggedIn,function(req,res)
     });  
 });
 
-app.post("/users/:id/tests",function(req,res)//when seed program ready this should be hanged to "/tests" which should redirect to a "/tests/:seed" route 
+app.post("/users/:id/tests", function(req,res)//when seed program ready this should be hanged to "/tests" which should redirect to a "/tests/:seed" route 
 {
     var topicsTemp = [req.body.topic1,req.body.topic2,req.body.topic3,req.body.topic4,req.body.topic5,req.body.topic6,req.body.topic7,req.body.topic8];
     var topicsToBeParsed = [];
@@ -237,7 +243,7 @@ app.post("/users/:id/tests",function(req,res)//when seed program ready this shou
             }
             for (var i = 0; i < topicsToBeParsed.length; i++)
             {
-                console.log("topicsToBeParsed["+i+"].name:" + topicsToBeParsed[i].name);
+                console.log("topicsToBeParsed[" + i + "].name:" + topicsToBeParsed[i].name);
                 console.log("topicsToBeParsed[" + i + "].questions.length:" + topicsToBeParsed[i].questions.length);
             }
             var topicsData = GenerateTest(req.body.time, topicsToBeParsed);
@@ -1509,18 +1515,18 @@ app.post("/users/:id/tests/results", isLoggedIn, function (req, res) {
 //examboard routes
 //----------------------------------------------
 
-app.get("/examboards",function(req,res)
+app.get("/users/:id/examboards", isLoggedIn, isAdmin, function(req,res)
 {
     res.render("examboards");        
 });
 
-app.get("/examboards/new",function(req,res)
+app.get("/users/:id/examboards/new", isLoggedIn, isAdmin, function(req,res)
 {
     //render new examboard form     
 });
 
 
-app.post("/examboards",function(req,res)
+app.post("/examboards", function(req,res)
 {
     //create new examboard
     res.redirect("/examboards");        
@@ -1530,28 +1536,26 @@ app.post("/examboards",function(req,res)
 //question routes
 //----------------------------------------------
 
-app.get("/questions",function(req,res)
+app.get("/users/:id/questions", isLoggedIn, isAdmin, function(req,res)
 {
-    question.find({},function(err,quests)
-    {
-        if(err)
-        {
-            console.log("Could not find questions\n"+err);
-        }else
-        {
-            res.render("questions/index",{questions:quests});
+    question.find({}, function (err, quests) {
+        if (err) {
+            console.log("Could not find questions\n" + err);
+        } else {
+            res.render("questions/index", { questions: quests });
         }
-    });       
+    });
+           
 });
 
-app.get("/questions/new",function(req,res)
+app.get("/users/:id/questions/new", isLoggedIn, isAdmin, function(req,res)
 {
     res.render("questions/new");
 });
 
-app.get("/questions/:id",function(req,res)
+app.get("/users/:id/questions/:questId", isLoggedIn, isAdmin, function(req,res)
 {
-    question.findById(req.params.id,function(err,quest)
+    question.findById(req.params.questId,function(err,quest)
     {
         if(err)
         {
@@ -1652,6 +1656,51 @@ app.post("/questions",function(req,res)
     res.redirect("/questions");        
 });
 
+//----------------------------------------------
+//user routes
+//----------------------------------------------
+
+app.get("/users/:id/users", isLoggedIn, isAdmin, function (req, res) {
+    user.find({}, function (err, users) {
+        if (err) {
+            console.log("Could not find users\n" + err);
+        } else {
+            var objectToBeParsed = { users: users, admin: req.params.id};
+            res.render("users/index", { data: objectToBeParsed });
+        }
+    });
+
+});
+
+app.get("/users/:id/users/:userId", isLoggedIn, isAdmin, function (req, res) {
+    user.findById(req.params.userId, function (err, user) {
+        if (err) {
+            console.log("Could not find user\n" + err);
+        } else {
+            var objectToBeParsed = { userData: user, admin: req.params.id };
+            res.render("users/show", { data: objectToBeParsed });
+        }
+    });
+});
+
+app.post("/users/:id/users/:userId/admin", function (req, res) {
+    user.findById(req.params.userId, function (err, user) {
+        if (err) {
+            console.log("Could not find user:\n" + err);
+        } else {
+            user.role = "admin";
+            user.save(function (err, updatedUser) {
+                if (err) {
+                    console.log("Could not update user role to admin:\n" + err);
+                } else {
+                    var objectToBeParsed = { userData: updatedUser, admin: req.params.id };
+                    res.render("users/show", { data: objectToBeParsed });
+                }
+            });
+        }
+    });
+});
+
 //---------------------------------------------------------------------
 //bottom stuff
 //---------------------------------------------------------------------
@@ -1664,6 +1713,22 @@ function isLoggedIn(req,res,next)
     res.redirect("/login");
 }
 
+function isAdmin(req, res, next) {
+    user.findById(req.params.id, function (err, user) {
+        if (err)
+        {
+            console.log("Could not find user\n" + err);
+        }
+        else
+        {
+            if (user.role == "admin")
+            {
+                return next();
+            }
+            res.redirect("/users/" + user._id);
+        }
+    });  
+} 
 //---------------------------------------------------------------------
 //test functions
 //---------------------------------------------------------------------

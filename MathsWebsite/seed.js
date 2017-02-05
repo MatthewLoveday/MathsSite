@@ -1,7 +1,11 @@
 var mongoose = require("mongoose"),
     examBoard = require("./models/examBoard"),
     question = require("./models/question"),
-    user = require("./models/user");
+    user = require("./models/user"),
+    passport = require("passport"),
+    bodyParser = require("body-parser"),
+    LocalStrategy = require("passport-local"),
+    passportLocalMongoose = require("passport-local-mongoose");
     
 var examboardData=
 [
@@ -215,8 +219,20 @@ function seedDB() {
                         }
                         else {
                             console.log("Removed old questions");
-                            
-                            console.log("Finished creating all questions");
+                            user.register(new user
+                                ({
+                                    username: "admin",
+                                    email: "jonathanwoollettlight@gmail.com",
+                                    role: "admin"
+                                }),
+                                "lu134r7n75q5psbzwgch", function (err, user) {
+                                    if (err) {
+                                        console.log("Failed to add admin\n" + err);
+                                    }
+                                    else {
+                                        console.log("Admin added");
+                                    }
+                                });
                             examboardData.forEach(function (examSeed) {
                                 examBoard.create(examSeed, function (err, exam) {
                                     console.log("Creating new examboard");

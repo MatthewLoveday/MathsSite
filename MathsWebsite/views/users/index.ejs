@@ -1,0 +1,19 @@
+<% include ../partials/header %>
+
+<h2>Admins</h2>
+
+<% for(var i=0;i<data.users.length;i++){ %>
+	<% if(data.users[i].role == "admin"){ %>
+		<li><%= data.users[i].username %></li>
+	<% } %>
+<% } %>
+
+<h2>Users</h2>
+
+<% for(var i=0;i<data.users.length;i++){ %>
+	<% if(data.users[i].role == "user"){ %>
+		<li><%= data.users[i].username %> <a href="/users/<%= data.admin %>/users/<%= data.users[i]._id %>">Info</a></li>
+	<% } %>
+<% } %>
+
+<% include ../partials/footer %>

@@ -3,19 +3,24 @@
 
 
 <nav>
-		<div class="nav-wrapper">
-			<a href="/" class="brand-logo">Logo</a>
-			<ul id="nav-mobile" class="right hide-on-med-and-down">
-				<li class="active"><a href="/users/<%= user._id %>">Home</a></li>
-				<li><a href="/users/<%= user._id %>/tests/new">Test</a></li>
-			</ul>
-		</div>
+	<div class="nav-wrapper">
+		<a href="/" class="brand-logo">Logo</a>
+		<ul id="nav-mobile" class="right hide-on-med-and-down">
+			<li class="active"><a href="/users/<%= user._id %>">Home</a></li>
+			<li><a href="/users/<%= user._id %>/tests/new">Test</a></li>
+		</ul>
+	</div>
 </nav>
+
 <h1>Home page</h1>
 
-<h3>Examboard:<%=user.examBoard.name%></h3>
-<% for(var i=0;i<user.examBoard.modules.length;i++){ %>
-<li><%=user.examBoard.modules[i].name%>:<%=user.examBoard.modules[i].progress%></li>
+<h3>Username:<%= user.username %></h3>
+<% if(user.examBoard){ %>
+	<h3>Examboard:<%=user.examBoard.name%></h3>
+	<% for(var i=0;i<user.examBoard.modules.length;i++){ %>
+	<li><%=user.examBoard.modules[i].name%>:<%=user.examBoard.modules[i].progress%></li>
+	<% } %>
 <% } %>
+
 <br>
 <% include ./partials/footer %>

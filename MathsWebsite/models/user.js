@@ -24,15 +24,11 @@ var userExamBoardSchema = new mongoose.Schema
 var testSchema = new mongoose.Schema
 ({
     seed: String,
-    attempts:[
-        {
-            totalTime: Number,
-            time: Number,
-            totalMarks: Number,
-            marks: Number,
-            date: Date
-        }
-    ]
+    totalTime: Number,
+    time: Number,
+    totalMarks: Number,
+    marks: Number,
+    date: Date
 });
 
 var UserSchema = new mongoose.Schema
@@ -43,7 +39,8 @@ var UserSchema = new mongoose.Schema
     targetGrade: String,
     examBoard:userExamBoardSchema,
     score: Number,
-    tests:[testSchema]
+    role: String,
+    tests: [testSchema]
     
 });
 

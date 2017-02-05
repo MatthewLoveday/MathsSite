@@ -1,0 +1,28 @@
+<% include ../partials/header %>
+
+<h2><%= data.userData.name %></h2>
+<h3><%= data.userData.role %></h3>
+
+<% if(data.userData.examBoard){ %>
+	<h3>Examboard:<%=data.userData.examBoard.name%></h3>
+	<% for(var i=0;i<data.userData.examBoard.modules.length;i++){ %>
+	<li><%=data.userData.examBoard.modules[i].name%>:<%=data.userData.examBoard.modules[i].progress%></li>
+	<% } %>
+<% } %>
+
+
+<form class="col s12" action="/users/<%= data.admin %>/users/<%= data.userData._id %>/admin" method="POST">
+	<div class="row">
+		<p>
+			<input type="checkbox" id="checker" required />
+			<label for="checker">I am 100% sure I want to do this</label>
+		</p>
+	</div>
+	<div class="row">
+		<button class="btn waves-effect waves-light" type="submit" name="action">Make admin
+			<i class="material-icons right">send</i>
+		</button>
+	</div>
+</form>
+
+<% include ../partials/footer %>
