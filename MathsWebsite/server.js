@@ -1568,7 +1568,7 @@ app.get("/users/:id/questions/:questId", isLoggedIn, isAdmin, function(req,res)
 });
 
 
-app.post("/questions",function(req,res)
+app.post("/users/:id/questions",function(req,res)
 {
     var numOfParts=[req.body.m1parts,req.body.m2parts,req.body.m3parts,req.body.m4parts];
     var parts = 
@@ -1692,6 +1692,24 @@ app.post("/users/:id/users/:userId/admin", function (req, res) {
             user.save(function (err, updatedUser) {
                 if (err) {
                     console.log("Could not update user role to admin:\n" + err);
+                } else {
+                    var objectToBeParsed = { userData: updatedUser, admin: req.params.id };
+                    res.render("users/show", { data: objectToBeParsed });
+                }
+            });
+        }
+    });
+});
+
+app.post("/users/:id/users/:userId/admin-remove", function (req, res) {
+    user.findById(req.params.userId, function (err, user) {
+        if (err) {
+            console.log("Could not find user:\n" + err);
+        } else {
+            user.role = "user";
+            user.save(function (err, updatedUser) {
+                if (err) {
+                    console.log("Could not update user role to user:\n" + err);
                 } else {
                     var objectToBeParsed = { userData: updatedUser, admin: req.params.id };
                     res.render("users/show", { data: objectToBeParsed });

@@ -4,7 +4,9 @@
 
 
 <form action="/users/<%= user._id %>/tests" method="POST">
-    <input type="number" name="time" placeholder="Time" required><br>
+	<p class="range-field">
+		<input type="range" name="time" id="test5" min="4" max="180" required />
+    </p>
     <input type="text" name="examBoardName" placeholder="Examboard" required><br>
     <input type="text" name="moduleName" placeholder="Module" required><br>
     <ul>
@@ -17,6 +19,7 @@
         <li><input type="text" name="topic7" placeholder="topic 7"></li>
         <li><input type="text" name="topic8" placeholder="topic 8"></li>
     </ul>
+	
     <button>Submit</button>
 </form>
 

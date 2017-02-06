@@ -10,19 +10,37 @@
 	<% } %>
 <% } %>
 
+<% if(data.userData.role == "user"){ %>
+	<form class="col s12" action="/users/<%= data.admin %>/users/<%= data.userData._id %>/admin" method="POST">
+		<div class="row">
+			<p>
+				<input type="checkbox" id="checker" required />
+				<label for="checker">I am 100% sure I want to do this</label>
+			</p>
+		</div>
+		<div class="row">
+			<button class="btn waves-effect waves-light" type="submit" name="action">Make admin
+				<i class="material-icons right">send</i>
+			</button>
+		</div>
+	</form>
+<% } else { %>
+	<form class="col s12" action="/users/<%= data.admin %>/users/<%= data.userData._id %>/admin-remove" method="POST">
+		<div class="row">
+			<p>
+				<input type="checkbox" id="checker" required />
+				<label for="checker">I am 100% sure I want to do this</label>
+			</p>
+		</div>
+		<div class="row">
+			<button class="btn waves-effect waves-light" type="submit" name="action">Remove admin
+				<i class="material-icons right">send</i>
+			</button>
+		</div>
+	</form>
+<% } %>
 
-<form class="col s12" action="/users/<%= data.admin %>/users/<%= data.userData._id %>/admin" method="POST">
-	<div class="row">
-		<p>
-			<input type="checkbox" id="checker" required />
-			<label for="checker">I am 100% sure I want to do this</label>
-		</p>
-	</div>
-	<div class="row">
-		<button class="btn waves-effect waves-light" type="submit" name="action">Make admin
-			<i class="material-icons right">send</i>
-		</button>
-	</div>
-</form>
+
+
 
 <% include ../partials/footer %>
