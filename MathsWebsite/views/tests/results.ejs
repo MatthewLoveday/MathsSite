@@ -3,29 +3,29 @@
 
 <h2>Output</h2>
 <% var checked = 0 %>
-<% for(var i = 0; i < markingData.numberOfTopics; i++){ %>
+<% for(var i = 0; i < data.markingData.numberOfTopics; i++){ %>
 
-	<h3><%= markingData.topics[i].name %></h3>
+	<h3><%= data.markingData.topics[i].name %></h3>
 
-	<% for(var t = 0; t < markingData.topics[i].numberOfQuestions; t++){ %>
+	<% for(var t = 0; t < data.markingData.topics[i].numberOfQuestions; t++){ %>
 
-		<img src="<%= markingData.topics[i].questions[t].content %>">
-		<% for(var x = 0; x < markingData.topics[i].questions[t].numberOfParts; x++){ %>
+		<img src="<%= data.markingData.topics[i].questions[t].content %>">
+		<% for(var x = 0; x < data.markingData.topics[i].questions[t].numberOfParts; x++){ %>
 			
-			<% for(var e = 0; e < markingData.topics[i].questions[t].answers.length; e++){ %>
+			<% for(var e = 0; e < data.markingData.topics[i].questions[t].answers.length; e++){ %>
 				
-				<% if(markingData.topics[i].questions[t].answers[e].partNumber == x){ %>
+				<% if(data.markingData.topics[i].questions[t].answers[e].partNumber == x){ %>
 					<% checked = 1 %>
-					<% if(markingData.topics[i].questions[t].answers[e].startIndex == 0 && markingData.topics[i].questions[t].answers[e].endIndex == markingData.topics[i].questions[t].parts[x].length){ %>
-						<p class="answer"><%= markingData.topics[i].questions[t].parts[x] %></p>					
+					<% if(data.markingData.topics[i].questions[t].answers[e].startIndex == 0 && data.markingData.topics[i].questions[t].answers[e].endIndex == data.markingData.topics[i].questions[t].parts[x].length){ %>
+						<p class="answer"><%= data.markingData.topics[i].questions[t].parts[x] %></p>					
 					<% } else { %>
-						<p><%= markingData.topics[i].questions[t].parts[x].slice(0,markingData.topics[i].questions[t].answers[e].startIndex) %><span class="answer"><%= markingData.topics[i].questions[t].parts[x].slice(markingData.topics[i].questions[t].answers[e].startIndex, markingData.topics[i].questions[t].answers[e].endIndex + 1) %></span><%= markingData.topics[i].questions[t].parts[x].slice(markingData.topics[i].questions[t].answers[e].endIndex + 1) %></p>		
+						<p><%= data.markingData.topics[i].questions[t].parts[x].slice(0,data.markingData.topics[i].questions[t].answers[e].startIndex) %><span class="answer"><%= data.markingData.topics[i].questions[t].parts[x].slice(data.markingData.topics[i].questions[t].answers[e].startIndex, data.markingData.topics[i].questions[t].answers[e].endIndex + 1) %></span><%= data.markingData.topics[i].questions[t].parts[x].slice(data.markingData.topics[i].questions[t].answers[e].endIndex + 1) %></p>		
 					<% } %>	
 					<% break; %>					
 				<% } %>
 			<% } %>
 			<% if(checked == 0){ %>
-				<p><%= markingData.topics[i].questions[t].parts[x] %></p>
+				<p><%= data.markingData.topics[i].questions[t].parts[x] %></p>
 			<% } %>
 			
 			<% checked = 0 %>

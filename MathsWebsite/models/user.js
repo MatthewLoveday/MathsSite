@@ -4,7 +4,8 @@ var passportLocalMongoose = require("passport-local-mongoose");
 var userTopicsSchema = new mongoose.Schema
 ({
         name: String,
-        progress: Number
+        progress: Number,
+        results: [Number]
 });
 
 var userModulesSchema = new mongoose.Schema
@@ -21,16 +22,6 @@ var userExamBoardSchema = new mongoose.Schema
     modules:[userModulesSchema]
 })
 
-var testSchema = new mongoose.Schema
-({
-    seed: String,
-    totalTime: Number,
-    time: Number,
-    totalMarks: Number,
-    marks: Number,
-    date: Date
-});
-
 var UserSchema = new mongoose.Schema
 ({
     username: String,
@@ -39,8 +30,7 @@ var UserSchema = new mongoose.Schema
     targetGrade: String,
     examBoard:userExamBoardSchema,
     score: Number,
-    role: String,
-    tests: [testSchema]
+    role: String
     
 });
 

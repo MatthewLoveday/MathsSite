@@ -10,6 +10,15 @@
     examBoard               = require("./models/examBoard"),
     user                    = require("./models/user");
 
+//------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------
+
+//------------------------------WILL NOT WORK IF 'math.js' IS NOT INCLUDED------------------------------
+
+//-----------------YOU NEED TO INCLUDE IT OR TELL ME HOW TO (I FORGOT HOW TO NPM STUFF)-----------------
+
+//------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------
 var app = express();
 
 seedDB();
@@ -257,11 +266,14 @@ app.post("/users/:id/tests", function(req,res)//when seed program ready this sho
 app.post("/users/:id/tests/results", isLoggedIn, function (req, res) {
 
     var testData = {
+        examBoard: req.body.examBoard,
+        module: req.body.module,
         numberOfTopics: req.body.numberOfTopics,
         topics: [
             {
                 name: req.body.topic0,
                 numberOfQuestions: req.body.topic0numberOfQuestions,
+                percentageMark: 0,
                 questions: [
                     {
                         id: req.body.topic0question0,
@@ -492,6 +504,7 @@ app.post("/users/:id/tests/results", isLoggedIn, function (req, res) {
             {
                 name: req.body.topic1,
                 numberOfQuestions: req.body.topic1numberOfQuestions,
+                percentageMark: 0,
                 questions: [
                     {
                         id: req.body.topic1question0,
@@ -722,6 +735,7 @@ app.post("/users/:id/tests/results", isLoggedIn, function (req, res) {
             {
                 name: req.body.topic2,
                 numberOfQuestions: req.body.topic2numberOfQuestions,
+                percentageMark: 0,
                 questions: [
                     {
                         id: req.body.topic2question0,
@@ -952,6 +966,7 @@ app.post("/users/:id/tests/results", isLoggedIn, function (req, res) {
             {
                 name: req.body.topic3,
                 numberOfQuestions: req.body.topic3numberOfQuestions,
+                percentageMark: 0,
                 questions: [
                     {
                         id: req.body.topic3question0,
@@ -1182,6 +1197,7 @@ app.post("/users/:id/tests/results", isLoggedIn, function (req, res) {
             {
                 name: req.body.topic4,
                 numberOfQuestions: req.body.topic4numberOfQuestions,
+                percentageMark: 0,
                 questions: [
                     {
                         id: req.body.topic4question0,
@@ -1492,18 +1508,56 @@ app.post("/users/:id/tests/results", isLoggedIn, function (req, res) {
                                             {
                                                 testData.topics[z].questions[q].solution = populatedExams[0].modules[i].topics[t].questions[p].methods[index];
                                                 testData.topics[z].questions[q].answers = answerLocationsTemp[index];
+                                                testData.topics[z].percentageMark += methodMarks[index] / populatedExams[0].modules[i].topics[t].questions[p].mark;
                                             }
                                             break;
                                         }
                                     }
                                 }
+                                testData.topics[z].percentageMark = testData.topics[z].percentageMarks / testData.topics[z].questions.length;
                             }
                         }       
                     }       
                 }        
             }
-            console.log("finished setting stuff");
-            res.render("tests/results", { markingData: testData });
+            user.findById(req.params.id, function (err, user) {//finding user in database
+                if (err)
+                {
+                    console.log("Could not find user data\n" + err);
+                }
+                else
+                {
+                    var weightOfDeviation = 3;
+                    for (var i = 0; i < user.examBoard.modules.length; i++)//find module
+                    {
+                        if (user.examBoard.modules[i].name == req.body.module)
+                        {
+                            for (var t = 0; t < user.examboard.modules[i].topics.length;t++)//finding topics
+                            {
+                                for (var z = 0; z < testData.topics.length; z++)
+                                {
+                                    if (user.examBoard.modules[i].topics[t].name == testData.topics[z].name)
+                                    {
+                                        user.examBoard.modules[i].topics[t].results.push(testData.topics[z].percentageMark)//adding results for each topic
+                                        user.examBoard.modules[i].topics[t].progress = math.mean(user.examBoard.modules[i].topics[t].results) - (math.std(user.examBoard.modules[i].topics[t].results) / weightOfDeviation);//changing progress in topic
+                                    }
+                                }
+                                
+                            }
+                            
+                        }
+                    }
+                    user.save(function (err, updatedUser) {
+                        if (err) {
+                            console.log("Could not update user results:\n" + err);
+                        } else {
+                            var objectToBeParsed = { userData: updatedUser, markingData: testData };
+                            console.log("finished setting stuff");
+                            res.render("tests/results", { data: objectToBeParsed });
+                        }
+                    });
+                }
+            });
         });
     });
 });
