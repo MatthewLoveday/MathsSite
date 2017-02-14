@@ -4,6 +4,7 @@
     bodyParser              = require("body-parser"),
     LocalStrategy           = require("passport-local"),
     passportLocalMongoose   = require("passport-local-mongoose"),
+    math                    = require("mathjs"),
 
     seedDB                  = require("./seed"),
     question                = require("./models/question"),
@@ -149,42 +150,74 @@ app.get("/register",function(req,res)
 
 app.post("/register",function(req,res)
 {
-    var tempModules=[req.body.module1,req.body.module2,req.body.module3,req.body.module4,req.body.module5,req.body.module6,req.body.module7,req.body.module8];
-    var modules=[];
-    for(var i=0;i<8;i++)
+
+    var tempModules = [req.body.module1, req.body.module2, req.body.module3, req.body.module4, req.body.module5, req.body.module6, req.body.module7, req.body.module8];
+
+    for (var i = tempModules.length - 1; i > -1; i--)
     {
-        if(tempModules[i])
+        if (!(tempModules[i]))
         {
-            modules.push({name:tempModules[i],progress:0});    
+            tempModules.splice(i, 1);
         }
     }
-    user.register(new user
-    ({
-        username:req.body.username,
-        email:req.body.email,
-        targetGrade:req.body.targetGrade,
-        examBoard:
+    var tempTopics = [];
+
+    var modules = [];
+    examBoard.find({ name: req.body.examBoard }, function (err, examBoard) {
+        if (err)
         {
-            name:req.body.examBoard,
-            progress:0,
-            modules:modules
-        },
-        score: 0,
-        role: "user"
-    }),
-    req.body.password,function(err,user)
-    {
-      if(err)
-      {
-          console.log("Failed to add new user\n"+err);
-          return res.render("register");
-      }
-      else
-      {
-            console.log("New user added");
-            passport.authenticate("local")(req,res,function()
+            console.log("Could not find examBoard\n" + err);
+        }
+        else
+        {
+            console.log("examBoard[0].modules.length :" + examBoard[0].modules.length);
+            for (var i = 0; i < examBoard[0].modules.length; i++)
             {
-                res.redirect("/users/"+user._id);
+                console.log("tempModules.length :" + tempModules.length);
+                for (var t = 0; t < tempModules.length; t++)
+                {
+                    if (examBoard[0].modules[i].name == tempModules[t])
+                    {
+                        console.log("tempModules[t] :" + tempModules[t]);
+                        for (var u = 0; u < examBoard[0].modules[i].topics.length; u++)
+                        {
+                            console.log("u :" + u);
+                            tempTopics.push({ name: examBoard[0].modules[i].topics[u].name, progress: 0, results: [] });       
+                        }
+                        modules.push({ name: tempModules[t], progress: 0, topics: tempTopics });
+                        console.log("modules :" + modules);
+                        break;
+                    }
+                }
+            }
+            console.log("\n\nFinal modules:\n" + modules);
+            console.log("modules[0].topics.length :" + modules[0].topics.length);
+            console.log("modules[0].topics:\n" + modules[0].topics);
+            user.register(new user
+            ({
+                username: req.body.username,
+                email: req.body.email,
+                targetGrade: req.body.targetGrade,
+                examBoard:
+                {
+                    name: req.body.examBoard,
+                    progress: 0,
+                    modules: modules
+                },
+                score: 0,
+                role: "user"
+            }),
+            req.body.password, function (err, user) {
+                if (err) {
+                    console.log("Failed to add new user\n" + err);
+                    return res.render("register");
+                }
+                else {
+                    console.log("New user added:\n" + user);
+                    passport.authenticate("local")(req, res, function () {
+                        res.redirect("/users/" + user._id);
+                    });
+                }
             });
         }
     });
@@ -249,11 +282,6 @@ app.post("/users/:id/tests", function(req,res)//when seed program ready this sho
                         }
                     }    
                 }
-            }
-            for (var i = 0; i < topicsToBeParsed.length; i++)
-            {
-                console.log("topicsToBeParsed[" + i + "].name:" + topicsToBeParsed[i].name);
-                console.log("topicsToBeParsed[" + i + "].questions.length:" + topicsToBeParsed[i].questions.length);
             }
             var topicsData = GenerateTest(req.body.time, topicsToBeParsed);
 
@@ -1509,15 +1537,21 @@ app.post("/users/:id/tests/results", isLoggedIn, function (req, res) {
                                                 testData.topics[z].questions[q].solution = populatedExams[0].modules[i].topics[t].questions[p].methods[index];
                                                 testData.topics[z].questions[q].answers = answerLocationsTemp[index];
                                                 testData.topics[z].percentageMark += methodMarks[index] / populatedExams[0].modules[i].topics[t].questions[p].mark;
+                                                console.log("testData.topics[z].percentageMark :" + testData.topics[z].percentageMark);
                                             }
                                             break;
                                         }
                                     }
                                 }
-                                testData.topics[z].percentageMark = testData.topics[z].percentageMarks / testData.topics[z].questions.length;
+                                console.log("testData.topics[z].percentageMark :" + testData.topics[z].percentageMark);
+                                console.log("testData.topics[z].questions.length :" + testData.topics[z].questions.length);
+                                testData.topics[z].percentageMark = ((testData.topics[z].percentageMarks) / (testData.topics[z].questions.length));
+                                console.log("FINAL : testData.topics[z].percentageMark :" + testData.topics[z].percentageMark);
+                                break;
                             }
                         }       
-                    }       
+                    }
+                    break;       
                 }        
             }
             user.findById(req.params.id, function (err, user) {//finding user in database
@@ -1527,24 +1561,36 @@ app.post("/users/:id/tests/results", isLoggedIn, function (req, res) {
                 }
                 else
                 {
+                    console.log("Found user");
                     var weightOfDeviation = 3;
+                    console.log("user.examBoard.modules.length : " + user.examBoard.modules.length);
                     for (var i = 0; i < user.examBoard.modules.length; i++)//find module
                     {
+                        console.log("i :" + i);
                         if (user.examBoard.modules[i].name == req.body.module)
                         {
-                            for (var t = 0; t < user.examboard.modules[i].topics.length;t++)//finding topics
+                            console.log("Found modules : " + req.body.module);
+                            console.log("user.examBoard.modules[i].topics.length : " + user.examBoard.modules[i].topics.length);
+                            for (var t = 0; t < user.examBoard.modules[i].topics.length;t++)//finding topics
                             {
+                                console.log("t :" + t);
                                 for (var z = 0; z < testData.topics.length; z++)
                                 {
+                                    console.log("z :" + z);
                                     if (user.examBoard.modules[i].topics[t].name == testData.topics[z].name)
                                     {
+                                        console.log("Found topic : " + testData.topics[z].name);
+                                        console.log("user.examBoard.modules[i].topics[t].results:\n" + user.examBoard.modules[i].topics[t].results);
+                                        console.log("testData.topics[z].percentageMark :" + testData.topics[z].percentageMark);
                                         user.examBoard.modules[i].topics[t].results.push(testData.topics[z].percentageMark)//adding results for each topic
+                                        console.log("user.examBoard.modules[i].topics[t].results:\n" + user.examBoard.modules[i].topics[t].results);
                                         user.examBoard.modules[i].topics[t].progress = math.mean(user.examBoard.modules[i].topics[t].results) - (math.std(user.examBoard.modules[i].topics[t].results) / weightOfDeviation);//changing progress in topic
+                                        console.log("user.examBoard.modules[i].topics[t].progress : " + user.examBoard.modules[i].topics[t].progress);
+                                        break;
                                     }
                                 }
-                                
                             }
-                            
+                            break;
                         }
                     }
                     user.save(function (err, updatedUser) {
@@ -1553,6 +1599,8 @@ app.post("/users/:id/tests/results", isLoggedIn, function (req, res) {
                         } else {
                             var objectToBeParsed = { userData: updatedUser, markingData: testData };
                             console.log("finished setting stuff");
+                            console.log("testData.topics[0].questions[0].answers : " + testData.topics[0].questions[0].answers);
+                            console.log("testData.topics[0].questions[0].answers[0].partNumber : " + testData.topics[0].questions[0].answers[0].partNumber);
                             res.render("tests/results", { data: objectToBeParsed });
                         }
                     });

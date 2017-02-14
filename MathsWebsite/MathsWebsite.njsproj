@@ -59,6 +59,7 @@
     <Folder Include="typings\" />
     <Folder Include="typings\globals\" />
     <Folder Include="typings\globals\express-session\" />
+    <Folder Include="typings\globals\mathjs\" />
     <Folder Include="typings\globals\mongoose\" />
     <Folder Include="typings\globals\node\" />
     <Folder Include="typings\globals\passport-local-mongoose\" />
@@ -66,6 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="typings\globals\express-session\index.d.ts" />
+    <TypeScriptCompile Include="typings\globals\mathjs\index.d.ts" />
     <TypeScriptCompile Include="typings\globals\mongoose\index.d.ts" />
     <TypeScriptCompile Include="typings\globals\node\index.d.ts" />
     <TypeScriptCompile Include="typings\globals\passport-local-mongoose\index.d.ts" />
