@@ -1495,16 +1495,21 @@ app.post("/users/:id/tests/results", isLoggedIn, function (req, res) {
                 {
                     for (var z = 0; z < testData.topics.length; z++)//finding topics
                     {
+                        console.log("Z : " + z);
                         for (var t = 0; t < populatedExams[0].modules[i].topics.length; t++)
                         {
+                            console.log("T : " + t);
                             if (testData.topics[z].name == populatedExams[0].modules[i].topics[t].name)
                             {
                                 for (var q = 0; q < testData.topics[z].questions.length; q++)//finding questions
                                 {
+                                    console.log("Q : " + q);
                                     for (var p = 0; p < populatedExams[0].modules[i].topics[t].questions.length; p++)
                                     {
+                                        console.log("P : " + p);
                                         if (populatedExams[0].modules[i].topics[t].questions[p]._id == testData.topics[z].questions[q].id)
                                         {
+                                            console.log("question found");
                                             methodMarks = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
                                             answerLocationsTemp = [];
                                             for (var x = 0; x < populatedExams[0].modules[i].topics[t].questions[p].methods.length; x++)//iterating through answer methods
@@ -1515,13 +1520,22 @@ app.post("/users/:id/tests/results", isLoggedIn, function (req, res) {
                                                     for (var e = 0; e < testData.topics[z].questions[q].parts.length; e++)//iterating through user parts
                                                     {
                                                         var posOfAnswer = markPart(testData.topics[z].questions[q].parts[e], populatedExams[0].modules[i].topics[t].questions[p].methods[x][c].content);
+                                                        console.log("testData.topics[z].questions[q].parts[e] : " + testData.topics[z].questions[q].parts[e]);
+                                                        console.log("populatedExams[0].modules[i].topics[t].questions[p].methods[x][c].content : " + populatedExams[0].modules[i].topics[t].questions[p].methods[x][c].content);
+                                                        console.log("posOfAnswer : " + posOfAnswer);
                                                         if (posOfAnswer > -1)//startIndex will be -1 if not found and index of start of string if found
                                                         {
                                                             methodMarks[x] += populatedExams[0].modules[i].topics[t].questions[p].methods[x][c].mark;
-                                                            
+                                                            console.log("methodMarks[" + x + "] : " + methodMarks[x]);
                                                             answerLocationsTemp[x][c] = { partNumber: e, startIndex: posOfAnswer, endIndex: posOfAnswer + populatedExams[0].modules[i].topics[t].questions[p].methods[x][c].content.length - 1, mark: populatedExams[0].modules[i].topics[t].questions[p].methods[x][c].mark };
+                                                            break;
                                                         }
                                                     }
+                                                    console.log("finished method");
+                                                }
+                                                if (methodMarks[x] == populatedExams[0].modules[i].topics[t].questions[p].mark)
+                                                {
+                                                    break;
                                                 }
                                             }
                                             index = 0;
@@ -1532,20 +1546,27 @@ app.post("/users/:id/tests/results", isLoggedIn, function (req, res) {
                                                     index = x;
                                                 }    
                                             }
+                                            console.log("methodMarks[index] : " + methodMarks[index]);
                                             if (methodMarks[index] > 0)
                                             {
+                                                console.log("\nend of question stuff");
                                                 testData.topics[z].questions[q].solution = populatedExams[0].modules[i].topics[t].questions[p].methods[index];
                                                 testData.topics[z].questions[q].answers = answerLocationsTemp[index];
                                                 testData.topics[z].percentageMark += methodMarks[index] / populatedExams[0].modules[i].topics[t].questions[p].mark;
+                                                console.log("methodMarks[index] :" + methodMarks[index]);
+                                                console.log("populatedExams[0].modules[i].topics[t].questions[p].mark :" + populatedExams[0].modules[i].topics[t].questions[p].mark);
                                                 console.log("testData.topics[z].percentageMark :" + testData.topics[z].percentageMark);
                                             }
                                             break;
                                         }
                                     }
                                 }
+                                console.log("\n\nend of topics stuff");
                                 console.log("testData.topics[z].percentageMark :" + testData.topics[z].percentageMark);
                                 console.log("testData.topics[z].questions.length :" + testData.topics[z].questions.length);
-                                testData.topics[z].percentageMark = ((testData.topics[z].percentageMarks) / (testData.topics[z].questions.length));
+                                console.log("typeof(testData.topics[z].percentageMark) :" + typeof (testData.topics[z].percentageMark));
+                                console.log("typeof (testData.topics[z].questions.length) :" + typeof (testData.topics[z].questions.length));
+                                testData.topics[z].percentageMark = ((testData.topics[z].percentageMark) / (testData.topics[z].questions.length));
                                 console.log("FINAL : testData.topics[z].percentageMark :" + testData.topics[z].percentageMark);
                                 break;
                             }
@@ -1562,37 +1583,31 @@ app.post("/users/:id/tests/results", isLoggedIn, function (req, res) {
                 else
                 {
                     console.log("Found user");
-                    var weightOfDeviation = 3;
                     console.log("user.examBoard.modules.length : " + user.examBoard.modules.length);
+                    user.examBoard.progress = 0;
                     for (var i = 0; i < user.examBoard.modules.length; i++)//find module
                     {
-                        console.log("i :" + i);
                         if (user.examBoard.modules[i].name == req.body.module)
                         {
-                            console.log("Found modules : " + req.body.module);
-                            console.log("user.examBoard.modules[i].topics.length : " + user.examBoard.modules[i].topics.length);
+                            user.examBoard.modules[i].progress = 0;
                             for (var t = 0; t < user.examBoard.modules[i].topics.length;t++)//finding topics
                             {
-                                console.log("t :" + t);
                                 for (var z = 0; z < testData.topics.length; z++)
                                 {
-                                    console.log("z :" + z);
                                     if (user.examBoard.modules[i].topics[t].name == testData.topics[z].name)
                                     {
-                                        console.log("Found topic : " + testData.topics[z].name);
-                                        console.log("user.examBoard.modules[i].topics[t].results:\n" + user.examBoard.modules[i].topics[t].results);
-                                        console.log("testData.topics[z].percentageMark :" + testData.topics[z].percentageMark);
                                         user.examBoard.modules[i].topics[t].results.push(testData.topics[z].percentageMark)//adding results for each topic
-                                        console.log("user.examBoard.modules[i].topics[t].results:\n" + user.examBoard.modules[i].topics[t].results);
-                                        user.examBoard.modules[i].topics[t].progress = math.mean(user.examBoard.modules[i].topics[t].results) - (math.std(user.examBoard.modules[i].topics[t].results) / weightOfDeviation);//changing progress in topic
-                                        console.log("user.examBoard.modules[i].topics[t].progress : " + user.examBoard.modules[i].topics[t].progress);
+                                        user.examBoard.modules[i].topics[t].progress = math.mean(user.examBoard.modules[i].topics[t].results) - (math.std(user.examBoard.modules[i].topics[t].results) / 3) - Math.pow(((user.examBoard.modules[i].topics[t].results.length / 30) + 0.105), -2);//changing progress in topic
                                         break;
                                     }
                                 }
+                                user.examBoard.modules[i].progress += user.examBoard.modules[i].topics[t].progress;
                             }
-                            break;
+                            user.examBoard.modules[i].progress = user.examBoard.modules[i].progress / user.examBoard.modules[i].topics.length;
                         }
+                        user.examBoard.progress += user.examBoard.modules[i].progress;
                     }
+                    user.examBoard.progress = user.examBoard.progress / user.examBoard.modules.length;
                     user.save(function (err, updatedUser) {
                         if (err) {
                             console.log("Could not update user results:\n" + err);

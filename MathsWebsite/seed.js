@@ -19,17 +19,17 @@ var questionData=
     {
         content: "http://www.christchurch.esussex.dbprimary.com/esussex/primary/christchurch/web/maths2-big[1].png",
         mark: 4,
-        methods: [[{ mark: 4, content: "x=\\frac{y}{2}" }], [{ mark: 2, content: "y=2x" }, { mark: 2, content:"x=\\frac{y}{2}"}]]
+        methods: [[{ mark: 4, content: "x=-2^{-\\frac{1}{2}}" }], [{ mark: 2, content: "2^{\\frac{1}{2}}x=1" }, { mark: 2, content:"x=2^{-\\frac{1}{2}}"}]]
     },
     {
         content: "http://www.christchurch.esussex.dbprimary.com/esussex/primary/christchurch/web/maths2-big[1].png",
         mark: 4,
-        methods: [[{ mark: 4, content: "x=\\frac{y}{2}" }], [{ mark: 2, content: "y=2x" }, { mark: 2, content: "x=\\frac{y}{2}" }]]
+        methods: [[{ mark: 4, content: "x=-2^{-\\frac{1}{2}}" }], [{ mark: 2, content: "2^{\\frac{1}{2}}x=1" }, { mark: 2, content: "x=2^{-\\frac{1}{2}}" }]]
     },
     {
         content: "http://www.christchurch.esussex.dbprimary.com/esussex/primary/christchurch/web/maths2-big[1].png",
         mark: 4,
-        methods: [[{ mark: 4, content: "x=\\frac{y}{2}" }], [{ mark: 2, content: "y=2x" }, { mark: 2, content:"x=\\frac{y}{2}"}]]
+        methods: [[{ mark: 4, content: "x=-2^{-\\frac{1}{2}}" }], [{ mark: 2, content: "2^{\\frac{1}{2}}x=1" }, { mark: 2, content:"x=2^{-\\frac{1}{2}}"}]]
     },
     {
         content: "http://logos.textgiraffe.com/logos/logo-name/Maths-designstyle-friday-m.png",
