@@ -19,7 +19,5 @@ var examBoardSchema = new mongoose.Schema({
     name: String,
     modules: [moduleSchema]
 });
+
 module.exports = mongoose.model("examBoard", examBoardSchema);
-
-
-

@@ -233,19 +233,24 @@ function seedDB() {
                                         console.log("Admin added");
                                     }
                                 });
-                            examboardData.forEach(function (examSeed) {
-                                examBoard.create(examSeed, function (err, exam) {
+                            examboardData.forEach(function (examSeed)
+                            {
+                                examBoard.create(examSeed, function (err, exam)
+                                {
                                     console.log("Creating new examboard");
-                                    if (err) {
+                                    if (err)
+                                    {
                                         console.log("Could not create new examboard\n" + err);
                                     }
-                                    else {
+                                    else
+                                    {
                                         console.log("Created examboard"); 
                                     }
                                     
                                 });
                             });
-                            questionData.forEach(function (questionSeed) {
+                            questionData.forEach(function (questionSeed)
+                            {
                                 question.create(questionSeed, function (err, question) 
                                 {
                                     if (err) {
@@ -254,9 +259,12 @@ function seedDB() {
                                     else {
                                         console.log("Created question");
                                         examBoard.find({}, function (err, exams) {
-                                            for (var i = 0; i < exams.length; i++) {
-                                                for (var t = 0; t < exams[i].modules.length; t++) {
-                                                    for (var u = 0; u < exams[i].modules[t].topics.length; u++) {
+                                            for (var i = 0; i < exams.length; i++)
+                                            {
+                                                for (var t = 0; t < exams[i].modules.length; t++)
+                                                {
+                                                    for (var u = 0; u < exams[i].modules[t].topics.length; u++)
+                                                    {
                                                         exams[i].modules[t].topics[u].questions.push(question);
                                                     }
                                                 }
@@ -274,15 +282,5 @@ function seedDB() {
         }
     });
 }
-
-
-
-
-
-
-
-
-
-
 
 module.exports = seedDB;

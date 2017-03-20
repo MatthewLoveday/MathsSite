@@ -68,20 +68,6 @@ passport.deserializeUser(user.deserializeUser());
 
 app.get("/",function(req,res)
 {
-    console.log("test random number:" + Math.random());
-    examBoard.find().exec()
-    .then((exams) => {
-    // Populate questions
-        examBoard.populate(exams, {
-            path: 'modules.topics.questions',
-            model: 'question'
-        })
-        .then((populatedExams) => {
-            // Do something with populated exams
-            //console.log("populatedExams:\n"+populatedExams);
-            //console.log("\n\npopulatedExams[0].modules[0].topcis[0]:\n"+populatedExams[0].modules[0].topics[0]);
-        });
-    });
     res.render("landing");
 });
 
@@ -150,7 +136,6 @@ app.get("/register",function(req,res)
 
 app.post("/register",function(req,res)
 {
-
     var tempModules = [req.body.module1, req.body.module2, req.body.module3, req.body.module4, req.body.module5, req.body.module6, req.body.module7, req.body.module8];
 
     for (var i = tempModules.length - 1; i > -1; i--)
@@ -160,9 +145,10 @@ app.post("/register",function(req,res)
             tempModules.splice(i, 1);
         }
     }
-    var tempTopics = [];
 
+    var tempTopics = [];
     var modules = [];
+
     examBoard.find({ name: req.body.examBoard }, function (err, examBoard) {
         if (err)
         {
@@ -170,29 +156,21 @@ app.post("/register",function(req,res)
         }
         else
         {
-            console.log("examBoard[0].modules.length :" + examBoard[0].modules.length);
             for (var i = 0; i < examBoard[0].modules.length; i++)
             {
-                console.log("tempModules.length :" + tempModules.length);
                 for (var t = 0; t < tempModules.length; t++)
                 {
                     if (examBoard[0].modules[i].name == tempModules[t])
                     {
-                        console.log("tempModules[t] :" + tempModules[t]);
                         for (var u = 0; u < examBoard[0].modules[i].topics.length; u++)
                         {
-                            console.log("u :" + u);
                             tempTopics.push({ name: examBoard[0].modules[i].topics[u].name, progress: 0, results: [] });       
                         }
                         modules.push({ name: tempModules[t], progress: 0, topics: tempTopics });
-                        console.log("modules :" + modules);
                         break;
                     }
                 }
             }
-            console.log("\n\nFinal modules:\n" + modules);
-            console.log("modules[0].topics.length :" + modules[0].topics.length);
-            console.log("modules[0].topics:\n" + modules[0].topics);
             user.register(new user
             ({
                 username: req.body.username,
@@ -208,12 +186,13 @@ app.post("/register",function(req,res)
                 role: "user"
             }),
             req.body.password, function (err, user) {
-                if (err) {
+                if (err)
+                {
                     console.log("Failed to add new user\n" + err);
                     return res.render("register");
                 }
-                else {
-                    console.log("New user added:\n" + user);
+                else
+                {
                     passport.authenticate("local")(req, res, function () {
                         res.redirect("/users/" + user._id);
                     });
@@ -230,17 +209,19 @@ app.post("/register",function(req,res)
 app.get("/users/:id/tests/new", isLoggedIn, function(req,res)
 {
     user.findById(req.params.id, function (err, userData) {
-        if (err) {
+        if (err)
+        {
             console.log("Could not find user data\n" + err);
         }
-        else {
+        else
+        {
             console.log(userData);
             res.render("tests/new", { user: userData });
         }
     });  
 });
 
-app.post("/users/:id/tests", function(req,res)//when seed program ready this should be hanged to "/tests" which should redirect to a "/tests/:seed" route 
+app.post("/users/:id/tests", function(req,res)//when seed program ready this should be changed to "/tests" which should redirect to a "/tests/:seed" route 
 {
     var topicsTemp = [req.body.topic1,req.body.topic2,req.body.topic3,req.body.topic4,req.body.topic5,req.body.topic6,req.body.topic7,req.body.topic8];
     var topicsToBeParsed = [];
@@ -291,7 +272,7 @@ app.post("/users/:id/tests", function(req,res)//when seed program ready this sho
     });
 });
 
-app.post("/users/:id/tests/results", isLoggedIn, function (req, res) {
+app.post("/users/:id/tests/results", function (req, res) {
 
     var testData = {
         examBoard: req.body.examBoard,
@@ -1483,7 +1464,7 @@ app.post("/users/:id/tests/results", isLoggedIn, function (req, res) {
     var methodMarks = [];
     var index;
     var startIndex;
-    console.log("req.body.examBoard:" + req.body.examBoard);
+    
     examBoard.find({ name: req.body.examBoard }).exec().then((exams) => {
         examBoard.populate(exams, {
             path: 'modules.topics.questions',
@@ -1491,7 +1472,7 @@ app.post("/users/:id/tests/results", isLoggedIn, function (req, res) {
         }).then((populatedExams) => {
             for (var i = 0; i < populatedExams[0].modules.length; i++)//finding module
             {
-                if (populatedExams[0].modules[i].name == req.body.module)
+                if (populatedExams[0].modules[i].name == req.body.module)//if module matches
                 {
                     for (var z = 0; z < testData.topics.length; z++)//finding topics
                     {
@@ -1499,7 +1480,7 @@ app.post("/users/:id/tests/results", isLoggedIn, function (req, res) {
                         for (var t = 0; t < populatedExams[0].modules[i].topics.length; t++)
                         {
                             console.log("T : " + t);
-                            if (testData.topics[z].name == populatedExams[0].modules[i].topics[t].name)
+                            if (testData.topics[z].name == populatedExams[0].modules[i].topics[t].name)//if topics match
                             {
                                 for (var q = 0; q < testData.topics[z].questions.length; q++)//finding questions
                                 {
@@ -1507,10 +1488,10 @@ app.post("/users/:id/tests/results", isLoggedIn, function (req, res) {
                                     for (var p = 0; p < populatedExams[0].modules[i].topics[t].questions.length; p++)
                                     {
                                         console.log("P : " + p);
-                                        if (populatedExams[0].modules[i].topics[t].questions[p]._id == testData.topics[z].questions[q].id)
+                                        if (populatedExams[0].modules[i].topics[t].questions[p]._id == testData.topics[z].questions[q].id)//if questions match
                                         {
                                             console.log("question found");
-                                            methodMarks = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+                                            methodMarks = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];//have to intialise values in array so as to use '+=' syntax
                                             answerLocationsTemp = [];
                                             for (var x = 0; x < populatedExams[0].modules[i].topics[t].questions[p].methods.length; x++)//iterating through answer methods
                                             {
@@ -1528,12 +1509,12 @@ app.post("/users/:id/tests/results", isLoggedIn, function (req, res) {
                                                             methodMarks[x] += populatedExams[0].modules[i].topics[t].questions[p].methods[x][c].mark;
                                                             console.log("methodMarks[" + x + "] : " + methodMarks[x]);
                                                             answerLocationsTemp[x][c] = { partNumber: e, startIndex: posOfAnswer, endIndex: posOfAnswer + populatedExams[0].modules[i].topics[t].questions[p].methods[x][c].content.length - 1, mark: populatedExams[0].modules[i].topics[t].questions[p].methods[x][c].mark };
-                                                            break;
+                                                            break;//this is neccessary so if the same part exists twice in the answer, the user doesnt get marks for both
                                                         }
                                                     }
                                                     console.log("finished method");
                                                 }
-                                                if (methodMarks[x] == populatedExams[0].modules[i].topics[t].questions[p].mark)
+                                                if (methodMarks[x] == populatedExams[0].modules[i].topics[t].questions[p].mark)//if user gets full marks, no point checking using other methods
                                                 {
                                                     break;
                                                 }
@@ -2051,3 +2032,5 @@ app.listen(process.env.PORT, process.env.IP,function()
 {
     console.log("Server started");
 });
+
+
