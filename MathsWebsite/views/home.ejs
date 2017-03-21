@@ -4,23 +4,43 @@
 
 <nav>
 	<div class="nav-wrapper">
-		<a href="/" class="brand-logo">Logo</a>
+		<a href="/" class="brand-logo">-1^(1/2) 2^3 sigma pi</a>
 		<ul id="nav-mobile" class="right hide-on-med-and-down">
-			<li class="active"><a href="/users/<%= user._id %>">Home</a></li>
-			<li><a href="/users/<%= user._id %>/tests/new">Test</a></li>
+			<li class="active">
+				<a href="/users/<%= user._id %>">
+					<i class="material-icons left">dashboard</i>
+					Home
+				</a>
+			</li>
+			<li>
+				<a href="/users/<%= user._id %>/tests/new">
+					<i class="material-icons left">assignment</i>
+					Test
+				</a>
+			</li>
+			<li>
+				<a href="/logout">
+					<i class="material-icons left">pause</i>
+					Logout
+				</a>
+			</li>
 		</ul>
 	</div>
 </nav>
+
 
 <h1>Home page</h1>
 
 <h3>Username:<%= user.username %></h3>
 <% if(user.examBoard){ %>
-	<h3>Examboard:<%=user.examBoard.name%></h3>
+	<h2>Examboard:<%=user.examBoard.name%></h2>
+	Progress:<%=user.examBoard.progress%>
 	<% for(var i=0;i<user.examBoard.modules.length;i++){ %>
-	<li><%=user.examBoard.modules[i].name%>:<%=user.examBoard.modules[i].progress%></li>
+		<h3><%=user.examBoard.modules[i].name%></h3>
+		Progress:<%=user.examBoard.modules[i].progress%>
+		<% for(var t=0;t<user.examBoard.modules[i].topics.length;t++){ %>
+			<h4><%=user.examBoard.modules[i].topics[t].name%></h4>
+			Progress:<%=user.examBoard.modules[i].topics[t].progress%>
+		<% } %>
 	<% } %>
 <% } %>
-
-<br>
-<% include ./partials/footer %>

@@ -1,5 +1,31 @@
 <% include ../partials/header %>
 
+<nav>
+	<div class="nav-wrapper">
+		<a href="/" class="brand-logo">-1^(1/2) 2^3 sigma pi</a>
+		<ul id="nav-mobile" class="right hide-on-med-and-down">
+			<li>
+				<a href="/users/<%= user._id %>">
+					<i class="material-icons left">dashboard</i>
+					Home
+				</a>
+			</li>
+			<li class="active">
+				<a href="/users/<%= user._id %>/tests/new">
+					<i class="material-icons left">assignment</i>
+					Test
+				</a>
+			</li>
+			<li>
+				<a href="/logout">
+					<i class="material-icons left">pause</i>
+					Logout
+				</a>
+			</li>
+		</ul>
+	</div>
+</nav>
+
 <h1>New test page</h1>
 
 

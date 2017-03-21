@@ -1,13 +1,69 @@
 <% include ./partials/header %>
 
-	<p>test</p>
-	<!-- static stuff -->
-	<p>Solve <span id="problem">ax^2 + bx + c = 0</span>.</p>
+		<div class="container">
+			<div class="row">
+				<div class="col s6 offset-s3">
+					<h1>Math Test</h1>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col s4 offset-s4">
+					<div id="image">
+						<img src="http://propensityforcuriosity.com/blog/wp-content/uploads/2012/08/Hardy-Math-Quote.jpg">	
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col s4 offset-s4">
+					<a href="/login" class="waves-effect waves-light btn">
+						<i class="material-icons left">play_arrow</i>
+						Login
+					</a>
+					<a href="/register" class="waves-effect waves-light btn">
+						<i class="material-icons left">assignment_ind</i>
+						Register
+					</a>
+				</div>
+			</div>
+		</div>
 
-	<script>
-	  	var problemSpan = document.getElementById('problem');
-		MQ.StaticMath(problemSpan);
-	</script>
-	<!-- dynamic stuff -->
+<style>
+		ul{
+			background-color: rgba(224, 183, 175, 0.5);
+		}
+		li{
+			margin-left: auto;
+			margin-right: auto;
+			text-align:center;
+			width: 100%;
+		}
+		img{
+			margin-left: auto;
+			margin-right: auto;
+			height: 100%;
+			width: 100%;
+		}
+		h1{
+			text-decoration: underline;
+			text-align:center;
+			font-family: 'Raleway', sans-serif;
+			font-weight: 900;
+		}
+		html{
+			background-image: url("http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/8/12/1407861611128/Calculus-on-blackboard-014.jpg");
+			background-size:100% 100%;
+            background-repeat: no-repeat;
+			height:100%;
+			width:100%;
+		}
+		#image{
+			display: flex;
+		}
+		a{
+			text-align:center;
+			margin-left: auto;
+			margin-right: auto;		
+		}
+		
+</style>
 
-<% include ./partials/footer %>
