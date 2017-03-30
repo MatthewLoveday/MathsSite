@@ -1595,8 +1595,6 @@ app.post("/users/:id/tests/results", function (req, res) {
                         } else {
                             var objectToBeParsed = { userData: updatedUser, markingData: testData };
                             console.log("finished setting stuff");
-                            console.log("testData.topics[0].questions[0].answers : " + testData.topics[0].questions[0].answers);
-                            console.log("testData.topics[0].questions[0].answers[0].partNumber : " + testData.topics[0].questions[0].answers[0].partNumber);
                             res.render("tests/results", { data: objectToBeParsed });
                         }
                     });
