@@ -18,7 +18,7 @@
 						<% if(data.markingData.topics[i].questions[t].answers[e].startIndex == 0 && data.markingData.topics[i].questions[t].answers[e].endIndex == data.markingData.topics[i].questions[t].parts[x].length){ %>
 							<p class="answer"><%= data.markingData.topics[i].questions[t].parts[x] %></p>					
 						<% } else { %>
-							<p><%= data.markingData.topics[i].questions[t].parts[x].slice(0,data.markingData.topics[i].questions[t].answers[e].startIndex) %><span class="answer"><%= data.markingData.topics[i].questions[t].parts[x].slice(data.markingData.topics[i].questions[t].answers[e].startIndex, data.markingData.topics[i].questions[t].answers[e].endIndex + 1) %></span><%= data.markingData.topics[i].questions[t].parts[x].slice(data.markingData.topics[i].questions[t].answers[e].endIndex + 1) %></p>		
+							<p><%= data.markingData.topics[i].questions[t].parts[x].slice(0,data.markingData.topics[i].questions[t].answers[e].startIndex) %><span class="answer"><%= data.markingData.topics[i].questions[t].parts[x].slice(data.markingData.topics[i].questions[t].answers[e].startIndex, data.markingData.topics[i].questions[t].answers[e].endIndex + 1) %><b>(<%= data.markingData.topics[i].questions[t].answers[e].mark %>)</b></span><%= data.markingData.topics[i].questions[t].parts[x].slice(data.markingData.topics[i].questions[t].answers[e].endIndex + 1) %></p>		
 						<% } %>	
 						<% break; %>					
 					<% } %>

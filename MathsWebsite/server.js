@@ -14,9 +14,7 @@
 //------------------------------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------------------
 
-//------------------------------WILL NOT WORK IF 'math.js' IS NOT INCLUDED------------------------------
-
-//-----------------YOU NEED TO INCLUDE IT OR TELL ME HOW TO (I FORGOT HOW TO NPM STUFF)-----------------
+//PUT ANY CRTICAL NOTICES HERE
 
 //------------------------------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------------------
@@ -1596,6 +1594,10 @@ app.post("/users/:id/tests/results", function (req, res) {
                                     {
                                         user.examBoard.modules[i].topics[t].results.push(testData.topics[z].percentageMark)//adding results for each topic
                                         user.examBoard.modules[i].topics[t].progress = math.mean(user.examBoard.modules[i].topics[t].results) - (math.std(user.examBoard.modules[i].topics[t].results) / 3) - Math.pow(((user.examBoard.modules[i].topics[t].results.length / 30) + 0.105), -2);//changing progress in topic
+                                        if (user.examBoard.modules[i].topics[t].progress < 0)
+                                        {
+                                            user.examBoard.modules[i].topics[t].progress = 0;
+                                        }
                                         break;
                                     }
                                 }
