@@ -131,75 +131,92 @@ app.get("/logout", function (req, res) {
 
 app.get("/register",function(req,res)
 {
-   res.render("register"); 
+    res.render("register", { userNameTaken: 0 }); 
 });
 
 app.post("/register",function(req,res)
 {
-    var tempModules = [req.body.module1, req.body.module2, req.body.module3, req.body.module4, req.body.module5, req.body.module6, req.body.module7, req.body.module8];
-
-    for (var i = tempModules.length - 1; i > -1; i--)
-    {
-        if (!(tempModules[i]))
-        {
-            tempModules.splice(i, 1);
-        }
-    }
-
-    var tempTopics = [];
-    var modules = [];
-
-    examBoard.find({ name: req.body.examBoard }, function (err, examBoard) {
+    user.findOne({ "username": req.body.username }, function (err, sameName) {
         if (err)
         {
-            console.log("Could not find examBoard\n" + err);
+            console.log("Could not check for same name user:/n" + err);
         }
         else
         {
-            for (var i = 0; i < examBoard[0].modules.length; i++)
-            {
-                for (var t = 0; t < tempModules.length; t++)
-                {
-                    if (examBoard[0].modules[i].name == tempModules[t])
-                    {
-                        for (var u = 0; u < examBoard[0].modules[i].topics.length; u++)
-                        {
-                            tempTopics.push({ name: examBoard[0].modules[i].topics[u].name, progress: 0, results: [] });       
-                        }
-                        modules.push({ name: tempModules[t], progress: 0, topics: tempTopics });
-                        break;
+            if (!sameName) {
+                var tempModules = [req.body.module1, req.body.module2, req.body.module3, req.body.module4, req.body.module5, req.body.module6, req.body.module7, req.body.module8];
+
+                for (var i = tempModules.length - 1; i > -1; i--) {
+                    if (!(tempModules[i])) {
+                        tempModules.splice(i, 1);
                     }
                 }
+
+                var tempTopics = [];
+                var modules = [];
+
+                examBoard.find({ name: req.body.examBoard }, function (err, examBoard)
+                {
+                    if (err)
+                    {
+                        console.log("Could not find examBoard\n" + err);
+                    }
+                    else
+                    {
+                        for (var i = 0; i < examBoard[0].modules.length; i++)
+                        {
+                            for (var t = 0; t < tempModules.length; t++)
+                            {
+                                if (examBoard[0].modules[i].name == tempModules[t])
+                                {
+                                    for (var u = 0; u < examBoard[0].modules[i].topics.length; u++)
+                                    {
+                                        tempTopics.push({ name: examBoard[0].modules[i].topics[u].name, progress: 0, results: [] });
+                                    }
+                                    modules.push({ name: tempModules[t], progress: 0, topics: tempTopics });
+                                    break;
+                                }
+                            }
+                        }
+                        user.register(new user
+                            ({
+                                username: req.body.username,
+                                email: req.body.email,
+                                targetGrade: req.body.targetGrade,
+                                examBoard:
+                                {
+                                    name: req.body.examBoard,
+                                    progress: 0,
+                                    modules: modules
+                                },
+                                score: 0,
+                                role: "user"
+                            }),
+                            req.body.password, function (err, user) {
+                                if (err)
+                                {
+                                    console.log("Failed to add new user\n" + err);
+                                    return res.render("register");
+                                }
+                                else
+                                {
+                                    passport.authenticate("local")(req, res, function ()
+                                    {
+                                        res.redirect("/users/" + user._id);
+                                    });
+                                }
+                            });
+                    }
+                });
             }
-            user.register(new user
-            ({
-                username: req.body.username,
-                email: req.body.email,
-                targetGrade: req.body.targetGrade,
-                examBoard:
-                {
-                    name: req.body.examBoard,
-                    progress: 0,
-                    modules: modules
-                },
-                score: 0,
-                role: "user"
-            }),
-            req.body.password, function (err, user) {
-                if (err)
-                {
-                    console.log("Failed to add new user\n" + err);
-                    return res.render("register");
-                }
-                else
-                {
-                    passport.authenticate("local")(req, res, function () {
-                        res.redirect("/users/" + user._id);
-                    });
-                }
-            });
+            else
+            {
+                console.log("Username already taken.");
+                res.render("register", { userNameTaken: 1 });
+            }
         }
     });
+    
 });
 
 //----------------------------------------------
@@ -1613,14 +1630,16 @@ app.post("/users/:id/tests/results", function (req, res) {
 
 app.get("/users/:id/examboards", isLoggedIn, isAdmin, function(req,res)
 {
-    res.render("examboards");        
+    examBoard.find({}, function (err, examBoards)
+    {
+        res.render("examboards/index", {examBoards:examBoards}); 
+    });
 });
 
 app.get("/users/:id/examboards/new", isLoggedIn, isAdmin, function(req,res)
 {
     //render new examboard form     
 });
-
 
 app.post("/examboards", function(req,res)
 {
@@ -1662,7 +1681,6 @@ app.get("/users/:id/questions/:questId", isLoggedIn, isAdmin, function(req,res)
         }
     });    
 });
-
 
 app.post("/users/:id/questions",function(req,res)
 {

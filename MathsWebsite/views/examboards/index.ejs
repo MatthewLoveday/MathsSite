@@ -1,0 +1,20 @@
+<% include ../partials/header %>
+
+<h3>Examboards</h3>
+<% for(var i=0;i<examBoards.length;i++){ %>
+    <li>
+        <p>Examboard: <%= i %></p>
+        <p>Name: <%= examBoards[i].name %></p>
+        <p>Modules: 
+		<% for(var t=0;t<examBoards[i].modules.length;t++){ %>
+			<% if(t == 0){ %>
+				 <%= examBoards[i].modules[t].name %>
+			<% } else { %>
+				, <%= examBoards[i].modules[t].name %>
+			<% } %>
+		<% } %>
+		</p>
+    </li>
+<% } %>
+
+<% include ../partials/footer %>
