@@ -1,15 +1,16 @@
-﻿var express                 = require("express"),
-    mongoose                = require("mongoose"),
-    passport                = require("passport"),
-    bodyParser              = require("body-parser"),
-    LocalStrategy           = require("passport-local"),
-    passportLocalMongoose   = require("passport-local-mongoose"),
-    math                    = require("mathjs"),
+﻿const   express                 = require("express"),
+        mongoose                = require("mongoose"),
+        passport                = require("passport"),
+        bodyParser              = require("body-parser"),
+        LocalStrategy           = require("passport-local"),
+        passportLocalMongoose   = require("passport-local-mongoose"),
+        math                    = require("mathjs"),
 
-    seedDB                  = require("./seed"),
-    question                = require("./models/question"),
-    examBoard               = require("./models/examBoard"),
-    user                    = require("./models/user");
+        seedDB                  = require("./seed"),
+        question                = require("./models/question"),
+        examBoard               = require("./models/examBoard"),
+        user                    = require("./models/user");
+
 
 //------------------------------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------------------
@@ -18,10 +19,13 @@
 
 //------------------------------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------------------
-var app = express();
+const app = express();
 
-seedDB();
-mongoose.connect("mongodb://localhost/MathsWebsite");
+const   uri = 'mongodb://localhost/MathsWebsite',
+        options = { useMongoClient: true };
+
+mongoose.Promise = global.Promise;
+mongoose.set('debug', true);
 
 app.set('view engine','ejs');
 app.use(bodyParser.urlencoded({extended:true}));
@@ -63,10 +67,22 @@ passport.deserializeUser(user.deserializeUser());
 //----------------------------------------------
 //landing route
 //----------------------------------------------
-
+seedDB();
 app.get("/",function(req,res)
 {
-    res.render("landing");
+    examBoard.find({}, function (err, examBoard)
+    {
+        console.log("examBoard.length: " + examBoard.length);
+        res.render("landing", { examBoard: examBoard, usernameTaken: false, loginFailure: false });
+    });
+});
+
+app.get("/loginFailure", function (req, res)//this is probably a way better way of doing this,  this screams inefficiency
+{
+    examBoard.find({}, function (err, examBoard) {
+        console.log("examBoard.length: " + examBoard.length);
+        res.render("landing", { examBoard: examBoard, usernameTaken: false, loginFailure: true });
+    });
 });
 
 //----------------------------------------------
@@ -82,7 +98,7 @@ app.get("/users/:id", isLoggedIn, function(req,res)
             console.log("Could not find user data\n"+err);
         }else
         {
-            res.render("home",{user:userData});
+            res.render("home", { user: userData });
         }
     });
 });
@@ -93,6 +109,7 @@ app.get("/users/:id", isLoggedIn, function(req,res)
 
 app.get("/login",function(req,res)
 {
+    console.log("got here");
     res.render("login");
 });
 
@@ -104,8 +121,8 @@ app.post('/login', function(req, res, next)
             return next(err); 
         }
         if (!user)
-        { 
-            return res.redirect("/login"); 
+        {
+            return res.redirect("/loginFailure"); 
         }
         req.logIn(user, function(err)
         {
@@ -129,7 +146,7 @@ app.get("/logout", function (req, res) {
 
 app.get("/register",function(req,res)
 {
-    res.render("register", { userNameTaken: 0 }); 
+    res.render("register", { userNameTaken: false }); 
 });
 
 app.post("/register",function(req,res)
@@ -142,13 +159,8 @@ app.post("/register",function(req,res)
         else
         {
             if (!sameName) {
-                var tempModules = [req.body.module1, req.body.module2, req.body.module3, req.body.module4, req.body.module5, req.body.module6, req.body.module7, req.body.module8];
-
-                for (var i = tempModules.length - 1; i > -1; i--) {
-                    if (!(tempModules[i])) {
-                        tempModules.splice(i, 1);
-                    }
-                }
+                var tempModules = req.body.checkModules;
+                console.log("tempModules:\n" + tempModules);
 
                 var tempTopics = [];
                 var modules = [];
@@ -161,17 +173,20 @@ app.post("/register",function(req,res)
                     }
                     else
                     {
-                        for (var i = 0; i < examBoard[0].modules.length; i++)
-                        {
-                            for (var t = 0; t < tempModules.length; t++)
+                        console.log("examBoard[0].modules[0].topics[0].name: " + examBoard[0].modules[0].topics[0].name);
+                        console.log("examBoard[0].modules[1].topics[0].name: " + examBoard[0].modules[1].topics[0].name);
+                        console.log("examBoard[0].modules[2].topics[0].name: " + examBoard[0].modules[2].topics[0].name);
+                        for (var t = 0; t < tempModules.length; t++) {
+                            for (var i = 0; i < examBoard[0].modules.length; i++)
                             {
-                                if (examBoard[0].modules[i].name == tempModules[t])
+                                if (tempModules[t] == examBoard[0].modules[i].name)
                                 {
                                     for (var u = 0; u < examBoard[0].modules[i].topics.length; u++)
                                     {
                                         tempTopics.push({ name: examBoard[0].modules[i].topics[u].name, progress: 0, results: [] });
                                     }
                                     modules.push({ name: tempModules[t], progress: 0, topics: tempTopics });
+                                    tempTopics = [];
                                     break;
                                 }
                             }
@@ -194,7 +209,7 @@ app.post("/register",function(req,res)
                                 if (err)
                                 {
                                     console.log("Failed to add new user\n" + err);
-                                    return res.render("register");
+                                    return res.redirect("/");
                                 }
                                 else
                                 {
@@ -209,8 +224,9 @@ app.post("/register",function(req,res)
             }
             else
             {
-                console.log("Username already taken.");
-                res.render("register", { userNameTaken: 1 });
+                examBoard.find({}, function (err, examBoard) {
+                    res.render("landing", { examBoard: examBoard, usernameTaken: true, loginFailure: false });
+                });
             }
         }
     });
@@ -265,7 +281,8 @@ app.post("/users/:id/tests", function(req,res)//when seed program ready this sho
             path: 'modules.topics.questions',
             model: 'question'
         })
-        .then((populatedExams) => {
+            .then((populatedExams) => {
+                console.log("populatedExams[0].modules[0].topics[0].questions: " + populatedExams[0].modules[0].topics[0].questions);
             for(var i=0;i<topicsTemp.length;i++)
             {
                 if(topicsTemp[i])
@@ -276,7 +293,7 @@ app.post("/users/:id/tests", function(req,res)//when seed program ready this sho
                         {
                             topicsToBeParsed.push(populatedExams[0].modules[moduleIndex].topics[t]);    
                         }
-                    }    
+                    }
                 }
             }
             var topicsData = GenerateTest(req.body.time, topicsToBeParsed);
@@ -1634,7 +1651,22 @@ app.get("/users/:id/examboards", isLoggedIn, isAdmin, function(req,res)
 {
     examBoard.find({}, function (err, examBoards)
     {
-        res.render("examboards/index", {examBoards:examBoards}); 
+        res.render("examboards/index", {examBoards:examBoards, userId:req.params.id}); 
+    });
+});
+
+app.get("/users/:id/examboards/:examId", isLoggedIn, isAdmin, function (req, res) {
+    examBoard.find({ _id: req.params.examId }).exec().then((exam) => {
+        examBoard.populate(exam, {
+            path: 'modules.topics.questions',
+            model: 'question'
+        })
+            .then((populatedExam) => {
+                console.log("populatedExam[0]: " + populatedExam[0]);
+                console.log("populatedExam[0].name: " + populatedExam[0].name);
+                console.log("populatedExam[0].modules[0].topics[0].questions: " + populatedExam[0].modules[0].topics[0].questions);
+                res.render("examboards/show", { examBoard: populatedExam[0] });
+            });
     });
 });
 
@@ -1862,7 +1894,7 @@ function isAdmin(req, res, next) {
             res.redirect("/users/" + user._id);
         }
     });  
-} 
+}
 //---------------------------------------------------------------------
 //test functions
 //---------------------------------------------------------------------
@@ -2011,7 +2043,6 @@ function GetTopicQuestion(Topic, topicTime)
     return questions;
 }
 
-
 function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
@@ -2027,8 +2058,6 @@ function getRandomIntInclusive(min, max) {
 //---------------------------------------------------------------------
 //JWL functions
 //---------------------------------------------------------------------
-
-
 
 function searchArray(array, value)
 {
@@ -2046,9 +2075,10 @@ function searchArray(array, value)
 //start server listening
 //---------------------------------------------------------------------
 
-app.listen(process.env.PORT, process.env.IP,function()
-{
-    console.log("Server started");
-});
-
+mongoose.connect(uri, options)
+    .then(() => seedDB)
+    .then(() => app.listen(process.env.PORT, process.env.IP, function () {
+        console.log("Server started");
+    }))
+    .catch(error => console.log("error"));
 

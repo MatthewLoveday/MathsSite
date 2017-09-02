@@ -2,19 +2,11 @@
 
 <h3>Examboards</h3>
 <% for(var i=0;i<examBoards.length;i++){ %>
-    <li>
-        <p>Examboard: <%= i %></p>
-        <p>Name: <%= examBoards[i].name %></p>
-        <p>Modules: 
+        <h4><a href="/users/<%= userId %>/examboards/<%= examBoards[i].id %>"><%= examBoards[i].name %></a></h4>
+        <h5>Modules</h5>
 		<% for(var t=0;t<examBoards[i].modules.length;t++){ %>
-			<% if(t == 0){ %>
-				 <%= examBoards[i].modules[t].name %>
-			<% } else { %>
-				, <%= examBoards[i].modules[t].name %>
-			<% } %>
+			<li><%= examBoards[i].modules[t].name %></li>
 		<% } %>
-		</p>
-    </li>
 <% } %>
 
 <% include ../partials/footer %>

@@ -7,7 +7,7 @@ var topicSchema = new mongoose.Schema({
             type:mongoose.Schema.Types.ObjectId,
             ref:"question"
         }
-    ],
+    ]
 });
 
 var moduleSchema = new mongoose.Schema({

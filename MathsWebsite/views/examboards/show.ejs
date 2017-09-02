@@ -1,0 +1,14 @@
+<% include ../partials/header %>
+
+<h3><%= examBoard.name%></h3>
+<% for(var i=0;i<examBoard.modules.length;i++){ %>
+	<h4><%= examBoard.modules[i].name %></h4>
+	<% for(var t=0;t<examBoard.modules[i].topics.length;t++){ %>
+		<h5><%= examBoard.modules[i].topics[t].name %></h5>
+		<% for(var q=0;q<examBoard.modules[i].topics[t].questions.length;q++){ %>
+			<li><%= examBoard.modules[i].topics[t].questions[q].content %></li>
+		<% } %>
+	<% } %>
+<% } %>
+
+<% include ../partials/footer %>

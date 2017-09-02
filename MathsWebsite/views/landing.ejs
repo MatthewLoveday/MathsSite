@@ -1,68 +1,179 @@
 <% include ./partials/header %>
 
-		<div class="container">
-			<div class="row">
-				<div class="col s6 offset-s3">
-					<h1>Math Test</h1>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col s4 offset-s4">
-					<div id="image">
-						<img src="http://propensityforcuriosity.com/blog/wp-content/uploads/2012/08/Hardy-Math-Quote.jpg">	
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col s4 offset-s4">
-					<a href="/login" class="waves-effect waves-light btn">
+	
+	
+
+	<nav>
+		<div class="nav-wrapper">
+			<a href="/" class="brand-logo"><span>Placeholder</span></a>
+			<ul id="nav-mobile" class="right hide-on-med-and-down">
+				<li>
+					<a href="/login">
 						<i class="material-icons left">play_arrow</i>
-						Login
+						<span>Login</span>
 					</a>
-					<a href="/register" class="waves-effect waves-light btn">
+				</li>
+				<li>
+					<a href="/register">
 						<i class="material-icons left">assignment_ind</i>
-						Register
+						<span>Register</span>
 					</a>
+				</li>
+			</ul>
+		</div>
+	</nav>
+
+
+
+	<div class="container">
+		<div class="row">
+			<h2>Placeholder</h2>
+		</div>
+		<div class="row">
+			<div class="col s6">
+				<div id="image">
+					<img src="http://propensityforcuriosity.com/blog/wp-content/uploads/2012/08/Hardy-Math-Quote.jpg">	
 				</div>
+			</div>
+			<div class="row">
+				<div class="col s6">
+					<ul class="tabs">
+						<li class="tab col s6"><a class="active" href="#register">Register</a></li>
+						<li class="tab col s6"><a href="#login">Login</a></li>
+					</ul>
+				</div>
+				<form id="register" class="col s6" action="/register" method="POST">
+					<div class="row">
+						<div class="input-field col s6">
+							<input id="username" class="validate" type="text" name="username" required>
+							<label id="usernameLabel" for="username">Username</label>
+						</div>
+						<div class="input-field col s6">
+							<input id="password" class="validate" type="password" name="password" required>
+							<label for="password">Password</label>
+						</div>
+					</div>
+					<div class="row">
+						<div class="input-field col s12">
+							<input id="email" class="validate" type="email" name="email" required>
+							<label for="email" data-error="Not a viable email address" data-success="Viable email address">Email</label>
+						</div>
+					</div>
+					<div class="row">
+						<div  class="input-field col s6">
+							<select name="targetGrade" required>
+								<option value="" disabled selected>Choose your target grade</option>
+								<option value="a*">A*</option>
+								<option value="a">A</option>
+								<option value="b">B</option>
+								<option value="c">C</option>
+								<option value="d">D</option>
+								<option value="e">E</option>
+							</select>
+							<label>Target Grade</label>
+						</div>
+						<div class="input-field col s6">
+							<select name="examBoard" id="exams" required>
+								<option value="" disabled selected>Choose your examboard</option>
+							</select>
+							<label>Examboard</label>
+						</div>
+					</div>
+					<div class="row">
+						<div class="input-field col s12">
+							<select multiple name="checkModules" id="modules" required>
+								<option value="" disabled selected>Choose your modules</option>
+							</select>
+							<label>Modules</label>
+						</div>
+					</div>
+					<div class="row">
+						<button class="btn waves-effect waves-light" type="submit" name="action">Submit
+							<i class="material-icons right">send</i>
+						</button>
+					</div>
+				</form>
+				<form id="login" class="col s6" action="/login" method="POST">
+					<div class="row">
+						<div class="input-field col s12">
+							<input id="username" class="validate" type="text" name="username" required>
+							<label class="loginLabel" for="username">Username</label>
+						</div>
+					</div>
+					<div class="row">
+						<div class="input-field col s12">
+							<input id="password" class="validate" type="password" name="password" required>
+							<label class="loginLabel" for="password">Password</label>
+						</div>
+					</div>
+					<div class="row">
+						<button class="btn waves-effect waves-light" type="submit" name="action">Submit
+							<i class="material-icons right">send</i>
+						</button>
+					</div>
+				</form>
 			</div>
 		</div>
+	</div>
+	
+	<script>
+		$(document).ready(function() {
+			<% if(usernameTaken){ %>
+				$("#usernameLabel").text("Username Taken").addClass("reason");
+			<% } %>
+			<% if(loginFailure){ %>
+				$('ul.tabs').tabs("select_tab", "login");
+				$(".loginLabel").text("One of these was wrong").addClass("reason");
+			<% } %>
+			<% for(var i=0;i<examBoard.length;i++){ %>
+				$("#exams").append("<option value='<%= examBoard[i].name %>'><%= examBoard[i].name %></option>");
+			<% } %>
+			
+			$("#exams").change(function(){
+				var exam = $("#exams").val();
+				$("#modules").empty().append("<option value='' disabled selected>Choose your modules</option>");
+				<% for(var i=0;i<examBoard.length;i++){ %>
+					if("<%= examBoard[i].name %>" == exam){
+						<% for(var t=0;t<examBoard[i].modules.length;t++){ %>
+							$("#modules").append("<option value='<%= examBoard[i].modules[t].name %>'><%= examBoard[i].modules[t].name %></option>");
+						<% } %>
+					}
+				<% } %>
+				$('select').material_select();
+			});
+		});
+	</script>
 
-<style>
-		ul{
-			background-color: rgba(224, 183, 175, 0.5);
-		}
-		li{
-			margin-left: auto;
-			margin-right: auto;
-			text-align:center;
-			width: 100%;
-		}
-		img{
-			margin-left: auto;
-			margin-right: auto;
-			height: 100%;
-			width: 100%;
-		}
-		h1{
-			text-decoration: underline;
-			text-align:center;
-			font-family: 'Raleway', sans-serif;
-			font-weight: 900;
-		}
+	<style>
 		html{
-			background-image: url("http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/8/12/1407861611128/Calculus-on-blackboard-014.jpg");
+			background-image: url("https://d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/5ywk0LA/abstract-polygonal-geometric-surface-loop-1a-clean-soft-low-poly-motion-background-of-shifting-pure-bright-white-grey-triangles-seamless-loop-4k-uhd-fullhd_se6csy-4l_thumbnail-full01.png");
 			background-size:100% 100%;
             background-repeat: no-repeat;
 			height:100%;
 			width:100%;
 		}
-		#image{
-			display: flex;
+		img{
+			max-width: 100%;
+			max-height: 100%;
 		}
-		a{
-			text-align:center;
-			margin-left: auto;
-			margin-right: auto;		
+		h2{
+			text-align: center;
 		}
-		
-</style>
+		nav i{
+			color: black;
+		}
+		nav a span{
+			color: black;
+		}
+		.nav-wrapper{
+			background-color: white;
+		}
+		brand-logo span{
+			color: black;
+		}
+		.reason{
+			color: red;
+		}
+	</style>
+
+<% include ./partials/footer %>
