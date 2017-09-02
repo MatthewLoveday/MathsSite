@@ -304,7 +304,7 @@ async function seedDB() {
     // Create examBoard. .create() does actually accept an array.
     // Keep the results as well
     var exams = [];
-    var qustions = [];
+    var questions = [];
     new Promise((resolve, reject) => {
         examboardData.forEach(function (examSeed) {
             examBoard.create(examSeed, function (err, exam) {
