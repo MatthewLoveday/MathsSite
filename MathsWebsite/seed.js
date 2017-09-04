@@ -11,8 +11,8 @@ const   mongoose = require("mongoose"),
 var examboardData=
 [
     { name: "a", modules: [{ name: "1", topics: [{ name: "a" }, { name: "b" }, { name: "c" }] }, { name: "2", topics: [{ name: "d" }, { name: "e" }, { name: "f" }] }, { name: "3", topics: [{ name: "g" }, { name: "h" }, { name: "i" }] }] },
-    { name: "b", modules: [{ name: "1", topics: [{ name: "a" }, { name: "b" }, { name: "c" }] }, { name: "2", topics: [{ name: "d" }, { name: "e" }, { name: "f" }] }, { name: "3", topics: [{ name: "g" }, { name: "h" }, { name: "i" }] }] },
-    { name: "c", modules: [{ name: "1", topics: [{ name: "a" }, { name: "b" }, { name: "c" }] }, { name: "2", topics: [{ name: "d" }, { name: "e" }, { name: "f" }] }, { name: "3", topics: [{ name: "g" }, { name: "h" }, { name: "i" }] }] }
+    { name: "b", modules: [{ name: "4", topics: [{ name: "a" }, { name: "b" }, { name: "c" }] }, { name: "5", topics: [{ name: "d" }, { name: "e" }, { name: "f" }] }, { name: "6", topics: [{ name: "g" }, { name: "h" }, { name: "i" }] }] },
+    { name: "c", modules: [{ name: "7", topics: [{ name: "a" }, { name: "b" }, { name: "c" }] }, { name: "8", topics: [{ name: "d" }, { name: "e" }, { name: "f" }] }, { name: "9", topics: [{ name: "g" }, { name: "h" }, { name: "i" }] }] }
 ];
 
 var questionData=
@@ -199,81 +199,6 @@ var questionData=
     }
 ];
 
-/*
-function seedDB() {
-    user.remove({}, function (err) {
-        if (err) {
-            console.log("Could not remove user\n" + err);
-        }
-        else {
-            console.log("Removed old user");
-            examBoard.remove({}, function (err) {
-                if (err) {
-                    console.log("Could not remove examboards\n" + err);
-                }
-                else {
-                    console.log("Removed old examboards");
-                    question.remove({}, function (err) {
-                        if (err) {
-                            console.log("Could not remove questions\n" + err);
-                        }
-                        else {
-                            console.log("Removed old questions");
-                            user.register(new user
-                                ({
-                                    username: "admin",
-                                    email: "jonathanwoollettlight@gmail.com",
-                                    role: "admin"
-                                }),
-                                "lu134r7n75q5psbzwgch", function (err, user) {
-                                    if (err) {
-                                        console.log("Failed to add admin\n" + err);
-                                    }
-                                    else {
-                                        console.log("Admin added");
-                                        examboardData.forEach(function (examSeed) {
-                                            examBoard.create(examSeed, function (err, exam) {
-                                                console.log("Creating new examboard");
-                                                if (err) {
-                                                    console.log("Could not create new examboard\n" + err);
-                                                }
-                                                else {
-                                                    console.log("Created examboard");
-                                                }
-                                            });
-                                        });
-                                        var topicIncrementor = 0;
-                                        questionData.forEach(function (questionSeed) {
-                                            question.create(questionSeed, function (err, question) {
-                                                if (err) {
-                                                    console.log("Could not create new question\n" + err);
-                                                }
-                                                else {
-                                                    console.log("Created question");
-                                                    examBoard.find({}, function (err, exams) {
-                                                        for (var i = 0; i < exams.length; i++) {
-                                                            for (var t = 0; t < exams[i].modules.length; t++) {
-                                                                for (var q = math.floor(topicIncrementor / 12); q < exams[i].modules[t].topics.length; q++) {
-                                                                    exams[i].modules[t].topics[q].questions.push(question);
-                                                                    topicIncrementor++;
-                                                                }
-                                                                topicIncrementor = 0;
-                                                            }
-                                                            exams[i].save();
-                                                        }
-                                                    });
-                                                }
-                                            });
-                                        });
-                                    }
-                                });
-                        }
-                    });
-                }
-            });
-        }
-    });
-}*/
 
 async function seedDB() {
     
@@ -294,52 +219,28 @@ async function seedDB() {
             console.log("Admin added:");
         }
     });
-
-    // Create examBoard. .create() does actually accept an array.
-    // Keep the results as well
-    var exams = [];
-    var questions = [];
-    new Promise((resolve, reject) => {
-        examboardData.forEach(function (examSeed) {
-            examBoard.create(examSeed, function (err, exam) {
-                console.log("Creating new examboard");
-                if (err) {
-                    console.log("Could not create new examboard\n" + err);
-                }
-                else {
-                    console.log("Created examboard");
-                    exams.push(exam);
-                }
-            });
-        });
-        questionData.forEach(function (questionSeed) {
-            question.create(questionSeed, function (err, question) {
-                if (err) {
-                    console.log("Could not create new question\n" + err);
-                }
-                else {
-                    console.log("Created question");
-                    questions.push(question);
-                }
-            });
-        });
-    }).then(async () => {
+    
+    Promise.all([
+        examBoard.create(examboardData),
+        question.create(questionData)
+    ]).then(async (values) => {
         var topicIncrementor = 0;
-        for (let question of questions) {
-            for (var i = 0; i < exams.length; i++) {
-                for (var t = 0; t < exams[i].modules.length; t++) {
-                    for (var q = 0; q < exams[i].modules[t].topics.length; q++) {
-                        exams[i].modules[t].topics[q].questions.push(question);
+        for (let question of values[1]) {
+            for (let exam of values[0]) {
+                for (var t = 0; t < exam.modules.length; t++) {
+                    for (var q = 0; q < exam.modules[t].topics.length; q++) {
+                        exam.modules[t].topics[q].questions.push(question);
                         topicIncrementor++;
                     }
                     topicIncrementor = 0;
                 }
-                await exams[i].save();
+                await exam.save();
                 console.log("Updated exam with questions");
             }
         }
     });
-
+    
+    
     // Add questions to each exam topic
     
     // Add questions to each exam topic

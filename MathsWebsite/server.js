@@ -70,10 +70,12 @@ passport.deserializeUser(user.deserializeUser());
 seedDB();
 app.get("/",function(req,res)
 {
-    examBoard.find({}, function (err, examBoard)
+    examBoard.find({}, function (err, examboard)
     {
-        console.log("examBoard.length: " + examBoard.length);
-        res.render("landing", { examBoard: examBoard, usernameTaken: false, loginFailure: false });
+        console.log("examboard.length: " + examboard.length);
+        console.log("examboard[0].modules[0].topics[0].questions.length: " + examboard[0].modules[0].topics[0].questions.length);
+        console.log("examboard[0].modules[0].topics:\n" + examboard[0].modules[0].topics);  
+        res.render("landing", { examBoard: examboard, usernameTaken: false, loginFailure: false });
     });
 });
 
@@ -254,53 +256,48 @@ app.get("/users/:id/tests/new", isLoggedIn, function(req,res)
 
 app.post("/users/:id/tests", function(req,res)//when seed program ready this should be changed to "/tests" which should redirect to a "/tests/:seed" route 
 {
-    var topicsTemp = [req.body.topic1,req.body.topic2,req.body.topic3,req.body.topic4,req.body.topic5,req.body.topic6,req.body.topic7,req.body.topic8];
+    var topicsTemp = req.body.topics;
     var topicsToBeParsed = [];
-    var moduleIndex; 
-    examBoard.find({name:req.body.examBoardName},function(err,examBoard)
-    {
-        if(err)
-        {
-            console.log("Could not find examBoard\n"+err);
-        }
-        else
-        {
-            for(var i=0;i<examBoard[0].modules.length;i++)
-            {
-                if(examBoard[0].modules[i].name==req.body.moduleName)
-                {
-                    moduleIndex=i;
-                    break;
-                }
-            }     
-        } 
-    });
-
-    examBoard.find({ name: req.body.examBoardName }).exec().then((exams) => {
-        examBoard.populate(exams, {
-            path: 'modules.topics.questions',
-            model: 'question'
-        })
-            .then((populatedExams) => {
-                console.log("populatedExams[0].modules[0].topics[0].questions: " + populatedExams[0].modules[0].topics[0].questions);
-            for(var i=0;i<topicsTemp.length;i++)
-            {
-                if(topicsTemp[i])
-                {
-                    for(var t=0;t<populatedExams[0].modules[moduleIndex].topics.length;t++)
-                    {
-                        if(topicsTemp[i]==populatedExams[0].modules[moduleIndex].topics[t].name)
-                        {
-                            topicsToBeParsed.push(populatedExams[0].modules[moduleIndex].topics[t]);    
+    var moduleIndex;
+    user.findById(req.params.id, function (err, userData) {
+        if (err) {
+            console.log("Could not find user data\n" + err);
+        } else {
+            examBoard.findOne({ name: userData.examBoard.name }, function (err,examboard) {
+                console.log("examboard.modules[0].topics[0].questions.length: " + examboard.modules[0].topics[0].questions.length);
+                console.log("examboard.modules[0].topics:\n" + examboard.modules[0].topics);     
+            });
+            examBoard.findOne({ name: userData.examBoard.name }).exec().then((exam) => {
+                examBoard.populate(exam, {
+                    path: 'modules.topics.questions',
+                    model: 'question'
+                })
+                    .then((populatedExamboard) => {
+                        console.log("populatedExamboard.modules[0].topics[0].questions.length: " + populatedExamboard.modules[0].topics[0].questions.length);
+                        console.log("populatedExamboard.modules[0].topics:\n" + populatedExamboard.modules[0].topics);
+                        for (var i = 0; i < populatedExamboard.modules.length; i++) {
+                            if (populatedExamboard.modules[i].name == req.body.moduleName) {
+                                moduleIndex = i;
+                                break;
+                            }
                         }
-                    }
-                }
-            }
-            var topicsData = GenerateTest(req.body.time, topicsToBeParsed);
 
-            var objectToBeParsed = { userID: req.params.id, topics: topicsData, examBoard: req.body.examBoardName, module:req.body.moduleName};
-            res.render("tests/show", { testData: objectToBeParsed });
-        });
+                        
+                        for (var i = 0; i < topicsTemp.length; i++) {
+                            for (var t = 0; t < populatedExamboard.modules[moduleIndex].topics.length; t++) {
+                                if (topicsTemp[i] == populatedExamboard.modules[moduleIndex].topics[t].name) {
+                                    topicsToBeParsed.push(populatedExamboard.modules[moduleIndex].topics[t]);
+                                    break;
+                                }
+                            }
+                        }
+                        var topicsData = GenerateTest(req.body.time, topicsToBeParsed);
+
+                        var objectToBeParsed = { userID: req.params.id, topics: topicsData, examBoard: userData.examBoard.name, module: req.body.moduleName };
+                        res.render("tests/show", { testData: objectToBeParsed });
+                    });
+            });
+        }
     });
 });
 
@@ -1817,24 +1814,6 @@ app.get("/users/:id/users/:userId", isLoggedIn, isAdmin, function (req, res) {
     });
 });
 
-app.post("/users/:id/users/:userId/admin", function (req, res) {
-    user.findById(req.params.userId, function (err, user) {
-        if (err) {
-            console.log("Could not find user:\n" + err);
-        } else {
-            user.role = "admin";
-            user.save(function (err, updatedUser) {
-                if (err) {
-                    console.log("Could not update user role to admin:\n" + err);
-                } else {
-                    var objectToBeParsed = { userData: updatedUser, admin: req.params.id };
-                    res.render("users/show", { data: objectToBeParsed });
-                }
-            });
-        }
-    });
-});
-
 app.post("/users/:id/users/:userId/update", function (req, res) {
     user.findById(req.params.userId, function (err, user) {
         if (err) {
@@ -1949,123 +1928,83 @@ function GenerateTest(time, topics) //Random Seed, Time of the Test, Array of th
 
     for(var i = 0; i < topics.length; i++)
     {
-        returnTopics.push({ name:topics[i].name, questions:GetTopicQuestion(topics[i], topicTime) });
+        console.log("topics[" + i + "].questions.length: " + topics[i].questions.length);
+        returnTopics.push({ name: topics[i].name, questions: getTopicQuestions(topics[i], topicTime) });
     }
-
     console.log("\n\nquestions (outside function):\n" + returnTopics);
 
     return returnTopics;
 }
 
-function GetTopicQuestion(Topic, topicTime)
+function getTopicQuestions(topic, topicTime)
 {
 
-    var timePerQuestion=[];
-    var QuestionAmount = 0;
-    var questionLow = 0;
-    var questionHigh = 0;
+    var timesPerQuestions=[];
     
-    if(topicTime > 60)//making sure topic time is a reasonable number
-    {
-        console.log("Are you wet? (topicTime over 60)");    
-        topicTime = 60;
-    }
-    else if(topicTime < 4)
-    {
-        console.log("This guy thinks he has something better to do? (topicTime less than 4)");    
-        topicTime = 4;    
-    }
 
 
-    if(topicTime < 12)//Find the times of each question in this topic
+    if(topicTime < 8)//Find the times of each question in this topic
     {
-        timePerQuestion[0] = topicTime;
+        timesPerQuestions[0] = topicTime;
     }
     else
     {
-
-        var numberOfQuestions = Math.floor(topicTime / getRandomIntInclusive(4, (Math.floor(topicTime / 2))));
-        var numberToRoundUp = Math.round(((topicTime / numberOfQuestions) % 1) * numberOfQuestions);
+        var numberOfQuestions = Math.floor(topicTime / getRandomIntInclusive(4, (topicTime / 2)));
+        var questionCounter = [0, 0];//1=higher,0=lower
+        console.log("questionCounter[1]: " + questionCounter[1] + "\nquestionCounter[0]: " + questionCounter[0]);
+        console.log("numberOfQuestions:" + numberOfQuestions);
+        if (((topicTime / numberOfQuestions) % 1) == 0) {
+            questionCounter[1] = numberOfQuestions;
+        } else {
+            questionCounter[1] = Math.round(numberOfQuestions * ((topicTime / numberOfQuestions) % 1));//the outmost Math.round is only neccessary becuase js cannot do maths properly
+        }
+        questionCounter[0] = numberOfQuestions - questionCounter[1]
 
         console.log("topicTime:" + topicTime);
-        console.log("numberOfQuestions:"+numberOfQuestions);
-        console.log("numberToRoundUp:" + numberToRoundUp);
-
-        for (var i = 0; i < numberToRoundUp; i++)
-        {
-            timePerQuestion[i] = Math.ceil(topicTime / numberOfQuestions);
-            questionHigh++;
+        console.log("questionCounter[1]: " + questionCounter[1] + "\nquestionCounter[0]: " + questionCounter[0]);
+        console.log("numberOfQuestions:" + numberOfQuestions);
+        for (var i = 0; i < 2; i++) {//when i=0 it's adding higher questions when i=1 it's adding lower questions
+            for (var t = (questionCounter[1] * i); t < (numberOfQuestions * i) + (questionCounter[1] * Math.abs(i-1)); t++) {
+                timesPerQuestions.push(Math.ceil((topicTime / numberOfQuestions) - i));
+            }
         }
-
-        for (var i = numberToRoundUp; i < numberOfQuestions;i++)
-        {
-            timePerQuestion[i] = Math.floor(topicTime/numberOfQuestions);
-            questionLow++;
-        }
-        console.log("timePerQuestion:\n"+timePerQuestion);
+        console.log("timesPerQuestions: " + timesPerQuestions);
     }
-    console.log("questionHigh:"+questionHigh);
-    console.log("questionLow:"+questionLow);
     
-    var questionsOfProperLengthLower = [];
-    var questionsOfProperLengthHigher = [];
-    console.log("Topic.questions.length:" + Topic.questions.length);
-    for(var i=0;i<Topic.questions.length;i++)//push all questions of appropriate lengths to the 'questionsOfProperLength's arrays
+    var questionsOfProperLength = [[],[]];//1=higher,0=lower
+    console.log("topic.questions.length: " + topic.questions.length);
+    var higher;
+    for (var i = 0; i < topic.questions.length; i++)//when i=0 it's adding higher questions when i=1 it's adding lower questions
     {
-        console.log("i = " + i);
-        if(Topic.questions[i].mark==timePerQuestion[0])
-        {
-            console.log("pushed a question of lesser marks (" + i + ")");
-            questionsOfProperLengthLower.push(Topic.questions[i]);               
-        }
-        else if(Topic.questions[i].mark==timePerQuestion[(timePerQuestion.length)-1])
-        {
-            console.log("pushed a question of greater marks (" + i + ")");
-            questionsOfProperLengthHigher.push(Topic.questions[i]);    
-        }
-    }  
-    console.log("Finished adding questions to questionsOfProperLengthLower and questionsOfProperLengthHigher ")
-    console.log("questionsOfProperLengthLower:" + questionsOfProperLengthLower);
-    console.log("questionsOfProperLengthHigher:" + questionsOfProperLengthHigher);
-
-    var questions=[];
-    var questionsAlreadyPickedLow = [];
-    var questionsAlreadyPickedHigh = [];
-    var random;
-
-    console.log("questionLow:" + questionLow);
-    for (var i = 0; i < questionLow; i++)
-    {
-        random = getRandomIntInclusive(0, ((questionsOfProperLengthLower.length)-1));
-        if (searchArray(questionsAlreadyPickedLow, random))
-        {
-            i--;
-            continue;    
-        }
-        questionsAlreadyPickedLow[i] = random;
-        questions.push(questionsOfProperLengthLower[random]);        
-    }
-    console.log("questionHigh:" + questionHigh);
-    for(var i = 0; i < questionHigh; i++)
-    {
-        random = getRandomIntInclusive(0, ((questionsOfProperLengthHigher.length)-1));
-        if (searchArray(questionsAlreadyPickedHigh, random)) {
-            i--;
+        console.log("topic.questions[" + i + "].mark: " + topic.questions[i].mark + "\ntimesPerQuestions[0]: " + timesPerQuestions[0] + "\ntimesPerQuestions[" + timesPerQuestions.length - 1 + "]: " + timesPerQuestions[timesPerQuestions.length - 1]);
+        if (topic.questions[i].mark == timesPerQuestions[0]) {
+            higher = 1;
+        } else if (topic.questions[i].mark == timesPerQuestions[timesPerQuestions.length - 1]) {
+            higher = 0;
+        } else {
             continue;
         }
-        questionsAlreadyPickedHigh[i] = random;
-        questions.push(questionsOfProperLengthHigher[random]);
+        questionsOfProperLength[higher].push(topic.questions[i]);
     }
-    
 
+    var questions=[];;
+    var questionsAlreadyPicked = [[],[]];//1=higher,0=lower
+    var random;
+
+    console.log("questionCounter[1]: " + questionCounter[1] + "\nquestionCounter[0]: " + questionCounter[0] + "\nquestionsOfProperLength[1].length: " + questionsOfProperLength[1].length + "\nquestionsOfProperLength[0].length: " + questionsOfProperLength[0].length);
+    for (var i = 0; i < 2; i++) {
+        for (var t = 0; t < questionCounter[i]; t++) {
+            random = getRandomIntInclusive(0, ((questionsOfProperLength[i].length) - 1));
+            if (searchArray(questionsAlreadyPicked[i], random)) {
+                t--;
+                continue;
+            }
+            questionsAlreadyPicked[i][t] = random;
+            questions.push(questionsOfProperLength[i][random]);
+        }
+    }
     console.log("\n\n\n\nquestions:\n" + questions + "\n\n");
     return questions;
-}
-
-function getRandomInt(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min)) + min;
 }
 
 function getRandomIntInclusive(min, max) {
@@ -2080,7 +2019,7 @@ function getRandomIntInclusive(min, max) {
 
 function searchArray(array, value)
 {
-    for (var i = 0; i <= array.length; i++)
+    for (var i = 0; i < array.length; i++)
     {
         if (array[i] == value)
         {

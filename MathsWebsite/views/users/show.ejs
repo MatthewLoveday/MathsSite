@@ -19,7 +19,7 @@
 					<td><%= data.user.role %></td>
 					<td><%= data.user.email %></td>
 					<td><%= data.user.targetGrade %></td>
-					<% if(!data.user.examBoard){ %>
+					<% if(data.user.examBoard){ %>
 						<td><%= data.user.examBoard.name %></td>
 					<% } else { %>
 						<td></td>
@@ -51,10 +51,6 @@
 					</select>
 					<label>Target Grade</label>
 				</div>
-				<div class="input-field col s1">
-					<input id="score" class="validate" type="number" name="score">
-					<label for="score">Score</label>
-				</div>
 				<div class="input-field col s2">
 					<select name="examBoard" id="exams">
 						<option value="" disabled selected>Set examboard</option>
@@ -69,6 +65,10 @@
 						<option value="" disabled selected>Set modules</option>
 					</select>
 					<label>Modules</label>
+				</div>
+				<div class="input-field col s1">
+					<input id="score" class="validate" type="number" name="score">
+					<label for="score">Score</label>
 				</div>
 			</div>
 			<div class="row">

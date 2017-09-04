@@ -73,7 +73,7 @@
 	<script>
 		$(document).ready(function() {
 			$("#modules").change(function(){
-				var module = $("#modules").val();
+				var module = $(this).val();
 				$("#topics").empty().append("<option value='' disabled selected>Choose your topics</option>");
 				<% for(var i=0;i<user.examBoard.modules.length;i++){ %>
 					if("<%= user.examBoard.modules[i].name %>" == module){
@@ -83,6 +83,14 @@
 					}
 				<% } %>
 				$('select').material_select();
+			});
+			$("#topics").change(function(){
+				$("#timeRange").attr("min",4 * $(this).val().length);
+				$("#time").attr("min",4 * $(this).val().length);
+				if($("#time").val() < (4 * $(this).val().length)){
+					$("#time").val(4 * $(this).val().length);
+				}
+				
 			});
 		});
 	</script>
