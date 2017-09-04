@@ -1,14 +1,26 @@
 <% include ../partials/header %>
 
-<h1>Show test page</h1>
 
 
-<form action="/users/<%= testData.userID %>/tests/results" method="POST">
+<div class="container">
+	<div class="row">
+		<h1>Show test page</h1>
+	</div>
+	
+	<div class="row">
+	
+	</div>
+	<div class="row">
+		<form action="/users/<%= testData.userID %>/tests/results" method="POST">
+			<button class="btn waves-effect waves-light" type="submit" name="action">Submit
+				<i class="material-icons right">send</i>
+			</button>
+		</form>
+	</div>
+</div>
 
-	<button class="btn waves-effect waves-light" type="submit" name="action">Submit
-		<i class="material-icons right">send</i>
-	</button>
-</form>
+
+
 
 <script>
 	var newInputs = [];
@@ -19,7 +31,7 @@
 		value: "<%= testData.examBoard %>",
 		readonly: "true"
 	});
-	$("form button").before(examBoard);
+	$("form").append(examBoard);
 
 	var module = $("<input>").attr({
 		name: "module",
@@ -27,7 +39,7 @@
 		value: "<%= testData.module %>",
 		readonly: "true"
 	});
-	$("form button").before(module);
+	$("form").append(module);
 
 	var numberOfTopics = $("<input>").attr({
 		name: "numberOfTopics",
@@ -35,12 +47,9 @@
 		value: "<%= testData.topics.length %>",
 		readonly: "true"
 	});
-	$("form button").before(numberOfTopics);
+	$("form").append(numberOfTopics);
 
 <% for(var i = 0;i < testData.topics.length;i++){ %>
-	
-	var newDiv = $("<div></div>").html("<h3><%= testData.topics[i].name %></h3>")
-	$("body").append(newDiv);
 	
 	var newTopic = $("<input>").attr({
 		name: "topic<%= i %>",
@@ -48,7 +57,7 @@
 		value: "<%= testData.topics[i].name %>",
 		readonly: "true"
 	});
-	$("form button").before(newTopic);
+	$("form").append(newTopic);
 
 	newInputs.push([]);
 
@@ -58,13 +67,12 @@
 		value: "<%= testData.topics[i].questions.length %>",
 		readonly: "true"
 	});
-	$("form button").before(numberOfQuestions);
+	$("form").append(numberOfQuestions);
+
+	var newDiv = $("<div></div>").html("<h3><%= testData.topics[i].name %></h3>")
+	$("body .container > div:nth-child(2)").prepend(newDiv);
 
 	<% for(var t=0;t< testData.topics[i].questions.length;t++){ %>
-		
-		var newImg = $("<img>").attr("src","<%= testData.topics[i].questions[t].content %>");
-		var newDiv = $("<div></div>").html(newImg);
-		$("body > div:last").append(newDiv);
 
 		var newQuestion = $("<input>").attr({
 			name:"topic<%= i %>question<%= t %>",
@@ -72,7 +80,7 @@
 			value:"<%= testData.topics[i].questions[t]._id %>",
 			readonly: "true"
 		});
-		$("form button").before(newQuestion);
+		$("form").append(newQuestion);
 
 		var newQuestionContent = $("<input>").attr({
 			name:"topic<%= i %>question<%= t %>content",
@@ -80,7 +88,7 @@
 			value:"<%= testData.topics[i].questions[t].content %>",
 			readonly: "true"
 		});
-		$("form button").before(newQuestionContent);
+		$("form").append(newQuestionContent);
 		
 		newInputs[<%= i %>].push([]);
 
@@ -91,10 +99,7 @@
 			value: "1",
 			readonly: "true"
 		});
-		$("form button").before(numberOfParts);
-
-		var newP = $("<p></p>").html("<span id='topic<%= i %>question<%= t %>part0'></span>");
-		$("body > div:last > div:last").append(newP);
+		$("form").append(numberOfParts);
 		
 		var newTxtInp = $("<input>").attr({
 			id:"itopic<%= i %>question<%= t %>part0",
@@ -102,7 +107,14 @@
 			type:"text",
 			readonly: "true"
 		});
-		$("form button").before(newTxtInp);
+		$("form").append(newTxtInp);
+
+		var newImg = $("<img>").attr("src","<%= testData.topics[i].questions[t].content %>");
+		var newDiv = $("<div></div>").html(newImg);
+		$("body .container > div:nth-child(2) > div:first").append(newDiv);
+
+		var newP = $("<p></p>").html("<span id='topic<%= i %>question<%= t %>part0'></span>");
+		$("body .container > div:nth-child(2) > div:first > div:last").append(newP);
 
 		newInputs[<%= i %>][<%= t %>][0] = MQ.MathField(document.getElementById("topic<%= i %>question<%= t %>part0"), {
 			handlers: {
