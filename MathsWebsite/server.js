@@ -1497,56 +1497,46 @@ app.post("/users/:id/tests/results", function (req, res) {
     var index;
     var startIndex;
     
-    examBoard.find({ name: req.body.examBoard }).exec().then((exams) => {
+    examBoard.findOne({ name: req.body.examBoard }).exec().then((exams) => {
         examBoard.populate(exams, {
             path: 'modules.topics.questions',
             model: 'question'
         }).then((populatedExams) => {
-            for (var i = 0; i < populatedExams[0].modules.length; i++)//finding module
+            for (var i = 0; i < populatedExams.modules.length; i++)//finding module
             {
-                if (populatedExams[0].modules[i].name == req.body.module)//if module matches
+                if (populatedExams.modules[i].name == req.body.module)//if module matches
                 {
                     for (var z = 0; z < testData.topics.length; z++)//finding topics
                     {
-                        console.log("Z : " + z);
-                        for (var t = 0; t < populatedExams[0].modules[i].topics.length; t++)
+                        for (var t = 0; t < populatedExams.modules[i].topics.length; t++)
                         {
-                            console.log("T : " + t);
-                            if (testData.topics[z].name == populatedExams[0].modules[i].topics[t].name)//if topics match
+                            if (testData.topics[z].name == populatedExams.modules[i].topics[t].name)//if topics match
                             {
                                 for (var q = 0; q < testData.topics[z].questions.length; q++)//finding questions
                                 {
-                                    console.log("Q : " + q);
-                                    for (var p = 0; p < populatedExams[0].modules[i].topics[t].questions.length; p++)
+                                    for (var p = 0; p < populatedExams.modules[i].topics[t].questions.length; p++)
                                     {
-                                        console.log("P : " + p);
-                                        if (populatedExams[0].modules[i].topics[t].questions[p]._id == testData.topics[z].questions[q].id)//if questions match
+                                        if (populatedExams.modules[i].topics[t].questions[p]._id == testData.topics[z].questions[q].id)//if questions match
                                         {
-                                            console.log("question found");
-                                            methodMarks = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];//have to intialise values in array so as to use '+=' syntax
                                             answerLocationsTemp = [];
-                                            for (var x = 0; x < populatedExams[0].modules[i].topics[t].questions[p].methods.length; x++)//iterating through answer methods
+                                            for (var x = 0; x < populatedExams.modules[i].topics[t].questions[p].methods.length; x++)//iterating through answer methods
                                             {
                                                 answerLocationsTemp.push([]);
-                                                for (var c = 0; c < populatedExams[0].modules[i].topics[t].questions[p].methods[x].length; c++)//iterating through parts in answer methods
+                                                methodMarks.push(0);
+                                                for (var c = 0; c < populatedExams.modules[i].topics[t].questions[p].methods[x].length; c++)//iterating through parts in answer methods
                                                 {
                                                     for (var e = 0; e < testData.topics[z].questions[q].parts.length; e++)//iterating through user parts
                                                     {
-                                                        var posOfAnswer = markPart(testData.topics[z].questions[q].parts[e], populatedExams[0].modules[i].topics[t].questions[p].methods[x][c].content);
-                                                        console.log("testData.topics[z].questions[q].parts[e] : " + testData.topics[z].questions[q].parts[e]);
-                                                        console.log("populatedExams[0].modules[i].topics[t].questions[p].methods[x][c].content : " + populatedExams[0].modules[i].topics[t].questions[p].methods[x][c].content);
-                                                        console.log("posOfAnswer : " + posOfAnswer);
+                                                        var posOfAnswer = markPart(testData.topics[z].questions[q].parts[e], populatedExams.modules[i].topics[t].questions[p].methods[x][c].content);
                                                         if (posOfAnswer > -1)//startIndex will be -1 if not found and index of start of string if found
                                                         {
-                                                            methodMarks[x] += populatedExams[0].modules[i].topics[t].questions[p].methods[x][c].mark;
-                                                            console.log("methodMarks[" + x + "] : " + methodMarks[x]);
-                                                            answerLocationsTemp[x][c] = { partNumber: e, startIndex: posOfAnswer, endIndex: posOfAnswer + populatedExams[0].modules[i].topics[t].questions[p].methods[x][c].content.length - 1, mark: populatedExams[0].modules[i].topics[t].questions[p].methods[x][c].mark };
+                                                            methodMarks[x] += populatedExams.modules[i].topics[t].questions[p].methods[x][c].mark;
+                                                            answerLocationsTemp[x][c] = { partNumber: e, startIndex: posOfAnswer, endIndex: posOfAnswer + populatedExams.modules[i].topics[t].questions[p].methods[x][c].content.length - 1, mark: populatedExams.modules[i].topics[t].questions[p].methods[x][c].mark };
                                                             break;//this is neccessary so if the same part exists twice in the answer, the user doesnt get marks for both
                                                         }
                                                     }
-                                                    console.log("finished method");
                                                 }
-                                                if (methodMarks[x] == populatedExams[0].modules[i].topics[t].questions[p].mark)//if user gets full marks, no point checking using other methods
+                                                if (methodMarks[x] == populatedExams.modules[i].topics[t].questions[p].mark)//if user gets full marks, no point checking other methods
                                                 {
                                                     break;
                                                 }
@@ -1559,28 +1549,17 @@ app.post("/users/:id/tests/results", function (req, res) {
                                                     index = x;
                                                 }    
                                             }
-                                            console.log("methodMarks[index] : " + methodMarks[index]);
                                             if (methodMarks[index] > 0)
                                             {
-                                                console.log("\nend of question stuff");
-                                                testData.topics[z].questions[q].solution = populatedExams[0].modules[i].topics[t].questions[p].methods[index];
+                                                testData.topics[z].questions[q].solution = populatedExams.modules[i].topics[t].questions[p].methods[index];
                                                 testData.topics[z].questions[q].answers = answerLocationsTemp[index];
-                                                testData.topics[z].percentageMark += methodMarks[index] / populatedExams[0].modules[i].topics[t].questions[p].mark;
-                                                console.log("methodMarks[index] :" + methodMarks[index]);
-                                                console.log("populatedExams[0].modules[i].topics[t].questions[p].mark :" + populatedExams[0].modules[i].topics[t].questions[p].mark);
-                                                console.log("testData.topics[z].percentageMark :" + testData.topics[z].percentageMark);
+                                                testData.topics[z].percentageMark += methodMarks[index] / populatedExams.modules[i].topics[t].questions[p].mark;
                                             }
                                             break;
                                         }
                                     }
                                 }
-                                console.log("\n\nend of topics stuff");
-                                console.log("testData.topics[z].percentageMark :" + testData.topics[z].percentageMark);
-                                console.log("testData.topics[z].questions.length :" + testData.topics[z].questions.length);
-                                console.log("typeof(testData.topics[z].percentageMark) :" + typeof (testData.topics[z].percentageMark));
-                                console.log("typeof (testData.topics[z].questions.length) :" + typeof (testData.topics[z].questions.length));
-                                testData.topics[z].percentageMark = ((testData.topics[z].percentageMark) / (testData.topics[z].questions.length));
-                                console.log("FINAL : testData.topics[z].percentageMark :" + testData.topics[z].percentageMark);
+                                testData.topics[z].percentageMark = testData.topics[z].percentageMark / testData.topics[z].questions.length;
                                 break;
                             }
                         }       
@@ -1817,17 +1796,24 @@ app.get("/users/:id/users", isLoggedIn, isAdmin, function (req, res) {
             res.render("users/index", { data: objectToBeParsed });
         }
     });
-
 });
 
 app.get("/users/:id/users/:userId", isLoggedIn, isAdmin, function (req, res) {
-    user.findById(req.params.userId, function (err, user) {
+    user.findById(req.params.userId, function (err, userData) {
         if (err) {
             console.log("Could not find user\n" + err);
         } else {
-            var objectToBeParsed = { userData: user, admin: req.params.id };
-            res.render("users/show", { data: objectToBeParsed });
+            examBoard.find({}, function (err, examBoards) {
+                if (err) {
+                    console.log("Could not find examboard\n" + err);
+                } else {
+                    var objectToBeParsed = { user: userData, admin: req.params.id, examboard: examBoards };
+                    res.render("users/show", { data: objectToBeParsed });
+                }
+            });
+            
         }
+        
     });
 });
 
@@ -1849,18 +1835,51 @@ app.post("/users/:id/users/:userId/admin", function (req, res) {
     });
 });
 
-app.post("/users/:id/users/:userId/admin-remove", function (req, res) {
+app.post("/users/:id/users/:userId/update", function (req, res) {
     user.findById(req.params.userId, function (err, user) {
         if (err) {
-            console.log("Could not find user:\n" + err);
+            console.log("Couldn't find user\n" + err);
         } else {
-            user.role = "user";
-            user.save(function (err, updatedUser) {
+            if (req.body.username) {
+                user.username = req.body.username;
+            }
+            if (req.body.email) {
+                user.email = req.body.email;
+            }
+            if (req.body.targetGrade) {
+                user.targertGrade = req.body.targetGrade;
+            }
+            if (req.body.score) {
+                user.score.push(req.body.score);
+            }
+            if (req.body.examBoard) {
+                user.examBoard.name = req.body.examBoard;
+                user.examBoard.modules.splice(0, user.examBoard.modules.length);
+                examBoard.findOne({ name: req.body.examBoard }, function (err, examboard) {
+                    for (var i = 0; i < req.body.modules; i++) {
+                        user.examBoard.modules.push({ name: req.body.modules[i], progress: 0, topics: [], results: [] });
+                        for (var t = 0; t < examBoard.modules.length; t++) {
+                            if (examBoard.modules[t].name == req.body.modules[i]) {
+                                for (var q = 0; q < examBoard.modules[t].topics.length; q++) {
+                                    user.examBoard.modules[i].topics.push({ name: examBoard.modules[t].topics[q].name, progress: 0, results: [] });
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+            user.save(function (err, updateUser) {
                 if (err) {
-                    console.log("Could not update user role to user:\n" + err);
+                    console.log("Could not save updated user\n" + err);
                 } else {
-                    var objectToBeParsed = { userData: updatedUser, admin: req.params.id };
-                    res.render("users/show", { data: objectToBeParsed });
+                    examBoard.find({}, function (err, examBoards) {
+                        if (err) {
+                            console.log("Could not find examboard\n" + err);
+                        } else {
+                            var objectToBeParsed = { user: updateUser, admin: req.params.id, examboard: examBoards };
+                            res.render("users/show", { data: objectToBeParsed });
+                        }
+                    });
                 }
             });
         }

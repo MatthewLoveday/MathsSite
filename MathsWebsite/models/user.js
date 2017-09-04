@@ -12,14 +12,14 @@ var userModulesSchema = new mongoose.Schema
 ({
     name:String,
     progress: Number,
-    topics:[userTopicsSchema]
+    topics: [userTopicsSchema]
 });
 
 var userExamBoardSchema = new mongoose.Schema
 ({
     name:String,
     progress:Number,
-    modules:[userModulesSchema]
+    modules: [userModulesSchema]
 })
 
 var UserSchema = new mongoose.Schema
@@ -29,7 +29,7 @@ var UserSchema = new mongoose.Schema
     email: String,
     targetGrade: String,
     examBoard:userExamBoardSchema,
-    score: Number,
+    score: [Number],
     role: String
     
 });

@@ -1,19 +1,51 @@
 <% include ../partials/header %>
 
-<h2>Admins</h2>
+<div class="container">
+	<table>
+		<thead>
+			<tr>
+				<th>Admins</th>
+				<th>Teachers</th>
+				<th>Students</th>
+			</tr>
+		</thead>
 
-<% for(var i=0;i<data.users.length;i++){ %>
-	<% if(data.users[i].role == "admin"){ %>
-		<li><%= data.users[i].username %></li>
+		<tbody>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+<script>
+	var t = 1;
+	var roleType = 1;
+	<% for(var i=0;i<data.users.length;i++){ %>
+			
+		<% if(data.users[i].role == "teacher"){ %>
+			roleType = 2;
+		<% }else if(data.users[i].role == "user"){ %>
+			roleType = 3;
+		<% } %>
+			while($("tbody tr:nth-child("+t+1+") :nth-child("+roleType+")").length){
+				t++;
+			}
+			if(!($("tbody tr:nth-child("+t+")").length)){
+				console.log($("tbody tr:nth-child("+t+")").length);
+				console.log(t);
+				$("tbody").append("<tr></tr>");
+				
+			}
+			$("tbody tr:nth-child("+t+") :nth-child("+roleType+")").append("<a href='/users/<%= data.admin %>/users/<%= data.users[i]._id %>'><%= data.users[i].username %></a>");
+		
+		t = 1;
+		roleType = 1;
 	<% } %>
-<% } %>
+</script>
 
-<h2>Users</h2>
 
-<% for(var i=0;i<data.users.length;i++){ %>
-	<% if(data.users[i].role == "user"){ %>
-		<li><%= data.users[i].username %> <a href="/users/<%= data.admin %>/users/<%= data.users[i]._id %>">Info</a></li>
-	<% } %>
-<% } %>
 
 <% include ../partials/footer %>

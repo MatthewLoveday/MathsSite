@@ -276,13 +276,7 @@ function seedDB() {
 }*/
 
 async function seedDB() {
-
-    // Remove existing data
-    /*
-    await Promise.all(
-        [user, examBoard, question].map(m => m.remove({}))
-    );
-    */
+    
     await Promise.all(
         [user, examBoard, question].map(data => data.remove({}))
     );

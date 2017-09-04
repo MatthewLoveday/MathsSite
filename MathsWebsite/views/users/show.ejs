@@ -1,46 +1,106 @@
 <% include ../partials/header %>
 
-<h2><%= data.userData.name %></h2>
-<h3><%= data.userData.role %></h3>
+<div class="container">
+		<table class="bordered">
+			<thead>
+				<tr>
+					<th>Username</th>
+					<th>Role</th>
+					<th>Email</th>
+					<th>Target grade</th>
+					<th>Examboard</th>
+					<th>Score</th>
+				</tr>
+			</thead>
 
-<% if(data.userData.examBoard){ %>
-	<h3>Examboard:<%=data.userData.examBoard.name%></h3>
-	<% for(var i=0;i<data.userData.examBoard.modules.length;i++){ %>
-	<li><%=data.userData.examBoard.modules[i].name%>:<%=data.userData.examBoard.modules[i].progress%></li>
-	<% } %>
-<% } %>
+			<tbody>
+				<tr>
+					<td><%= data.user.username %></td>
+					<td><%= data.user.role %></td>
+					<td><%= data.user.email %></td>
+					<td><%= data.user.targetGrade %></td>
+					<% if(!data.user.examBoard){ %>
+						<td><%= data.user.examBoard.name %></td>
+					<% } else { %>
+						<td></td>
+					<% } %>
+					<td><%= data.user.score %></td>
+				</tr>
+			</tbody>
+		</table>
+	<div class="row">
+		<form class="col s12" action="/users/<%= data.admin %>/users/<%= data.user._id %>/update" method="POST">
+			<div class="row">
+				<div class="input-field col s2">
+					<input id="username" class="validate" type="text" data-length="30" name="username">
+					<label id="usernameLabel" for="username">Username</label>
+				</div>
+				<div class="input-field col s3">
+					<input id="email" class="validate" type="email" name="email">
+					<label for="email" data-error="Not a viable email address" data-success="Viable email address">Email</label>
+				</div>
+				<div  class="input-field col s2">
+					<select name="targetGrade">
+						<option value="" disabled selected>Set target grade</option>
+						<option value="a*">A*</option>
+						<option value="a">A</option>
+						<option value="b">B</option>
+						<option value="c">C</option>
+						<option value="d">D</option>
+						<option value="e">E</option>
+					</select>
+					<label>Target Grade</label>
+				</div>
+				<div class="input-field col s1">
+					<input id="score" class="validate" type="number" name="score">
+					<label for="score">Score</label>
+				</div>
+				<div class="input-field col s2">
+					<select name="examBoard" id="exams">
+						<option value="" disabled selected>Set examboard</option>
+						<% for(var i=0;i<data.examboard.length;i++){ %>
+							<option value="<%= data.examboard[i].name %>"><%= data.examboard[i].name %></option>
+						<% } %>
+					</select>
+					<label>Examboard</label>
+				</div>
+				<div class="input-field col s2">
+					<select multiple name="modules" id="modules">
+						<option value="" disabled selected>Set modules</option>
+					</select>
+					<label>Modules</label>
+				</div>
+			</div>
+			<div class="row">
+				<input type="checkbox" id="checker" required/>
+				<label for="checker">I am 100% sure.</label>
+			</div>
+			<div class="row">
+				<button class="btn waves-effect waves-light" type="submit" name="action">Submit changes
+					<i class="material-icons right">send</i>
+				</button>
+			</div>
+		</form>
+	</div>
+</div>
 
-<% if(data.userData.role == "user"){ %>
-	<form class="col s12" action="/users/<%= data.admin %>/users/<%= data.userData._id %>/admin" method="POST">
-		<div class="row">
-			<p>
-				<input type="checkbox" id="checker" required />
-				<label for="checker">I am 100% sure I want to do this</label>
-			</p>
-		</div>
-		<div class="row">
-			<button class="btn waves-effect waves-light" type="submit" name="action">Make admin
-				<i class="material-icons right">send</i>
-			</button>
-		</div>
-	</form>
-<% } else { %>
-	<form class="col s12" action="/users/<%= data.admin %>/users/<%= data.userData._id %>/admin-remove" method="POST">
-		<div class="row">
-			<p>
-				<input type="checkbox" id="checker" required />
-				<label for="checker">I am 100% sure I want to do this</label>
-			</p>
-		</div>
-		<div class="row">
-			<button class="btn waves-effect waves-light" type="submit" name="action">Remove admin
-				<i class="material-icons right">send</i>
-			</button>
-		</div>
-	</form>
-<% } %>
 
-
+<script>
+		$(document).ready(function() {
+			$("#exams").change(function(){
+				var exam = $("#exams").val();
+				$("#modules").empty().append("<option value='' disabled selected>Set modules</option>");
+				<% for(var i=0;i<data.examboard.length;i++){ %>
+					if("<%= data.examboard[i].name %>" == exam){
+						<% for(var t=0;t<data.examboard[i].modules.length;t++){ %>
+							$("#modules").append("<option value='<%= data.examboard[i].modules[t].name %>'><%= data.examboard[i].modules[t].name %></option>");
+						<% } %>
+					}
+				<% } %>
+				$('select').material_select();
+			});
+		});
+	</script>
 
 
 <% include ../partials/footer %>

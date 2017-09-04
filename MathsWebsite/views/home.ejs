@@ -28,27 +28,32 @@
 	</div>
 </nav>
 
+<div class="container">
+	<div class="row">
+		<% if(user.examBoard){ %>
+			<h2>Examboard:<%=user.examBoard.name%></h2>
+			Progress:<%=user.examBoard.progress%>
+			
+			<div id="examboardChart"></div>
 
-<div class="row">
-<% if(user.examBoard){ %>
-	<h2>Examboard:<%=user.examBoard.name%></h2>
-	Progress:<%=user.examBoard.progress%>
-	<ul id="modules" class="tabs">
-	<% for(var i=0;i<user.examBoard.modules.length;i++){ %>
-		<li class="tab col s<%=Math.floor(12/user.examBoard.modules.length)%>"><a href="#module-<%=user.examBoard.modules[i].name%>"><%=user.examBoard.modules[i].name%></a></li>
-	<% } %>
-	</ul>
-	<% for(var i=0;i<user.examBoard.modules.length;i++){ %>
-		<div id="module-<%=user.examBoard.modules[i].name%>" class="col s12">
-		<h4><%=user.examBoard.modules[i].name%></h4>
-		<% for(var t=0;t<user.examBoard.modules[i].topics.length;t++){ %>
-			<h5><%=user.examBoard.modules[i].topics[t].name%></h5>
-			Progress:<%=user.examBoard.modules[i].topics[t].progress%>
+			<ul id="modules" class="tabs">
+			<% for(var i=0;i<user.examBoard.modules.length;i++){ %>
+				<li class="tab col s<%=Math.floor(12/user.examBoard.modules.length)%>"><a href="#module-<%=user.examBoard.modules[i].name%>"><%=user.examBoard.modules[i].name%></a></li>
+			<% } %>
+			</ul>
+			<% for(var i=0;i<user.examBoard.modules.length;i++){ %>
+				<div id="module-<%=user.examBoard.modules[i].name%>" class="col s12">
+				<h4><%=user.examBoard.modules[i].name%></h4>
+				<% for(var t=0;t<user.examBoard.modules[i].topics.length;t++){ %>
+					<h5><%=user.examBoard.modules[i].topics[t].name%></h5>
+					Progress:<%=user.examBoard.modules[i].topics[t].progress%>
+				<% } %>
+				</div>
+			<% } %>
 		<% } %>
-		</div>
-	<% } %>
-<% } %>
+	</div>
 </div>
+
 
 
 <style>
@@ -75,4 +80,83 @@
 		brand-logo span{
 			color: black;
 		}
-	</style>
+</style>
+
+	<% if(user.examBoard){ %>
+		<% var modulesAverages = []; %>
+		<% var examboardAverages = []; %>
+		<% var modulesMinResultsLength = 0; %>
+		<% var topicsMinResultsLengths = []; %>
+		<% for(var i=0;i<user.examBoard.modules.length;i++){ %>
+		
+			<% topicsMinResultsLengths.push(user.examBoard.modules[i].topics[0].results.length); %>
+			<% for(var t=1;t<user.examBoard.modules[i].topics.length;t++){ %>
+				<% if(user.examBoard.modules[i].topics[t].results.length < topicsMinResultsLengths[i]){ %>
+					<%  topicsMinResultsLengths[i] = user.examBoard.modules[i].topics[t].results.length %>
+				<% } %>
+			<% } %>
+
+			<% modulesAverages.push([]); %>
+			<% for(var t=0;t<topicsMinResultsLengths;t++){ %>
+				<% modulesAverages[i][t].push(0); %>
+				<% for(var q=0;q<user.examBoard.modules[i].topics.length;q++){ %>
+					<% modulesAverages[i][t] += user.examBoard.modules[i].topics[q].results[t]; %>		
+				<% } %>
+				<% modulesAverages[i][t] = modulesAverages[i] / user.examBoard.modules[i].topics.length; %>
+			<% } %>
+
+		
+			<% if(modulesAverages[i].length < modulesMinResultsLength){ %>
+				<%  modulesMinResultsLength = modulesAverages[i].length %>
+			<% } %>
+
+		<% } %>
+
+		<% for(var i=0;i<modulesMinResultsLength;i++){ %>
+			<% examboardAverages.push(0); %>
+			<% for(var t=0;t<modulesAverages.length;t++){ %>
+				<% examboardAverages[i] += modulesAverages[t][i]; %>			
+			<% } %>
+			<% examboardAverages[i] = examboardAverages[i] / user.examBoard.modules.length; %>
+		<% } %>
+		<script>
+	
+			google.charts.load('current', {packages: ['corechart', 'line']});
+			google.charts.setOnLoadCallback(drawBackgroundColor);
+
+			function drawBackgroundColor() {
+				  var data = new google.visualization.DataTable();
+				  data.addColumn('number', 'X');
+				  data.addColumn('number', 'Dogs');
+		  
+
+				  data.addRows([
+			
+					<% for(var i=0;i < examboardAverages.length - 1;i++){ %>
+						[ <%= i %> , <%= examboardAverages[i] %> ],
+					<% } %>
+					[ <%= examboardAverages.length %> , <%= examboardAverages[examboardAverages.length] %> ]
+				  ]);
+		
+
+				  var options = {
+					hAxis: {
+					  title: 'Time'
+					},
+					vAxis: {
+					  title: 'Score'
+					},
+					backgroundColor: '#f1f8e9'
+				  };
+
+				  var chart = new google.visualization.LineChart(document.getElementById('examboardChart'));
+				  chart.draw(data, options);
+				}
+
+		</script>
+	<% } %>
+	
+
+	
+
+<% include ./partials/footer %>
