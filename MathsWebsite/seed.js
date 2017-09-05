@@ -10,190 +10,206 @@ const   mongoose = require("mongoose"),
     
 var examboardData=
 [
-    { name: "a", modules: [{ name: "1", topics: [{ name: "a" }, { name: "b" }, { name: "c" }] }, { name: "2", topics: [{ name: "d" }, { name: "e" }, { name: "f" }] }, { name: "3", topics: [{ name: "g" }, { name: "h" }, { name: "i" }] }] },
-    { name: "b", modules: [{ name: "4", topics: [{ name: "a" }, { name: "b" }, { name: "c" }] }, { name: "5", topics: [{ name: "d" }, { name: "e" }, { name: "f" }] }, { name: "6", topics: [{ name: "g" }, { name: "h" }, { name: "i" }] }] },
-    { name: "c", modules: [{ name: "7", topics: [{ name: "a" }, { name: "b" }, { name: "c" }] }, { name: "8", topics: [{ name: "d" }, { name: "e" }, { name: "f" }] }, { name: "9", topics: [{ name: "g" }, { name: "h" }, { name: "i" }] }] }
+        {
+            name: "Placeholder1", modules: [
+                { name: "PlaceholderA1", topics: [{ name: "Placeholder1A1" }, { name: "Placeholder2A1" }, { name: "Placeholder3A1" }, { name: "Placeholder4A1" }] },
+                { name: "PlaceholderB1", topics: [{ name: "Placeholder1B1" }, { name: "Placeholder2B1" }, { name: "Placeholder3B1" }, { name: "Placeholder4B1" }, { name: "Placeholder5B1" }, { name: "Placeholder6B1" }] },
+                { name: "PlaceholderC1", topics: [{ name: "Placeholder1C1" }, { name: "Placeholder2C1" }, { name: "Placeholder3C1" }, { name: "Placeholder4C1" }, { name: "Placeholder5C1" }, { name: "Placeholder6C1" }] },
+                { name: "PlaceholderD1", topics: [{ name: "Placeholder1D1" }, { name: "Placeholder2D1" }, { name: "Placeholder3D1" }, { name: "Placeholder4D1" }, { name: "Placeholder5D1" }, { name: "Placeholder6D1" }, { name: "Placeholder7D1" }] }]
+        }, {
+            name: "Placeholder2", modules: [
+            { name: "PlaceholderA2", topics: [{ name: "Placeholder1A2" }, { name: "Placeholder2A2" }, { name: "Placeholder3A2" }, { name: "Placeholder4A2" }] },
+            { name: "PlaceholderB2", topics: [{ name: "Placeholder1B2" }, { name: "Placeholder2B2" }, { name: "Placeholder3B2" }, { name: "Placeholder4B2" }, { name: "Placeholder5B2" }, { name: "Placeholder6B2" }] },
+            { name: "PlaceholderC2", topics: [{ name: "Placeholder1C2" }, { name: "Placeholder2C2" }, { name: "Placeholder3C2" }, { name: "Placeholder4C2" }, { name: "Placeholder5C2" }, { name: "Placeholder6C2" }] },
+            { name: "PlaceholderD2", topics: [{ name: "Placeholder1D2" }, { name: "Placeholder2D2" }, { name: "Placeholder3D2" }, { name: "Placeholder4D2" }, { name: "Placeholder5D2" }, { name: "Placeholder6D2" }, { name: "Placeholder7D2" }] }]
+        }, {
+            name: "Placeholder3", modules: [
+                { name: "PlaceholderA3", topics: [{ name: "Placeholder1A3" }, { name: "Placeholder2A3" }, { name: "Placeholder3A3" }, { name: "Placeholder4A3" }] },
+                { name: "PlaceholderB3", topics: [{ name: "Placeholder1B3" }, { name: "Placeholder2B3" }, { name: "Placeholder3B3" }, { name: "Placeholder4B3" }, { name: "Placeholder5B3" }, { name: "Placeholder6B3" }] },
+                { name: "PlaceholderC3", topics: [{ name: "Placeholder1C3" }, { name: "Placeholder2C3" }, { name: "Placeholder3C3" }, { name: "Placeholder4C3" }, { name: "Placeholder5C3" }, { name: "Placeholder6C3" }] },
+                { name: "PlaceholderD3", topics: [{ name: "Placeholder1D3" }, { name: "Placeholder2D3" }, { name: "Placeholder3D3" }, { name: "Placeholder4D3" }, { name: "Placeholder5D3" }, { name: "Placeholder6D3" }, { name: "Placeholder7D3" }] }]
+        }
 ];
 
 var questionData=
 [
     {
-        content: "http://www.christchurch.esussex.dbprimary.com/esussex/primary/christchurch/web/maths2-big[1].png",
+        content: "file:///C:/Users/jonat/Documents/GitHub/MathsSite/MathsWebsite/images/questions/C4/intLims-4marks(0).png",
         mark: 4,
         methods: [[{ mark: 4, content: "x=-2^{-\\frac{1}{2}}" }], [{ mark: 2, content: "2^{\\frac{1}{2}}x=1" }, { mark: 2, content:"x=2^{-\\frac{1}{2}}"}]]
     },
     {
-        content: "http://www.christchurch.esussex.dbprimary.com/esussex/primary/christchurch/web/maths2-big[1].png",
+        content: "file:///C:/Users/jonat/Documents/GitHub/MathsSite/MathsWebsite/images/questions/C4/intLims-4marks(0).png",
         mark: 4,
         methods: [[{ mark: 4, content: "x=-2^{-\\frac{1}{2}}" }], [{ mark: 2, content: "2^{\\frac{1}{2}}x=1" }, { mark: 2, content: "x=2^{-\\frac{1}{2}}" }]]
     },
     {
-        content: "http://www.christchurch.esussex.dbprimary.com/esussex/primary/christchurch/web/maths2-big[1].png",
+        content: "file:///C:/Users/jonat/Documents/GitHub/MathsSite/MathsWebsite/images/questions/C4/intLims-4marks(0).png",
         mark: 4,
         methods: [[{ mark: 4, content: "x=-2^{-\\frac{1}{2}}" }], [{ mark: 2, content: "2^{\\frac{1}{2}}x=1" }, { mark: 2, content:"x=2^{-\\frac{1}{2}}"}]]
     },
     {
-        content: "http://logos.textgiraffe.com/logos/logo-name/Maths-designstyle-friday-m.png",
+        content: "file:///C:/Users/jonat/Documents/GitHub/MathsSite/MathsWebsite/images/questions/C4/binExpan-7marks(0).png",
         mark: 5,
         methods: [[{ mark: 5, content: "x=-2^{-\\frac{1}{2}}" }], [{ mark: 3, content: "2^{\\frac{1}{2}}x=1" }, { mark: 2, content: "x=2^{-\\frac{1}{2}}" }]]
     },
     {
-        content: "http://logos.textgiraffe.com/logos/logo-name/Maths-designstyle-friday-m.png",
+        content: "file:///C:/Users/jonat/Documents/GitHub/MathsSite/MathsWebsite/images/questions/C4/binExpan-7marks(0).png",
         mark: 5,
         methods: [[{ mark: 5, content: "x=-2^{-\\frac{1}{2}}" }], [{ mark: 3, content: "2^{\\frac{1}{2}}x=1" }, { mark: 2, content: "x=2^{-\\frac{1}{2}}" }]]
     },
     {
-        content: "http://logos.textgiraffe.com/logos/logo-name/Maths-designstyle-friday-m.png",
+        content: "file:///C:/Users/jonat/Documents/GitHub/MathsSite/MathsWebsite/images/questions/C4/binExpan-7marks(0).png",
         mark: 5,
         methods: [[{ mark: 5, content: "x=-2^{-\\frac{1}{2}}" }], [{ mark: 3, content: "2^{\\frac{1}{2}}x=1" }, { mark: 2, content: "x=2^{-\\frac{1}{2}}" }]]
     },
     {
-        content: "http://mathszone2.net/mathszonenew/wp-content/uploads/2015/11/image.gif",
+        content: "file:///C:/Users/jonat/Documents/GitHub/MathsSite/MathsWebsite/images/questions/C4/int-7marks(0).png",
         mark: 6,
         methods: [[{ mark: 6, content: "x=-2^{-\\frac{1}{2}}" }], [{ mark: 3, content: "2^{\\frac{1}{2}}x=1" }, { mark: 3, content: "x=2^{-\\frac{1}{2}}" }]]
     },
     {
-        content: "http://mathszone2.net/mathszonenew/wp-content/uploads/2015/11/image.gif",
+        content: "file:///C:/Users/jonat/Documents/GitHub/MathsSite/MathsWebsite/images/questions/C4/int-7marks(0).png",
         mark: 6,
         methods: [[{ mark: 6, content: "x=-2^{-\\frac{1}{2}}" }], [{ mark: 3, content: "2^{\\frac{1}{2}}x=1" }, { mark: 3, content: "x=2^{-\\frac{1}{2}}" }]]
     },
     {
-        content: "http://mathszone2.net/mathszonenew/wp-content/uploads/2015/11/image.gif",
+        content: "file:///C:/Users/jonat/Documents/GitHub/MathsSite/MathsWebsite/images/questions/C4/int-7marks(0).png",
         mark: 6,
         methods: [[{ mark: 6, content: "x=-2^{-\\frac{1}{2}}" }], [{ mark: 3, content: "2^{\\frac{1}{2}}x=1" }, { mark: 3, content: "x=2^{-\\frac{1}{2}}" }]]
     },
     {
-        content: "http://logos.textgiraffe.com/logos/logo-name/Maths-designstyle-kiddo-m.png",
+        content: "file:///C:/Users/jonat/Documents/GitHub/MathsSite/MathsWebsite/images/questions/C4/rateOfChange-7marks(1).png",
         mark: 7,
         methods: [[{ mark: 7, content: "x=-2^{-\\frac{1}{2}}" }], [{ mark: 4, content: "2^{\\frac{1}{2}}x=1" }, { mark: 3, content: "x=2^{-\\frac{1}{2}}" }]]
     },
     {
-        content: "http://logos.textgiraffe.com/logos/logo-name/Maths-designstyle-kiddo-m.png",
+        content: "file:///C:/Users/jonat/Documents/GitHub/MathsSite/MathsWebsite/images/questions/C4/rateOfChange-7marks(1).png",
         mark: 7,
         methods: [[{ mark: 7, content: "x=-2^{-\\frac{1}{2}}" }], [{ mark: 4, content: "2^{\\frac{1}{2}}x=1" }, { mark: 3, content: "x=2^{-\\frac{1}{2}}" }]]
     },
     {
-        content: "http://logos.textgiraffe.com/logos/logo-name/Maths-designstyle-kiddo-m.png",
+        content: "file:///C:/Users/jonat/Documents/GitHub/MathsSite/MathsWebsite/images/questions/C4/rateOfChange-7marks(1).png",
         mark: 7,
         methods: [[{ mark: 7, content: "x=-2^{-\\frac{1}{2}}" }], [{ mark: 4, content: "2^{\\frac{1}{2}}x=1" }, { mark: 3, content: "x=2^{-\\frac{1}{2}}" }]]
     },
     {
-        content: "http://logos.textgiraffe.com/logos/logo-name/Maths-designstyle-candy-m.png",
+        content: "file:///C:/Users/jonat/Documents/GitHub/MathsSite/MathsWebsite/images/questions/C4/implicitDiff-8marks(0).png",
         mark: 8,
         methods: [[{ mark: 8, content: "x=-2^{-\\frac{1}{2}}" }], [{ mark: 4, content: "2^{\\frac{1}{2}}x=1" }, { mark: 4, content: "x=2^{-\\frac{1}{2}}" }]]
     },
     {
-        content: "http://logos.textgiraffe.com/logos/logo-name/Maths-designstyle-candy-m.png",
+        content: "file:///C:/Users/jonat/Documents/GitHub/MathsSite/MathsWebsite/images/questions/C4/implicitDiff-8marks(0).png",
         mark: 8,
         methods: [[{ mark: 8, content: "x=-2^{-\\frac{1}{2}}" }], [{ mark: 4, content: "2^{\\frac{1}{2}}x=1" }, { mark: 4, content: "x=2^{-\\frac{1}{2}}" }]]
     },
     {
-        content: "http://logos.textgiraffe.com/logos/logo-name/Maths-designstyle-candy-m.png",
+        content: "file:///C:/Users/jonat/Documents/GitHub/MathsSite/MathsWebsite/images/questions/C4/implicitDiff-8marks(0).png",
         mark: 8,
         methods: [[{ mark: 8, content: "x=-2^{-\\frac{1}{2}}" }], [{ mark: 4, content: "2^{\\frac{1}{2}}x=1" }, { mark: 4, content: "x=2^{-\\frac{1}{2}}" }]]
     },
     {
-        content: "http://www.christchurch.esussex.dbprimary.com/esussex/primary/christchurch/web/maths2-big[1].png",
+        content: "file:///C:/Users/jonat/Documents/GitHub/MathsSite/MathsWebsite/images/questions/C4/implicitDiff-8marks(1).png",
         mark: 9,
         methods: [[{ mark: 9, content: "x=-2^{-\\frac{1}{2}}" }], [{ mark: 5, content: "2^{\\frac{1}{2}}x=1" }, { mark: 4, content: "x=2^{-\\frac{1}{2}}" }]]
     },
     {
-        content: "http://www.christchurch.esussex.dbprimary.com/esussex/primary/christchurch/web/maths2-big[1].png",
+        content: "file:///C:/Users/jonat/Documents/GitHub/MathsSite/MathsWebsite/images/questions/C4/implicitDiff-8marks(1).png",
         mark: 9,
         methods: [[{ mark: 9, content: "x=-2^{-\\frac{1}{2}}" }], [{ mark: 5, content: "2^{\\frac{1}{2}}x=1" }, { mark: 4, content: "x=2^{-\\frac{1}{2}}" }]]
     },
     {
-        content: "http://www.christchurch.esussex.dbprimary.com/esussex/primary/christchurch/web/maths2-big[1].png",
+        content: "file:///C:/Users/jonat/Documents/GitHub/MathsSite/MathsWebsite/images/questions/C4/implicitDiff-8marks(1).png",
         mark: 9,
         methods: [[{ mark: 9, content: "x=-2^{-\\frac{1}{2}}" }], [{ mark: 5, content: "2^{\\frac{1}{2}}x=1" }, { mark: 4, content: "x=2^{-\\frac{1}{2}}" }]]
     },
     {
-        content: "http://www.christchurch.esussex.dbprimary.com/esussex/primary/christchurch/web/maths2-big[1].png",
+        content: "file:///C:/Users/jonat/Documents/GitHub/MathsSite/MathsWebsite/images/questions/C4/binExpan-10marks(0).png",
         mark: 10,
         methods: [[{ mark: 10, content: "x=-2^{-\\frac{1}{2}}" }], [{ mark: 5, content: "2^{\\frac{1}{2}}x=1" }, { mark: 5, content: "x=2^{-\\frac{1}{2}}" }]]
     },
     {
-        content: "http://www.christchurch.esussex.dbprimary.com/esussex/primary/christchurch/web/maths2-big[1].png",
+        content: "file:///C:/Users/jonat/Documents/GitHub/MathsSite/MathsWebsite/images/questions/C4/binExpan-10marks(0).png",
         mark: 10,
         methods: [[{ mark: 10, content: "x=-2^{-\\frac{1}{2}}" }], [{ mark: 5, content: "2^{\\frac{1}{2}}x=1" }, { mark: 5, content: "x=2^{-\\frac{1}{2}}" }]]
     },
     {
-        content: "http://www.christchurch.esussex.dbprimary.com/esussex/primary/christchurch/web/maths2-big[1].png",
+        content: "file:///C:/Users/jonat/Documents/GitHub/MathsSite/MathsWebsite/images/questions/C4/binExpan-10marks(0).png",
         mark: 10,
         methods: [[{ mark: 10, content: "x=-2^{-\\frac{1}{2}}" }], [{ mark: 5, content: "2^{\\frac{1}{2}}x=1" }, { mark: 5, content: "x=2^{-\\frac{1}{2}}" }]]
     },
     {
-        content: "http://www.christchurch.esussex.dbprimary.com/esussex/primary/christchurch/web/maths2-big[1].png",
+        content: "file:///C:/Users/jonat/Documents/GitHub/MathsSite/MathsWebsite/images/questions/C4/parametrics-12marks.png",
         mark: 11,
         methods: [[{ mark: 11, content: "x=-2^{-\\frac{1}{2}}" }], [{ mark: 6, content: "2^{\\frac{1}{2}}x=1" }, { mark: 5, content: "x=2^{-\\frac{1}{2}}" }]]
     },
     {
-        content: "http://www.christchurch.esussex.dbprimary.com/esussex/primary/christchurch/web/maths2-big[1].png",
+        content: "file:///C:/Users/jonat/Documents/GitHub/MathsSite/MathsWebsite/images/questions/C4/parametrics-12marks.png",
         mark: 11,
         methods: [[{ mark: 11, content: "x=-2^{-\\frac{1}{2}}" }], [{ mark: 6, content: "2^{\\frac{1}{2}}x=1" }, { mark: 5, content: "x=2^{-\\frac{1}{2}}" }]]
     },
     {
-        content: "pStart of question 8c/phttp://www.christchurch.esussex.dbprimary.com/esussex/primary/christchurch/web/maths2-big[1].png",
+        content: "file:///C:/Users/jonat/Documents/GitHub/MathsSite/MathsWebsite/images/questions/C4/parametrics-12marks.png",
         mark: 11,
         methods: [[{ mark: 11, content: "x=-2^{-\\frac{1}{2}}" }], [{ mark: 6, content: "2^{\\frac{1}{2}}x=1" }, { mark: 5, content: "x=2^{-\\frac{1}{2}}" }]]
     },
     {
-        content: "http://www.christchurch.esussex.dbprimary.com/esussex/primary/christchurch/web/maths2-big[1].png",
+        content: "file:///C:/Users/jonat/Documents/GitHub/MathsSite/MathsWebsite/images/questions/C4/diffEquation-12marks(0).png",
         mark: 12,
         methods: [[{ mark: 12, content: "x=-2^{-\\frac{1}{2}}" }], [{ mark: 6, content: "2^{\\frac{1}{2}}x=1" }, { mark: 6, content: "x=2^{-\\frac{1}{2}}" }]]
     },
     {
-        content: "http://www.christchurch.esussex.dbprimary.com/esussex/primary/christchurch/web/maths2-big[1].png",
+        content: "file:///C:/Users/jonat/Documents/GitHub/MathsSite/MathsWebsite/images/questions/C4/diffEquation-12marks(0).png",
         mark: 12,
         ethods: [[{ mark: 12, content: "x=-2^{-\\frac{1}{2}}" }], [{ mark: 6, content: "2^{\\frac{1}{2}}x=1" }, { mark: 6, content: "x=2^{-\\frac{1}{2}}" }]]
     },
     {
-        content: "http://www.christchurch.esussex.dbprimary.com/esussex/primary/christchurch/web/maths2-big[1].png",
+        content: "file:///C:/Users/jonat/Documents/GitHub/MathsSite/MathsWebsite/images/questions/C4/diffEquation-12marks(0).png",
         mark: 12,
         ethods: [[{ mark: 12, content: "x=-2^{-\\frac{1}{2}}" }], [{ mark: 6, content: "2^{\\frac{1}{2}}x=1" }, { mark: 6, content: "x=2^{-\\frac{1}{2}}" }]]
     },
     {
-        content: "http://www.christchurch.esussex.dbprimary.com/esussex/primary/christchurch/web/maths2-big[1].png",
+        content: "file:///C:/Users/jonat/Documents/GitHub/MathsSite/MathsWebsite/images/questions/C4/vectors-12marks(0).png",
         mark: 13,
         methods: [[{ mark: 13, content: "x=-2^{-\\frac{1}{2}}" }], [{ mark: 7, content: "2^{\\frac{1}{2}}x=1" }, { mark: 6, content: "x=2^{-\\frac{1}{2}}" }]]
     },
     {
-        content: "http://www.christchurch.esussex.dbprimary.com/esussex/primary/christchurch/web/maths2-big[1].png",
+        content: "file:///C:/Users/jonat/Documents/GitHub/MathsSite/MathsWebsite/images/questions/C4/vectors-12marks(0).png",
         mark: 13,
         methods: [[{ mark: 13, content: "x=-2^{-\\frac{1}{2}}" }], [{ mark: 7, content: "2^{\\frac{1}{2}}x=1" }, { mark: 6, content: "x=2^{-\\frac{1}{2}}" }]]
     },
     {
-        content: "http://www.christchurch.esussex.dbprimary.com/esussex/primary/christchurch/web/maths2-big[1].png",
+        content: "file:///C:/Users/jonat/Documents/GitHub/MathsSite/MathsWebsite/images/questions/C4/vectors-12marks(0).png",
         mark: 13,
         methods: [[{ mark: 13, content: "x=-2^{-\\frac{1}{2}}" }], [{ mark: 7, content: "2^{\\frac{1}{2}}x=1" }, { mark: 6, content: "x=2^{-\\frac{1}{2}}" }]]
     },
     {
-        content: "http://www.christchurch.esussex.dbprimary.com/esussex/primary/christchurch/web/maths2-big[1].png",
+        content: "file:///C:/Users/jonat/Documents/GitHub/MathsSite/MathsWebsite/images/questions/C4/vectors-12marks(1).png",
         mark: 14,
         methods: [[{ mark: 14, content: "x=-2^{-\\frac{1}{2}}" }], [{ mark: 7, content: "2^{\\frac{1}{2}}x=1" }, { mark: 7, content: "x=2^{-\\frac{1}{2}}" }]]
     },
     {
-        content: "http://www.christchurch.esussex.dbprimary.com/esussex/primary/christchurch/web/maths2-big[1].png",
+        content: "file:///C:/Users/jonat/Documents/GitHub/MathsSite/MathsWebsite/images/questions/C4/vectors-12marks(1).png",
         mark: 14,
         methods: [[{ mark: 14, content: "x=-2^{-\\frac{1}{2}}" }], [{ mark: 7, content: "2^{\\frac{1}{2}}x=1" }, { mark: 7, content: "x=2^{-\\frac{1}{2}}" }]]
     },
     {
-        content: "http://www.christchurch.esussex.dbprimary.com/esussex/primary/christchurch/web/maths2-big[1].png",
+        content: "file:///C:/Users/jonat/Documents/GitHub/MathsSite/MathsWebsite/images/questions/C4/vectors-12marks(1).png",
         mark: 14,
         methods: [[{ mark: 14, content: "x=-2^{-\\frac{1}{2}}" }], [{ mark: 7, content: "2^{\\frac{1}{2}}x=1" }, { mark: 7, content: "x=2^{-\\frac{1}{2}}" }]]
     },
     {
-        content: "http://www.christchurch.esussex.dbprimary.com/esussex/primary/christchurch/web/maths2-big[1].png",
+        content: "file:///C:/Users/jonat/Documents/GitHub/MathsSite/MathsWebsite/images/questions/C4/rateOfChange-15marks(0).png",
         mark: 15,
         methods: [[{ mark: 15, content: "x=-2^{-\\frac{1}{2}}" }], [{ mark: 8, content: "2^{\\frac{1}{2}}x=1" }, { mark: 7, content: "x=2^{-\\frac{1}{2}}" }]]
     },
     {
-        content: "http://www.christchurch.esussex.dbprimary.com/esussex/primary/christchurch/web/maths2-big[1].png",
+        content: "file:///C:/Users/jonat/Documents/GitHub/MathsSite/MathsWebsite/images/questions/C4/rateOfChange-15marks(0).png",
         mark: 15,
         methods: [[{ mark: 15, content: "x=-2^{-\\frac{1}{2}}" }], [{ mark: 8, content: "2^{\\frac{1}{2}}x=1" }, { mark: 7, content: "x=2^{-\\frac{1}{2}}" }]]
     },
     {
-        content: "http://www.christchurch.esussex.dbprimary.com/esussex/primary/christchurch/web/maths2-big[1].png",
+        content: "file:///C:/Users/jonat/Documents/GitHub/MathsSite/MathsWebsite/images/questions/C4/rateOfChange-15marks(0).png",
         mark: 15,
         methods: [[{ mark: 15, content: "x=-2^{-\\frac{1}{2}}" }], [{ mark: 8, content: "2^{\\frac{1}{2}}x=1" }, { mark: 7, content: "x=2^{-\\frac{1}{2}}" }]]
     }

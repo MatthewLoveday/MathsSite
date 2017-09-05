@@ -72,9 +72,7 @@ app.get("/",function(req,res)
 {
     examBoard.find({}, function (err, examboard)
     {
-        console.log("examboard.length: " + examboard.length);
-        console.log("examboard[0].modules[0].topics[0].questions.length: " + examboard[0].modules[0].topics[0].questions.length);
-        console.log("examboard[0].modules[0].topics:\n" + examboard[0].modules[0].topics);  
+        console.log("examboard.length: " + examboard.length); 
         res.render("landing", { examBoard: examboard, usernameTaken: false, loginFailure: false });
     });
 });
