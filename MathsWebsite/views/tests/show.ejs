@@ -69,8 +69,7 @@
 	});
 	$("form").append(numberOfQuestions);
 
-	var newDiv = $("<div></div>").html("<h3><%= testData.topics[i].name %></h3>")
-	$("body .container > div:nth-child(2)").prepend(newDiv);
+	$("body .container > div:nth-child(2)").prepend("<div class='row'><h3><%= testData.topics[i].name %></h3></div>");
 
 	<% for(var t=0;t< testData.topics[i].questions.length;t++){ %>
 
@@ -82,13 +81,6 @@
 		});
 		$("form").append(newQuestion);
 
-		var newQuestionContent = $("<input>").attr({
-			name:"topic<%= i %>question<%= t %>content",
-			type:"text",
-			value:"<%= testData.topics[i].questions[t].content %>",
-			readonly: "true"
-		});
-		$("form").append(newQuestionContent);
 		
 		newInputs[<%= i %>].push([]);
 
@@ -109,12 +101,9 @@
 		});
 		$("form").append(newTxtInp);
 
-		var newImg = $("<img>").attr("src","<%= testData.topics[i].questions[t].content %>");
-		var newDiv = $("<div></div>").html(newImg);
-		$("body .container > div:nth-child(2) > div:first").append(newDiv);
+		$("body .container > div:nth-child(2) > div:first").append("<div><img class='col s6 offset-s3' src='<%= testData.topics[i].questions[t].content %>'></div>");
 
-		var newP = $("<p></p>").html("<span id='topic<%= i %>question<%= t %>part0'></span>");
-		$("body .container > div:nth-child(2) > div:first > div:last").append(newP);
+		$("body .container > div:nth-child(2) > div:first > div:last").append("<div class='col s8 offset-s2'><p><span id='topic<%= i %>question<%= t %>part0'></span></p></div>");
 
 		newInputs[<%= i %>][<%= t %>][0] = MQ.MathField(document.getElementById("topic<%= i %>question<%= t %>part0"), {
 			handlers: {
@@ -186,5 +175,12 @@
 	
 	}
 </script>
+
+<style>
+	p span{
+		width:100%;
+		font-size: 100pt;
+	}
+</style>
 
 <% include ../partials/footer %>
