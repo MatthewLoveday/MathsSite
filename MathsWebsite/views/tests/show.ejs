@@ -103,7 +103,7 @@
 
 		$("body .container > div:nth-child(2) > div:first").append("<div class='row'><div class='col s6 offset-s3'><img src='<%= testData.topics[i].questions[t].content %>'></div></div>");
 
-		$("body .container > div:nth-child(2) > div:first > div:last").append("<div class='col s8 offset-s2'><p><span id='topic<%= i %>question<%= t %>part0'></span></p></div>");
+		$("body .container > div:nth-child(2) > div:first > div:last").append("<div class='col s8 offset-s2'><p><span id='topic<%= i %>question<%= t %>part0'></span></p></div><hr class='col s8 offset-s2'>");
 
 		newInputs[<%= i %>][<%= t %>][0] = MQ.MathField(document.getElementById("topic<%= i %>question<%= t %>part0"), {
 			handlers: {
@@ -178,7 +178,6 @@
 
 <style>
 	p span{
-		width:100%;
 		font-size: 100pt;
 	}
 	img{
