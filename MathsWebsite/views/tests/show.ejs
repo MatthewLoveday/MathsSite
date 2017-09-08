@@ -2,20 +2,36 @@
 
 
 
-<div class="container">
-	<div class="row">
-		<h1>Show test page</h1>
+<div class="row">
+	<div class="col s2 z-depth-2">
+		<h3>timer</h3>
+		<hr>
+		<ul class="section table-of-contents">
+		</ul>
 	</div>
-	
-	<div class="row">
-	
-	</div>
-	<div class="row">
-		<form action="/users/<%= testData.userID %>/tests/results" method="POST">
-			<button class="btn waves-effect waves-light" type="submit" name="action">Submit
-				<i class="material-icons right">send</i>
-			</button>
-		</form>
+	<div class="col s8 offset-s2">
+		<div class="row">
+			<h1>Show test page</h1>
+		</div>
+		<div class="row">
+		</div>
+		<div class="row">
+			<form action="/users/<%= testData.userID %>/tests/results" method="POST">
+				<div class="col s6 offset-s3 center-align">
+					<div class="row">
+						<input type="checkbox" id="endTest" required/>
+						<label for="endTest">Submission checkbox</label>
+					</div>
+					<div class="row">
+						<button class="btn waves-effect waves-light modal-trigger" type="submit" name="action">Submit
+							<i class="material-icons right">send</i>
+						</button>
+					</div>
+				</div>
+				<div class="hide">
+				</div>
+			</form>
+		</div>
 	</div>
 </div>
 
@@ -31,7 +47,7 @@
 		value: "<%= testData.examBoard %>",
 		readonly: "true"
 	});
-	$("form").append(examBoard);
+	$("form > div:last").append(examBoard);
 
 	var module = $("<input>").attr({
 		name: "module",
@@ -39,7 +55,7 @@
 		value: "<%= testData.module %>",
 		readonly: "true"
 	});
-	$("form").append(module);
+	$("form > div:last").append(module);
 
 	var numberOfTopics = $("<input>").attr({
 		name: "numberOfTopics",
@@ -47,7 +63,7 @@
 		value: "<%= testData.topics.length %>",
 		readonly: "true"
 	});
-	$("form").append(numberOfTopics);
+	$("form > div:last").append(numberOfTopics);
 
 <% for(var i = 0;i < testData.topics.length;i++){ %>
 	
@@ -57,7 +73,7 @@
 		value: "<%= testData.topics[i].name %>",
 		readonly: "true"
 	});
-	$("form").append(newTopic);
+	$("form > div:last").append(newTopic);
 
 	newInputs.push([]);
 
@@ -67,9 +83,10 @@
 		value: "<%= testData.topics[i].questions.length %>",
 		readonly: "true"
 	});
-	$("form").append(numberOfQuestions);
+	$("form > div:last").append(numberOfQuestions);
 
-	$("body .container > div:nth-child(2)").prepend("<div class='row'><h3><%= testData.topics[i].name %></h3></div>");
+	$("body > .row > div:nth-child(2) > div:nth-child(2)").append("<div id='topic<%= i %>OnScreen' class='row section scrollspy'><h3><%= testData.topics[i].name %></h3></div>");
+	$("body > .row > div:nth-child(1) > ul").append("<li><a href='#topic<%= i %>OnScreen'><h5>topicTimer<%= i %></h5></a><ul></ul></li>");
 
 	<% for(var t=0;t< testData.topics[i].questions.length;t++){ %>
 
@@ -79,7 +96,7 @@
 			value:"<%= testData.topics[i].questions[t]._id %>",
 			readonly: "true"
 		});
-		$("form").append(newQuestion);
+		$("form > div:last").append(newQuestion);
 
 		
 		newInputs[<%= i %>].push([]);
@@ -91,7 +108,7 @@
 			value: "1",
 			readonly: "true"
 		});
-		$("form").append(numberOfParts);
+		$("form > div:last").append(numberOfParts);
 		
 		var newTxtInp = $("<input>").attr({
 			id:"itopic<%= i %>question<%= t %>part0",
@@ -99,11 +116,10 @@
 			type:"text",
 			readonly: "true"
 		});
-		$("form").append(newTxtInp);
+		$("form > div:last").append(newTxtInp);
 
-		$("body .container > div:nth-child(2) > div:first").append("<div class='row'><div class='col s6 offset-s3'><img src='<%= testData.topics[i].questions[t].content %>'></div></div>");
-
-		$("body .container > div:nth-child(2) > div:first > div:last").append("<div class='col s8 offset-s2'><p><span id='topic<%= i %>question<%= t %>part0'></span></p></div><hr class='col s8 offset-s2'>");
+		$("#topic<%= i %>OnScreen").append("<div class='row'><div class='col s6 offset-s3'><img src='<%= testData.topics[i].questions[t].content %>'></div><div class='col s8 offset-s2'><p><span id='topic<%= i %>question<%= t %>part0'></span></p></div><hr class='col s8 offset-s2'></div>");
+	
 
 		newInputs[<%= i %>][<%= t %>][0] = MQ.MathField(document.getElementById("topic<%= i %>question<%= t %>part0"), {
 			handlers: {
@@ -126,6 +142,14 @@
 
 	<% } %> 
 <% } %>
+	$(document).ready(function() {
+		$('body').scroll(function() { 
+			$('.z-depth-2').css('top', $(this).scrollTop());
+		});
+		$('.scrollspy').scrollSpy();
+	});
+	
+	
 	function newInp(i,t,count)
 	{
 		
@@ -184,8 +208,14 @@
 		width:100%;
 		height:100%;
 	}
-	h1, h3{
+	body > .row > div:nth-child(2) h1,body > .row > div:nth-child(2) h3{
 		text-align:center;
+	}
+	body > .row > div:nth-child(1) {
+		position:fixed;
+	}
+	.highlighted{
+		background-color:#d3e4ff;
 	}
 </style>
 
