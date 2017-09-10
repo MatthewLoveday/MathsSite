@@ -1,7 +1,6 @@
 <% include ../partials/header %>
 
 
-
 <div class="row">
 	<div class="col s2 z-depth-2">
 		<h3>timer</h3>
@@ -39,165 +38,167 @@
 
 
 <script>
-	var newInputs = [];
-
-	var examBoard = $("<input>").attr({
-		name: "examBoard",
-		type: "text",
-		value: "<%= testData.examBoard %>",
-		readonly: "true"
-	});
-	$("form > div:last").append(examBoard);
-
-	var module = $("<input>").attr({
-		name: "module",
-		type: "text",
-		value: "<%= testData.module %>",
-		readonly: "true"
-	});
-	$("form > div:last").append(module);
-
-	var numberOfTopics = $("<input>").attr({
-		name: "numberOfTopics",
-		type: "text",
-		value: "<%= testData.topics.length %>",
-		readonly: "true"
-	});
-	$("form > div:last").append(numberOfTopics);
-
-<% for(var i = 0;i < testData.topics.length;i++){ %>
-	
-	var newTopic = $("<input>").attr({
-		name: "topic<%= i %>",
-		type:  "text",
-		value: "<%= testData.topics[i].name %>",
-		readonly: "true"
-	});
-	$("form > div:last").append(newTopic);
-
-	newInputs.push([]);
-
-	var numberOfQuestions = $("<input>").attr({
-		name: "topic<%= i %>numberOfQuestions",
-		type: "text",
-		value: "<%= testData.topics[i].questions.length %>",
-		readonly: "true"
-	});
-	$("form > div:last").append(numberOfQuestions);
-
-	$("body > .row > div:nth-child(2) > div:nth-child(2)").append("<div id='topic<%= i %>OnScreen' class='row section scrollspy'><h3><%= testData.topics[i].name %></h3></div>");
-	$("body > .row > div:nth-child(1) > ul").append("<li><a href='#topic<%= i %>OnScreen'><h5>topicTimer<%= i %></h5></a><ul></ul></li>");
-
-	<% for(var t=0;t< testData.topics[i].questions.length;t++){ %>
-
-		var newQuestion = $("<input>").attr({
-			name:"topic<%= i %>question<%= t %>",
-			type:"text",
-			value:"<%= testData.topics[i].questions[t]._id %>",
-			readonly: "true"
-		});
-		$("form > div:last").append(newQuestion);
-
-		
-		newInputs[<%= i %>].push([]);
-
-		var numberOfParts = $("<input>").attr({
-			id: "topic<%= i %>question<%= t %>numberOfParts",
-			name: "topic<%= i %>question<%= t %>numberOfParts",
-			type: "number",
-			value: "1",
-			readonly: "true"
-		});
-		$("form > div:last").append(numberOfParts);
-		
-		var newTxtInp = $("<input>").attr({
-			id:"itopic<%= i %>question<%= t %>part0",
-			name:"itopic<%= i %>question<%= t %>part0",
-			type:"text",
-			readonly: "true"
-		});
-		$("form > div:last").append(newTxtInp);
-
-		$("#topic<%= i %>OnScreen").append("<div class='row'><div class='col s6 offset-s3'><img src='<%= testData.topics[i].questions[t].content %>'></div><div class='col s8 offset-s2'><p><span id='topic<%= i %>question<%= t %>part0'></span></p></div><hr class='col s8 offset-s2'></div>");
-	
-
-		newInputs[<%= i %>][<%= t %>][0] = MQ.MathField(document.getElementById("topic<%= i %>question<%= t %>part0"), {
-			handlers: {
-				enter: function() {
-					if(newInputs[<%= i %>][<%= t %>].length == 1)
-					{
-						$("#topic<%= i %>question<%= t %>numberOfParts").val(2);
-						newInp(<%= i %>,<%= t %>,1);
-					}
-					else
-					{
-						newInputs[<%= i %>][<%= t %>][1].focus();
-					}
-				},
-				edit: function() {
-					$("#itopic<%= i %>question<%= t %>part0").val(newInputs[<%= i %>][<%= t %>][0].latex());
-				}
-            }
-        });
-
-	<% } %> 
-<% } %>
 	$(document).ready(function() {
+		
+		var newInputs = [];
+
+		var examBoard = $("<input>").attr({
+			name: "examBoard",
+			type: "text",
+			value: "<%= testData.examBoard %>",
+			readonly: "true"
+		});
+		$("form > div:last").append(examBoard);
+
+		var module = $("<input>").attr({
+			name: "module",
+			type: "text",
+			value: "<%= testData.module %>",
+			readonly: "true"
+		});
+		$("form > div:last").append(module);
+
+		var numberOfTopics = $("<input>").attr({
+			name: "numberOfTopics",
+			type: "text",
+			value: "<%= testData.topics.length %>",
+			readonly: "true"
+		});
+		$("form > div:last").append(numberOfTopics);
+
+	<% for(var i = 0;i < testData.topics.length;i++){ %>
+	
+		var newTopic = $("<input>").attr({
+			name: "topic<%= i %>",
+			type:  "text",
+			value: "<%= testData.topics[i].name %>",
+			readonly: "true"
+		});
+		$("form > div:last").append(newTopic);
+
+		newInputs.push([]);
+
+		var numberOfQuestions = $("<input>").attr({
+			name: "topic<%= i %>numberOfQuestions",
+			type: "text",
+			value: "<%= testData.topics[i].questions.length %>",
+			readonly: "true"
+		});
+		$("form > div:last").append(numberOfQuestions);
+
+		$("body > .row > div:nth-child(2) > div:nth-child(2)").append("<div id='topic<%= i %>OnScreen' class='row section scrollspy'><h3><%= testData.topics[i].name %></h3></div>");
+		$("body > .row > div:nth-child(1) > ul").append("<li><a href='#topic<%= i %>OnScreen'><h5>topicTimer(<%= i %>)</h5></a><ul></ul></li>");
+		
+		<% for(var t=0;t< testData.topics[i].questions.length;t++){ %>
+
+			var newQuestion = $("<input>").attr({
+				name:"topic<%= i %>question<%= t %>",
+				type:"text",
+				value:"<%= testData.topics[i].questions[t]._id %>",
+				readonly: "true"
+			});
+			$("form > div:last").append(newQuestion);
+
+		
+			newInputs[<%= i %>].push([]);
+
+			var numberOfParts = $("<input>").attr({
+				id: "topic<%= i %>question<%= t %>numberOfParts",
+				name: "topic<%= i %>question<%= t %>numberOfParts",
+				type: "number",
+				value: "1",
+				readonly: "true"
+			});
+			$("form > div:last").append(numberOfParts);
+		
+			var newTxtInp = $("<input>").attr({
+				id:"itopic<%= i %>question<%= t %>part0",
+				name:"itopic<%= i %>question<%= t %>part0",
+				type:"text",
+				readonly: "true"
+			});
+			$("form > div:last").append(newTxtInp);
+
+			$("#topic<%= i %>OnScreen").append("<div class='row'><div class='col s6 offset-s3'><img src='<%= testData.topics[i].questions[t].content %>'></div><div class='col s8 offset-s2'><p><span id='topic<%= i %>question<%= t %>part0'></span></p></div><hr class='col s8 offset-s2'></div>");
+
+			newInputs[<%= i %>][<%= t %>][0] = MQ.MathField(document.getElementById("topic<%= i %>question<%= t %>part0"), {
+				handlers: {
+					enter: function() {
+						if(newInputs[<%= i %>][<%= t %>].length == 1)
+						{
+							$("#topic<%= i %>question<%= t %>numberOfParts").val(2);
+							newInp(<%= i %>,<%= t %>,1);
+						}
+						else
+						{
+							newInputs[<%= i %>][<%= t %>][1].focus();
+						}
+					},
+					edit: function() {
+						$("#itopic<%= i %>question<%= t %>part0").val(newInputs[<%= i %>][<%= t %>][0].latex());
+					}
+				}
+			});
+
+		<% } %> 
+	<% } %>
+	
 		$('body').scroll(function() { 
 			$('.z-depth-2').css('top', $(this).scrollTop());
 		});
 		$('.scrollspy').scrollSpy();
-	});
 	
 	
-	function newInp(i,t,count)
-	{
+		function newInp(i,t,count)
+		{
 		
-		var id = "topic"+i+"question"+t+"part"+count;
-		var newP = $("<p></p>").html("<span id='"+id+"'></span>");
-		var temp = count-1;
-		$("#topic"+i+"question"+t+"part"+temp).after(newP);
+			var id = "topic"+i+"question"+t+"part"+count;
+			var newP = $("<p></p>").html("<span id='"+id+"'></span>");
+			var temp = count-1;
+			$("#topic"+i+"question"+t+"part"+temp).after(newP);
 
-		var inpId = "itopic"+i+"question"+t+"part"+count;
-		var lInpId = "itopic"+i+"question"+t+"part"+(count-1);
-		var newTxtInp = $("<input>").attr({
-			id:inpId,
-			name:inpId,
-			type:"text",
-			readonly: "true"
-		});
-		$("#"+lInpId).after(newTxtInp);
+			var inpId = "itopic"+i+"question"+t+"part"+count;
+			var lInpId = "itopic"+i+"question"+t+"part"+(count-1);
+			var newTxtInp = $("<input>").attr({
+				id:inpId,
+				name:inpId,
+				type:"text",
+				readonly: "true"
+			});
+			$("#"+lInpId).after(newTxtInp);
 
-		newInputs[i][t][count] = MQ.MathField(document.getElementById("topic"+i+"question"+t+"part"+count), {
-			handlers: {
-				enter: function() {
-					if(newInputs[i][t].length == count+1 && newInputs[i][t].length <= 60){
-						$("#topic"+i+"question"+t+"numberOfParts").val(function( i, val ) {
-							return +val+1;
-						});
-						newInp(i,t,(count+1));
-					}
-					else{
-						newInputs[i][t][count+1].focus()	
-					}
-				},
-				edit: function() {
-					$("#itopic"+i+"question"+t+"part"+count).val(newInputs[i][t][count].latex());
-					if(!(newInputs[i][t][count].latex()) && !(newInputs[i][t][count+1])){
-						$("#topic"+i+"question"+t+"part"+count).parent().remove();
-						$("#itopic"+i+"question"+t+"part"+count).remove();
-						$("#topic"+i+"question"+t+"numberOfParts").val(function( i, val ) {
-							return +val-1;
-						});
-						newInputs[i][t].splice(count,1);
-						newInputs[i][t][(count-1)].focus();
+			newInputs[i][t][count] = MQ.MathField(document.getElementById("topic"+i+"question"+t+"part"+count), {
+				handlers: {
+					enter: function() {
+						if(newInputs[i][t].length == count+1 && newInputs[i][t].length <= 60){
+							$("#topic"+i+"question"+t+"numberOfParts").val(function( i, val ) {
+								return +val+1;
+							});
+							newInp(i,t,(count+1));
+						}
+						else{
+							newInputs[i][t][count+1].focus()	
+						}
+					},
+					edit: function() {
+						$("#itopic"+i+"question"+t+"part"+count).val(newInputs[i][t][count].latex());
+						if(!(newInputs[i][t][count].latex()) && !(newInputs[i][t][count+1])){
+							$("#topic"+i+"question"+t+"part"+count).parent().remove();
+							$("#itopic"+i+"question"+t+"part"+count).remove();
+							$("#topic"+i+"question"+t+"numberOfParts").val(function( i, val ) {
+								return +val-1;
+							});
+							newInputs[i][t].splice(count,1);
+							newInputs[i][t][(count-1)].focus();
+						}
 					}
 				}
-			}
-		});
-		newInputs[i][t][count].focus();
+			});
+			newInputs[i][t][count].focus();
 	
-	}
+		}
+		
+	});
 </script>
 
 <style>
@@ -217,6 +218,16 @@
 	.highlighted{
 		background-color:#d3e4ff;
 	}
+	.table-of-contents h6{
+	   margin:0;
+	}
+	.table-of-contents h5{
+	   margin:0;
+	}
+	.table-of-contents a{
+	   margin:2%;
+	}
+	
 </style>
 
 <% include ../partials/footer %>
