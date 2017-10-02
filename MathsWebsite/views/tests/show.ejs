@@ -87,7 +87,7 @@
 		$("form > div:last").append(numberOfQuestions);
 
 		$("body > .row > div:nth-child(2) > div:nth-child(2)").append("<div id='topic<%= i %>OnScreen' class='row section scrollspy'><h3><%= testData.topics[i].name %></h3></div>");
-		$("body > .row > div:nth-child(1) > ul").append("<li><a href='#topic<%= i %>OnScreen'><h5>topicTimer(<%= i %>)</h5></a><ul></ul></li>");
+		$("body > .row > div:nth-child(1) > ul").append("<li><a href='#topic<%= i %>OnScreen'><h5>topicTimer(<%= i %>)</h5></a></li>");
 		
 		<% for(var t=0;t< testData.topics[i].questions.length;t++){ %>
 
@@ -119,7 +119,8 @@
 			});
 			$("form > div:last").append(newTxtInp);
 
-			$("#topic<%= i %>OnScreen").append("<div class='row'><div class='col s6 offset-s3'><img src='<%= testData.topics[i].questions[t].content %>'></div><div class='col s8 offset-s2'><p><span id='topic<%= i %>question<%= t %>part0'></span></p></div><hr class='col s8 offset-s2'></div>");
+			$("#topic<%= i %>OnScreen").append("<div class='row'><div id='topic<%= i %>Question<%= t %>OnScreen' class='col s6 offset-s3'><img src='<%= testData.topics[i].questions[t].content %>'></div><div class='col s8 offset-s2'><p><span id='topic<%= i %>question<%= t %>part0'></span></p></div><hr class='col s8 offset-s2'></div>");
+			$("body > .row > div:nth-child(1) > ul").append("<li><a href='#topic<%= i %>Question<%= t %>OnScreen'><h6>questionTimer(<%= i %>:<%= t %>)</h6></a></li>");
 
 			newInputs[<%= i %>][<%= t %>][0] = MQ.MathField(document.getElementById("topic<%= i %>question<%= t %>part0"), {
 				handlers: {
