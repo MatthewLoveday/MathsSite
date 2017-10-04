@@ -89,7 +89,8 @@
 		});
 		$("form > div:last").append(numberOfQuestions);
 
-		$("body > .row > div:nth-child(2) > div:nth-child(2)").append("<div id='topic<%= i %>OnScreen' class='row section scrollspy'><h3><%= testData.topics[i].name %></h3></div>");
+		$("body > .row > div:nth-child(2) > div:nth-child(2)").append("<div id='topic<%= i %>OnScreen' class='row section scrollspy'><% if(testData.options.topicNames){ %><h3><%= testData.topics[i].name %></h3><% } %></div>");
+
 		<% if(testData.options.topicTimer){ %>
 			$("body > .row > div:nth-child(1) > ul").append("<li><a id='topicTimer<%= i %>' href='#topic<%= i %>OnScreen'><h5>topicTimer(<%= i %>)</h5></a></li>");
 		<% } %>
@@ -125,7 +126,7 @@
 			});
 			$("form > div:last").append(newTxtInp);
 
-			$("#topic<%= i %>OnScreen").append("<div class='row'><div id='topic<%= i %>Question<%= t %>OnScreen' class='col s6 offset-s3'><img src='<%= testData.topics[i].questions[t].content %>'></div><div class='col s8 offset-s2'><p><span id='topic<%= i %>question<%= t %>part0'></span></p></div><hr class='col s8 offset-s2'></div>");
+			$("#topic<%= i %>OnScreen").append("<div class='row'><div id='topic<%= i %>Question<%= t %>OnScreen' class='questionInfo col s6 offset-s3'><img src='<%= testData.topics[i].questions[t].content %>'><% if(testData.options.questionLength){ %><p>Number of markable parts:<% for(var u=0;u<testData.topics[i].questions[t].methods.length - 2;u++){ %><%= testData.topics[i].questions[t].methods[u].length %>,<% } %> <%= testData.topics[i].questions[t].methods[testData.topics[i].questions[t].methods.length - 2].length %> and <%= testData.topics[i].questions[t].methods[testData.topics[i].questions[t].methods.length - 1].length %></p><% } %></div><div class='col s8 offset-s2'><p><span id='topic<%= i %>question<%= t %>part0'></span></p></div><hr class='col s8 offset-s2'></div>");
 
 			newInputs[<%= i %>][<%= t %>][0] = MQ.MathField(document.getElementById("topic<%= i %>question<%= t %>part0"), {
 				handlers: {
@@ -311,7 +312,7 @@
 		position:fixed;
 	}
 	.highlighted{
-		background-color:#d3e4ff;
+		background-color: #d3e4ff;
 	}
 	.table-of-contents h6{
 	   margin:0;
@@ -321,6 +322,9 @@
 	}
 	.table-of-contents a{
 	   margin:2%;
+	}
+	.questionInfo{
+		background-color: #c8cace;
 	}
 	
 </style>
