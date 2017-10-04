@@ -261,18 +261,12 @@ app.post("/users/:id/tests", function(req,res)//when seed program ready this sho
         if (err) {
             console.log("Could not find user data\n" + err);
         } else {
-            examBoard.findOne({ name: userData.examBoard.name }, function (err,examboard) {
-                console.log("examboard.modules[0].topics[0].questions.length: " + examboard.modules[0].topics[0].questions.length);
-                console.log("examboard.modules[0].topics:\n" + examboard.modules[0].topics);     
-            });
             examBoard.findOne({ name: userData.examBoard.name }).exec().then((exam) => {
                 examBoard.populate(exam, {
                     path: 'modules.topics.questions',
                     model: 'question'
                 })
                     .then((populatedExamboard) => {
-                        console.log("populatedExamboard.modules[0].topics[0].questions.length: " + populatedExamboard.modules[0].topics[0].questions.length);
-                        console.log("populatedExamboard.modules[0].topics:\n" + populatedExamboard.modules[0].topics);
                         for (var i = 0; i < populatedExamboard.modules.length; i++) {
                             if (populatedExamboard.modules[i].name == req.body.moduleName) {
                                 moduleIndex = i;
@@ -291,7 +285,7 @@ app.post("/users/:id/tests", function(req,res)//when seed program ready this sho
                         }
                         var topicsData = GenerateTest(req.body.time, topicsToBeParsed);
 
-                        var objectToBeParsed = { userID: req.params.id, topics: topicsData, examBoard: userData.examBoard.name, module: req.body.moduleName };
+                        var objectToBeParsed = { userID: req.params.id, topics: topicsData, examBoard: userData.examBoard.name, module: req.body.moduleName, options:{timer:req.body.timer,topicTimer:req.body.topicTimer, topicNames:req.body.topicNames, questionLength:req.body.questionLength, dynamicMarking:req.body.dynamicMarking} };
                         res.render("tests/show", { testData: objectToBeParsed });
                     });
             });

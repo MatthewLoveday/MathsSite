@@ -5,8 +5,7 @@
 	<div class="col s2 z-depth-2">
 		<h3>timer</h3>
 		<hr>
-		<ul class="section table-of-contents">
-		</ul>
+		
 	</div>
 	<div class="col s8 offset-s2">
 		<div class="row">
@@ -40,6 +39,10 @@
 <script>
 	$(document).ready(function() {
 		
+		<% if(testData.options.topicTimer){ %>
+			$("body > .row > div:nth-child(1)").append("<ul class='section table-of-contents'></ul>");
+		<% } %>
+
 		var newInputs = [];
 
 		var examBoard = $("<input>").attr({
@@ -87,7 +90,10 @@
 		$("form > div:last").append(numberOfQuestions);
 
 		$("body > .row > div:nth-child(2) > div:nth-child(2)").append("<div id='topic<%= i %>OnScreen' class='row section scrollspy'><h3><%= testData.topics[i].name %></h3></div>");
-		$("body > .row > div:nth-child(1) > ul").append("<li><a id='topicTimer<%= i %>' href='#topic<%= i %>OnScreen'><h5>topicTimer(<%= i %>)</h5></a></li>");
+		<% if(testData.options.topicTimer){ %>
+			$("body > .row > div:nth-child(1) > ul").append("<li><a id='topicTimer<%= i %>' href='#topic<%= i %>OnScreen'><h5>topicTimer(<%= i %>)</h5></a></li>");
+		<% } %>
+		
 		
 		<% for(var t=0;t< testData.topics[i].questions.length;t++){ %>
 
@@ -142,57 +148,95 @@
 
 		<% } %> 
 	<% } %>
-		var timeLeft = [{hrs:0,mins:0,secs:0}];
-		<% for(var i = 1;i < testData.topics.length + 1;i++){ %>
-			timeLeft.push({hrs:0,mins:0,secs:0});
-			<% for(var t = 0;t < testData.topics[i - 1].questions.length;t++){ %>
-				timeLeft[<%= i %>].mins += <%= testData.topics[i - 1].questions[t].mark %>;
-				if(timeLeft[<%= i %>].mins >= 60){
-					timeLeft[<%= i %>].mins -= 60;
-					timeLeft[<%= i %>].hrs++;
+		
+
+		<% if(testData.options.topicTimer){ %>
+
+			var timeLeft = [{hrs:0,mins:0,secs:0}];
+			<% for(var i = 1;i < testData.topics.length + 1;i++){ %>
+				timeLeft.push({hrs:0,mins:0,secs:0});
+				<% for(var t = 0;t < testData.topics[i - 1].questions.length;t++){ %>
+					timeLeft[<%= i %>].mins += <%= testData.topics[i - 1].questions[t].mark %>;
+					if(timeLeft[<%= i %>].mins >= 60){
+						timeLeft[<%= i %>].mins -= 60;
+						timeLeft[<%= i %>].hrs++;
+					}
+				<% } %>
+				$("#topicTimer" + (<%= i %> - 1) + "> h5").text(timeLeft[<%= i %>].hrs + ":" + timeLeft[<%= i %>].mins + ":" + timeLeft[<%= i %>].secs);
+				timeLeft[0].mins += timeLeft[<%= i %>].mins;
+				if(timeLeft[0].mins >= 60){
+					timeLeft[0].mins -= 60;
+					timeLeft[0].hrs++;
 				}
 			<% } %>
-			$("#topicTimer" + (<%= i %> - 1) + "> h5").text(timeLeft[<%= i %>].hrs + ":" + timeLeft[<%= i %>].mins + ":" + timeLeft[<%= i %>].secs);
-			timeLeft[0].mins += timeLeft[<%= i %>].mins;
-			if(timeLeft[0].mins >= 60){
-				timeLeft[0].mins -= 60;
-				timeLeft[0].hrs++;
-			}
-		<% } %>
-		$(".z-depth-2 > h3").text(timeLeft[0].hrs + ":" + timeLeft[0].mins + ":" + timeLeft[0].secs);
+			$(".z-depth-2 > h3").text(timeLeft[0].hrs + ":" + timeLeft[0].mins + ":" + timeLeft[0].secs);
+			//------------------------------------------------------------------------------------------------------------------------
+			var timer = setInterval(() => {
+				for(var i=1;i<<%= testData.topics.length %> + 1;i++){
+					if($("#topicTimer" + (i - 1)).hasClass("active")){
 
-		var timer = setInterval(() => {
-			for(var i=1;i<<%= testData.topics.length %> + 1;i++){
-				if($("#topicTimer" + (i - 1)).hasClass("active")){
-
-					if(timeLeft[i].secs == 0){
-						timeLeft[i].secs = 59;
-						if(timeLeft[i].mins == 0){
-							timeLeft[i].mins = 59;
-							timeLeft[i].hrs--;
+						if(timeLeft[i].secs == 0){
+							timeLeft[i].secs = 59;
+							if(timeLeft[i].mins == 0){
+								timeLeft[i].mins = 59;
+								timeLeft[i].hrs--;
+							}else{
+								timeLeft[i].mins--;
+							}
 						}else{
-							timeLeft[i].mins--;
+							timeLeft[i].secs--;
 						}
-					}else{
-						timeLeft[i].secs--;
-					}
-					$("#topicTimer" + (i-1) + "> h5").text(timeLeft[i].hrs + ":" + timeLeft[i].mins + ":" + timeLeft[i].secs);
+						$("#topicTimer" + (i-1) + "> h5").text(timeLeft[i].hrs + ":" + timeLeft[i].mins + ":" + timeLeft[i].secs);
 
-					if(timeLeft[0].secs == 0){
-						timeLeft[0].secs = 59;
-						if(timeLeft[0].mins == 0){
-							timeLeft[0].mins = 59;
-							timeLeft[0].hrs--;
+						if(timeLeft[0].secs == 0){
+							timeLeft[0].secs = 59;
+							if(timeLeft[0].mins == 0){
+								timeLeft[0].mins = 59;
+								timeLeft[0].hrs--;
+							}else{
+								timeLeft[0].mins--;
+							}
 						}else{
-							timeLeft[0].mins--;
+							timeLeft[0].secs--;
 						}
-					}else{
-						timeLeft[0].secs--;
+						$(".z-depth-2 > h3").text(timeLeft[0].hrs + ":" + timeLeft[0].mins + ":" + timeLeft[0].secs);
 					}
-					$(".z-depth-2 > h3").text(timeLeft[0].hrs + ":" + timeLeft[0].mins + ":" + timeLeft[0].secs);
 				}
-			}
-		}, 1000);
+			}, 1000);
+			//------------------------------------------------------------------------------------------------------------------------
+		<% }else if(testData.options.timer){ %>
+
+			var timeLeft = {hrs:0,mins:0,secs:0};
+			<% for(var i = 0;i < testData.topics.length;i++){ %>
+				<% for(var t = 0;t < testData.topics[i].questions.length;t++){ %>
+					timeLeft.mins += <%= testData.topics[i].questions[t].mark %>;
+					if(timeLeft.mins >= 60){
+						timeLeft.mins -= 60;
+						timeLeft.hrs++;
+					}
+				<% } %>
+			<% } %>
+			$(".z-depth-2 > h3").text(timeLeft.hrs + ":" + timeLeft.mins + ":" + timeLeft.secs);
+			//------------------------------------------------------------------------------------------------------------------------
+			var timer = setInterval(() => {
+				if(timeLeft.secs == 0){
+					timeLeft.secs = 59;
+					if(timeLeft.mins == 0){
+						timeLeft.mins = 59;
+						timeLeft.hrs--;
+					}else{
+						timeLeft.mins--;
+					}
+				}else{
+					timeLeft.secs--;
+				}
+				$(".z-depth-2 > h3").text(timeLeft.hrs + ":" + timeLeft.mins + ":" + timeLeft.secs);
+			}, 1000);
+			//------------------------------------------------------------------------------------------------------------------------
+		<% } %>
+
+
+		
 
 		$('body').scroll(function() { 
 			$('.z-depth-2').css('top', $(this).scrollTop());
