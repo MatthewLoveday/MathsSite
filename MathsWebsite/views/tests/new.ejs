@@ -54,7 +54,7 @@
 						<label>Module</label>
 					</div>
 					<div class="input-field col s6">
-						<select multiple name="topics" id="topics" required>
+						<select multiple name="topics" id="topics" required disabled>
 							<option value="" disabled selected>Choose your topics</option>
 						</select>
 						<label>Topics</label>
@@ -113,6 +113,7 @@
 						<% } %>
 					}
 				<% } %>
+				$("#topics").prop("disabled", false);
 				$('select').material_select();
 			});
 			$("#topics").change(function(){
@@ -126,28 +127,51 @@
 				if($(this).val() == "easier"){
 					$("#timer").prop("checked", true);
 					$("#topicTimer").prop("checked", true);
-					$("#questionTimer").prop("checked", true);
 					$("#topicNames").prop("checked", true);
 					$("#questionLength").prop("checked", true);
 					$("#dynamicMarking").prop("checked", true);
 				}else if($(this).val() == "standard"){
 					$("#timer").prop("checked", true);
 					$("#topicTimer").prop("checked", false);
-					$("#questionTimer").prop("checked", false);
 					$("#topicNames").prop("checked", true);
 					$("#questionLength").prop("checked", false);
 					$("#dynamicMarking").prop("checked", false);
 				}else if($(this).val() == "harder"){
 					$("#timer").prop("checked", false);
 					$("#topicTimer").prop("checked", false);
-					$("#questionTimer").prop("checked", false);
 					$("#topicNames").prop("checked", false);
 					$("#questionLength").prop("checked", false);
 					$("#dynamicMarking").prop("checked", false);
 				}
 			});
 			$("form > div:nth-child(3) input").change(function(){
-				$("#settings option[value='custom']").prop("selected", true);
+				if(
+					$("#timer").prop("checked") &&
+					$("#topicTimer").prop("checked") &&
+					$("#topicNames").prop("checked") &&
+					$("#questionLength").prop("checked") &&
+					$("#dynamicMarking").prop("checked")
+				){
+					$("#settings option[value='easier']").prop("selected", true);
+				}else if(
+					$("#timer").prop("checked") &&
+					!$("#topicTimer").prop("checked") &&
+					$("#topicNames").prop("checked") &&
+					!$("#questionLength").prop("checked") &&
+					!$("#dynamicMarking").prop("checked")
+				){
+					$("#settings option[value='standard']").prop("selected", true);
+				}else if(
+					!$("#timer").prop("checked") &&
+					!$("#topicTimer").prop("checked") &&
+					!$("#topicNames").prop("checked") &&
+					!$("#questionLength").prop("checked") &&
+					!$("#dynamicMarking").prop("checked")
+				){
+					$("#settings option[value='harder']").prop("selected", true);
+				}else{
+					$("#settings option[value='custom']").prop("selected", true);
+				}
 				$('select').material_select();
 			});
 		});

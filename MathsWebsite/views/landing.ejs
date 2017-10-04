@@ -84,7 +84,7 @@
 					</div>
 					<div class="row">
 						<div class="input-field col s12">
-							<select multiple name="checkModules" id="modules" required>
+							<select multiple name="checkModules" id="modules" required disabled>
 								<option value="" disabled selected>Choose your modules</option>
 							</select>
 							<label>Modules</label>
@@ -130,6 +130,7 @@
 			<% } %>
 			
 			$("#exams").change(function(){
+				$("#modules").prop("disabled", false);
 				var exam = $("#exams").val();
 				$("#modules").empty().append("<option value='' disabled selected>Choose your modules</option>");
 				<% for(var i=0;i<examBoard.length;i++){ %>
