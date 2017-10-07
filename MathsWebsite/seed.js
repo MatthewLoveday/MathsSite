@@ -36,182 +36,182 @@ var questionData=
     {
         content: "https://image.ibb.co/gDevEF/rate_Of_Change_15marks_0.png",
         mark: 4,
-        methods: [[{ mark: 4, content: "x=-2^{-\\frac{1}{2}}" }], [{ mark: 2, content: "2^{\\frac{1}{2}}x=1" }, { mark: 2, content:"x=2^{-\\frac{1}{2}}"}]]
+        methods: [[{ mark: 4, content: "x=-2^{\\frac{1}{2}}" }], [{ mark: 2, content: "2^{\\frac{1}{2}}x=1" }, { mark: 2, content:"x=2^{\\frac{1}{2}}"}]]
     },
     {
         content: "https://image.ibb.co/gDevEF/rate_Of_Change_15marks_0.png",
         mark: 4,
-        methods: [[{ mark: 4, content: "x=-2^{-\\frac{1}{2}}" }], [{ mark: 2, content: "2^{\\frac{1}{2}}x=1" }, { mark: 2, content: "x=2^{-\\frac{1}{2}}" }]]
+        methods: [[{ mark: 4, content: "x=-2^{\\frac{1}{2}}" }], [{ mark: 2, content: "2^{\\frac{1}{2}}x=1" }, { mark: 2, content: "x=2^{\\frac{1}{2}}" }]]
     },
     {
         content: "https://image.ibb.co/gDevEF/rate_Of_Change_15marks_0.png",
         mark: 4,
-        methods: [[{ mark: 4, content: "x=-2^{-\\frac{1}{2}}" }], [{ mark: 2, content: "2^{\\frac{1}{2}}x=1" }, { mark: 2, content:"x=2^{-\\frac{1}{2}}"}]]
+        methods: [[{ mark: 4, content: "x=-2^{\\frac{1}{2}}" }], [{ mark: 2, content: "2^{\\frac{1}{2}}x=1" }, { mark: 2, content:"x=2^{\\frac{1}{2}}"}]]
     },
     {
         content: "https://image.ibb.co/c3QD1v/rate_Of_Change_7marks_1.png",
         mark: 5,
-        methods: [[{ mark: 5, content: "x=-2^{-\\frac{1}{2}}" }], [{ mark: 3, content: "2^{\\frac{1}{2}}x=1" }, { mark: 2, content: "x=2^{-\\frac{1}{2}}" }]]
+        methods: [[{ mark: 5, content: "x=-2^{\\frac{1}{2}}" }], [{ mark: 3, content: "2^{\\frac{1}{2}}x=1" }, { mark: 2, content: "x=2^{\\frac{1}{2}}" }]]
     },
     {
         content: "https://image.ibb.co/c3QD1v/rate_Of_Change_7marks_1.png",
         mark: 5,
-        methods: [[{ mark: 5, content: "x=-2^{-\\frac{1}{2}}" }], [{ mark: 3, content: "2^{\\frac{1}{2}}x=1" }, { mark: 2, content: "x=2^{-\\frac{1}{2}}" }]]
+        methods: [[{ mark: 5, content: "x=-2^{\\frac{1}{2}}" }], [{ mark: 3, content: "2^{\\frac{1}{2}}x=1" }, { mark: 2, content: "x=2^{\\frac{1}{2}}" }]]
     },
     {
         content: "https://image.ibb.co/c3QD1v/rate_Of_Change_7marks_1.png",
         mark: 5,
-        methods: [[{ mark: 5, content: "x=-2^{-\\frac{1}{2}}" }], [{ mark: 3, content: "2^{\\frac{1}{2}}x=1" }, { mark: 2, content: "x=2^{-\\frac{1}{2}}" }]]
+        methods: [[{ mark: 5, content: "x=-2^{\\frac{1}{2}}" }], [{ mark: 3, content: "2^{\\frac{1}{2}}x=1" }, { mark: 2, content: "x=2^{\\frac{1}{2}}" }]]
     },
     {
         content: "https://image.ibb.co/cHJY1v/rate_Of_Change_7marks_0.png",
         mark: 6,
-        methods: [[{ mark: 6, content: "x=-2^{-\\frac{1}{2}}" }], [{ mark: 3, content: "2^{\\frac{1}{2}}x=1" }, { mark: 3, content: "x=2^{-\\frac{1}{2}}" }]]
+        methods: [[{ mark: 6, content: "x=-2^{\\frac{1}{2}}" }], [{ mark: 3, content: "2^{\\frac{1}{2}}x=1" }, { mark: 3, content: "x=2^{\\frac{1}{2}}" }]]
     },
     {
         content: "https://image.ibb.co/cHJY1v/rate_Of_Change_7marks_0.png",
         mark: 6,
-        methods: [[{ mark: 6, content: "x=-2^{-\\frac{1}{2}}" }], [{ mark: 3, content: "2^{\\frac{1}{2}}x=1" }, { mark: 3, content: "x=2^{-\\frac{1}{2}}" }]]
+        methods: [[{ mark: 6, content: "x=-2^{\\frac{1}{2}}" }], [{ mark: 3, content: "2^{\\frac{1}{2}}x=1" }, { mark: 3, content: "x=2^{\\frac{1}{2}}" }]]
     },
     {
         content: "https://image.ibb.co/cHJY1v/rate_Of_Change_7marks_0.png",
         mark: 6,
-        methods: [[{ mark: 6, content: "x=-2^{-\\frac{1}{2}}" }], [{ mark: 3, content: "2^{\\frac{1}{2}}x=1" }, { mark: 3, content: "x=2^{-\\frac{1}{2}}" }]]
+        methods: [[{ mark: 6, content: "x=-2^{\\frac{1}{2}}" }], [{ mark: 3, content: "2^{\\frac{1}{2}}x=1" }, { mark: 3, content: "x=2^{\\frac{1}{2}}" }]]
     },
     {
         content: "https://image.ibb.co/k78NuF/parametrics_14marks_0.png",
         mark: 7,
-        methods: [[{ mark: 7, content: "x=-2^{-\\frac{1}{2}}" }], [{ mark: 4, content: "2^{\\frac{1}{2}}x=1" }, { mark: 3, content: "x=2^{-\\frac{1}{2}}" }]]
+        methods: [[{ mark: 7, content: "x=-2^{\\frac{1}{2}}" }], [{ mark: 4, content: "2^{\\frac{1}{2}}x=1" }, { mark: 3, content: "x=2^{\\frac{1}{2}}" }]]
     },
     {
         content: "https://image.ibb.co/k78NuF/parametrics_14marks_0.png",
         mark: 7,
-        methods: [[{ mark: 7, content: "x=-2^{-\\frac{1}{2}}" }], [{ mark: 4, content: "2^{\\frac{1}{2}}x=1" }, { mark: 3, content: "x=2^{-\\frac{1}{2}}" }]]
+        methods: [[{ mark: 7, content: "x=-2^{\\frac{1}{2}}" }], [{ mark: 4, content: "2^{\\frac{1}{2}}x=1" }, { mark: 3, content: "x=2^{\\frac{1}{2}}" }]]
     },
     {
         content: "https://image.ibb.co/k78NuF/parametrics_14marks_0.png",
         mark: 7,
-        methods: [[{ mark: 7, content: "x=-2^{-\\frac{1}{2}}" }], [{ mark: 4, content: "2^{\\frac{1}{2}}x=1" }, { mark: 3, content: "x=2^{-\\frac{1}{2}}" }]]
+        methods: [[{ mark: 7, content: "x=-2^{\\frac{1}{2}}" }], [{ mark: 4, content: "2^{\\frac{1}{2}}x=1" }, { mark: 3, content: "x=2^{\\frac{1}{2}}" }]]
     },
     {
         content: "https://image.ibb.co/k5pTZF/parametrics_12marks.png",
         mark: 8,
-        methods: [[{ mark: 8, content: "x=-2^{-\\frac{1}{2}}" }], [{ mark: 4, content: "2^{\\frac{1}{2}}x=1" }, { mark: 4, content: "x=2^{-\\frac{1}{2}}" }]]
+        methods: [[{ mark: 8, content: "x=-2^{\\frac{1}{2}}" }], [{ mark: 4, content: "2^{\\frac{1}{2}}x=1" }, { mark: 4, content: "x=2^{\\frac{1}{2}}" }]]
     },
     {
         content: "https://image.ibb.co/k5pTZF/parametrics_12marks.png",
         mark: 8,
-        methods: [[{ mark: 8, content: "x=-2^{-\\frac{1}{2}}" }], [{ mark: 4, content: "2^{\\frac{1}{2}}x=1" }, { mark: 4, content: "x=2^{-\\frac{1}{2}}" }]]
+        methods: [[{ mark: 8, content: "x=-2^{\\frac{1}{2}}" }], [{ mark: 4, content: "2^{\\frac{1}{2}}x=1" }, { mark: 4, content: "x=2^{\\frac{1}{2}}" }]]
     },
     {
         content: "https://image.ibb.co/k5pTZF/parametrics_12marks.png",
         mark: 8,
-        methods: [[{ mark: 8, content: "x=-2^{-\\frac{1}{2}}" }], [{ mark: 4, content: "2^{\\frac{1}{2}}x=1" }, { mark: 4, content: "x=2^{-\\frac{1}{2}}" }]]
+        methods: [[{ mark: 8, content: "x=-2^{\\frac{1}{2}}" }], [{ mark: 4, content: "2^{\\frac{1}{2}}x=1" }, { mark: 4, content: "x=2^{\\frac{1}{2}}" }]]
     },
     {
         content: "https://image.ibb.co/nFDY1v/int_Vol_Of_Rev_8marks_0.png",
         mark: 9,
-        methods: [[{ mark: 9, content: "x=-2^{-\\frac{1}{2}}" }], [{ mark: 5, content: "2^{\\frac{1}{2}}x=1" }, { mark: 4, content: "x=2^{-\\frac{1}{2}}" }]]
+        methods: [[{ mark: 9, content: "x=-2^{\\frac{1}{2}}" }], [{ mark: 5, content: "2^{\\frac{1}{2}}x=1" }, { mark: 4, content: "x=2^{\\frac{1}{2}}" }]]
     },
     {
         content: "https://image.ibb.co/nFDY1v/int_Vol_Of_Rev_8marks_0.png",
         mark: 9,
-        methods: [[{ mark: 9, content: "x=-2^{-\\frac{1}{2}}" }], [{ mark: 5, content: "2^{\\frac{1}{2}}x=1" }, { mark: 4, content: "x=2^{-\\frac{1}{2}}" }]]
+        methods: [[{ mark: 9, content: "x=-2^{\\frac{1}{2}}" }], [{ mark: 5, content: "2^{\\frac{1}{2}}x=1" }, { mark: 4, content: "x=2^{\\frac{1}{2}}" }]]
     },
     {
         content: "https://image.ibb.co/nFDY1v/int_Vol_Of_Rev_8marks_0.png",
         mark: 9,
-        methods: [[{ mark: 9, content: "x=-2^{-\\frac{1}{2}}" }], [{ mark: 5, content: "2^{\\frac{1}{2}}x=1" }, { mark: 4, content: "x=2^{-\\frac{1}{2}}" }]]
+        methods: [[{ mark: 9, content: "x=-2^{\\frac{1}{2}}" }], [{ mark: 5, content: "2^{\\frac{1}{2}}x=1" }, { mark: 4, content: "x=2^{\\frac{1}{2}}" }]]
     },
     {
         content: "https://image.ibb.co/gRTcTa/int_Lims_4marks_0.png",
         mark: 10,
-        methods: [[{ mark: 10, content: "x=-2^{-\\frac{1}{2}}" }], [{ mark: 5, content: "2^{\\frac{1}{2}}x=1" }, { mark: 5, content: "x=2^{-\\frac{1}{2}}" }]]
+        methods: [[{ mark: 10, content: "x=-2^{\\frac{1}{2}}" }], [{ mark: 5, content: "2^{\\frac{1}{2}}x=1" }, { mark: 5, content: "x=2^{\\frac{1}{2}}" }]]
     },
     {
         content: "https://image.ibb.co/gRTcTa/int_Lims_4marks_0.png",
         mark: 10,
-        methods: [[{ mark: 10, content: "x=-2^{-\\frac{1}{2}}" }], [{ mark: 5, content: "2^{\\frac{1}{2}}x=1" }, { mark: 5, content: "x=2^{-\\frac{1}{2}}" }]]
+        methods: [[{ mark: 10, content: "x=-2^{\\frac{1}{2}}" }], [{ mark: 5, content: "2^{\\frac{1}{2}}x=1" }, { mark: 5, content: "x=2^{\\frac{1}{2}}" }]]
     },
     {
         content: "https://image.ibb.co/gRTcTa/int_Lims_4marks_0.png",
         mark: 10,
-        methods: [[{ mark: 10, content: "x=-2^{-\\frac{1}{2}}" }], [{ mark: 5, content: "2^{\\frac{1}{2}}x=1" }, { mark: 5, content: "x=2^{-\\frac{1}{2}}" }]]
+        methods: [[{ mark: 10, content: "x=-2^{\\frac{1}{2}}" }], [{ mark: 5, content: "2^{\\frac{1}{2}}x=1" }, { mark: 5, content: "x=2^{\\frac{1}{2}}" }]]
     },
     {
         content: "https://image.ibb.co/h3Vroa/int_7marks_0.png",
         mark: 11,
-        methods: [[{ mark: 11, content: "x=-2^{-\\frac{1}{2}}" }], [{ mark: 6, content: "2^{\\frac{1}{2}}x=1" }, { mark: 5, content: "x=2^{-\\frac{1}{2}}" }]]
+        methods: [[{ mark: 11, content: "x=-2^{\\frac{1}{2}}" }], [{ mark: 6, content: "2^{\\frac{1}{2}}x=1" }, { mark: 5, content: "x=2^{\\frac{1}{2}}" }]]
     },
     {
         content: "https://image.ibb.co/h3Vroa/int_7marks_0.png",
         mark: 11,
-        methods: [[{ mark: 11, content: "x=-2^{-\\frac{1}{2}}" }], [{ mark: 6, content: "2^{\\frac{1}{2}}x=1" }, { mark: 5, content: "x=2^{-\\frac{1}{2}}" }]]
+        methods: [[{ mark: 11, content: "x=-2^{\\frac{1}{2}}" }], [{ mark: 6, content: "2^{\\frac{1}{2}}x=1" }, { mark: 5, content: "x=2^{\\frac{1}{2}}" }]]
     },
     {
         content: "https://image.ibb.co/h3Vroa/int_7marks_0.png",
         mark: 11,
-        methods: [[{ mark: 11, content: "x=-2^{-\\frac{1}{2}}" }], [{ mark: 6, content: "2^{\\frac{1}{2}}x=1" }, { mark: 5, content: "x=2^{-\\frac{1}{2}}" }]]
+        methods: [[{ mark: 11, content: "x=-2^{\\frac{1}{2}}" }], [{ mark: 6, content: "2^{\\frac{1}{2}}x=1" }, { mark: 5, content: "x=2^{\\frac{1}{2}}" }]]
     },
     {
         content: "https://image.ibb.co/nBN48a/implicit_Diff_8marks_1.png",
         mark: 12,
-        methods: [[{ mark: 12, content: "x=-2^{-\\frac{1}{2}}" }], [{ mark: 6, content: "2^{\\frac{1}{2}}x=1" }, { mark: 6, content: "x=2^{-\\frac{1}{2}}" }]]
+        methods: [[{ mark: 12, content: "x=-2^{\\frac{1}{2}}" }], [{ mark: 6, content: "2^{\\frac{1}{2}}x=1" }, { mark: 6, content: "x=2^{\\frac{1}{2}}" }]]
     },
     {
         content: "https://image.ibb.co/nBN48a/implicit_Diff_8marks_1.png",
         mark: 12,
-        ethods: [[{ mark: 12, content: "x=-2^{-\\frac{1}{2}}" }], [{ mark: 6, content: "2^{\\frac{1}{2}}x=1" }, { mark: 6, content: "x=2^{-\\frac{1}{2}}" }]]
+        ethods: [[{ mark: 12, content: "x=-2^{\\frac{1}{2}}" }], [{ mark: 6, content: "2^{\\frac{1}{2}}x=1" }, { mark: 6, content: "x=2^{\\frac{1}{2}}" }]]
     },
     {
         content: "https://image.ibb.co/nBN48a/implicit_Diff_8marks_1.png",
         mark: 12,
-        ethods: [[{ mark: 12, content: "x=-2^{-\\frac{1}{2}}" }], [{ mark: 6, content: "2^{\\frac{1}{2}}x=1" }, { mark: 6, content: "x=2^{-\\frac{1}{2}}" }]]
+        ethods: [[{ mark: 12, content: "x=-2^{\\frac{1}{2}}" }], [{ mark: 6, content: "2^{\\frac{1}{2}}x=1" }, { mark: 6, content: "x=2^{\\frac{1}{2}}" }]]
     },
     {
         content: "https://image.ibb.co/kVDcTa/implicit_Diff_8marks_0.png",
         mark: 13,
-        methods: [[{ mark: 13, content: "x=-2^{-\\frac{1}{2}}" }], [{ mark: 7, content: "2^{\\frac{1}{2}}x=1" }, { mark: 6, content: "x=2^{-\\frac{1}{2}}" }]]
+        methods: [[{ mark: 13, content: "x=-2^{\\frac{1}{2}}" }], [{ mark: 7, content: "2^{\\frac{1}{2}}x=1" }, { mark: 6, content: "x=2^{\\frac{1}{2}}" }]]
     },
     {
         content: "https://image.ibb.co/kVDcTa/implicit_Diff_8marks_0.png",
         mark: 13,
-        methods: [[{ mark: 13, content: "x=-2^{-\\frac{1}{2}}" }], [{ mark: 7, content: "2^{\\frac{1}{2}}x=1" }, { mark: 6, content: "x=2^{-\\frac{1}{2}}" }]]
+        methods: [[{ mark: 13, content: "x=-2^{\\frac{1}{2}}" }], [{ mark: 7, content: "2^{\\frac{1}{2}}x=1" }, { mark: 6, content: "x=2^{\\frac{1}{2}}" }]]
     },
     {
         content: "https://image.ibb.co/kVDcTa/implicit_Diff_8marks_0.png",
         mark: 13,
-        methods: [[{ mark: 13, content: "x=-2^{-\\frac{1}{2}}" }], [{ mark: 7, content: "2^{\\frac{1}{2}}x=1" }, { mark: 6, content: "x=2^{-\\frac{1}{2}}" }]]
+        methods: [[{ mark: 13, content: "x=-2^{\\frac{1}{2}}" }], [{ mark: 7, content: "2^{\\frac{1}{2}}x=1" }, { mark: 6, content: "x=2^{\\frac{1}{2}}" }]]
     },
     {
         content: "https://image.ibb.co/iJGxTa/diff_Equation_12marks_0.png",
         mark: 14,
-        methods: [[{ mark: 14, content: "x=-2^{-\\frac{1}{2}}" }], [{ mark: 7, content: "2^{\\frac{1}{2}}x=1" }, { mark: 7, content: "x=2^{-\\frac{1}{2}}" }]]
+        methods: [[{ mark: 14, content: "x=-2^{\\frac{1}{2}}" }], [{ mark: 7, content: "2^{\\frac{1}{2}}x=1" }, { mark: 7, content: "x=2^{\\frac{1}{2}}" }]]
     },
     {
         content: "https://image.ibb.co/iJGxTa/diff_Equation_12marks_0.png",
         mark: 14,
-        methods: [[{ mark: 14, content: "x=-2^{-\\frac{1}{2}}" }], [{ mark: 7, content: "2^{\\frac{1}{2}}x=1" }, { mark: 7, content: "x=2^{-\\frac{1}{2}}" }]]
+        methods: [[{ mark: 14, content: "x=-2^{\\frac{1}{2}}" }], [{ mark: 7, content: "2^{\\frac{1}{2}}x=1" }, { mark: 7, content: "x=2^{\\frac{1}{2}}" }]]
     },
     {
         content: "https://image.ibb.co/iJGxTa/diff_Equation_12marks_0.png",
         mark: 14,
-        methods: [[{ mark: 14, content: "x=-2^{-\\frac{1}{2}}" }], [{ mark: 7, content: "2^{\\frac{1}{2}}x=1" }, { mark: 7, content: "x=2^{-\\frac{1}{2}}" }]]
+        methods: [[{ mark: 14, content: "x=-2^{\\frac{1}{2}}" }], [{ mark: 7, content: "2^{\\frac{1}{2}}x=1" }, { mark: 7, content: "x=2^{\\frac{1}{2}}" }]]
     },
     {
         content: "https://image.ibb.co/fSyBoa/bin_Expan_10marks_0.png",
         mark: 15,
-        methods: [[{ mark: 15, content: "x=-2^{-\\frac{1}{2}}" }], [{ mark: 8, content: "2^{\\frac{1}{2}}x=1" }, { mark: 7, content: "x=2^{-\\frac{1}{2}}" }]]
+        methods: [[{ mark: 15, content: "x=-2^{\\frac{1}{2}}" }], [{ mark: 8, content: "2^{\\frac{1}{2}}x=1" }, { mark: 7, content: "x=2^{\\frac{1}{2}}" }]]
     },
     {
         content: "https://image.ibb.co/fSyBoa/bin_Expan_10marks_0.png",
         mark: 15,
-        methods: [[{ mark: 15, content: "x=-2^{-\\frac{1}{2}}" }], [{ mark: 8, content: "2^{\\frac{1}{2}}x=1" }, { mark: 7, content: "x=2^{-\\frac{1}{2}}" }]]
+        methods: [[{ mark: 15, content: "x=-2^{\\frac{1}{2}}" }], [{ mark: 8, content: "2^{\\frac{1}{2}}x=1" }, { mark: 7, content: "x=2^{\\frac{1}{2}}" }]]
     },
     {
         content: "https://image.ibb.co/fSyBoa/bin_Expan_10marks_0.png",
         mark: 15,
-        methods: [[{ mark: 15, content: "x=-2^{-\\frac{1}{2}}" }], [{ mark: 8, content: "2^{\\frac{1}{2}}x=1" }, { mark: 7, content: "x=2^{-\\frac{1}{2}}" }]]
+        methods: [[{ mark: 15, content: "x=-2^{\\frac{1}{2}}" }], [{ mark: 8, content: "2^{\\frac{1}{2}}x=1" }, { mark: 7, content: "x=2^{\\frac{1}{2}}" }]]
     }
 ];
 
