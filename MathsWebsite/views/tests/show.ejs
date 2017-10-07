@@ -304,6 +304,11 @@
 						var latexHolder = newInputs[i][t][count].latex();
 						$("#itopic"+i+"question"+t+"part"+count).val(latexHolder);
 
+						for(var j=0;j<partPositionings[i][t].length;j++){
+							if(partPositionings[i][t][j].part == q && partPositionings[i][t][j].pos == count){
+								partPositionings[i][t].splice(j,1);
+							}
+						}
 
 						var methodsHolder = topicsHolder[i].questions[t].methods;
 
@@ -321,8 +326,7 @@
 											}
 											console.log("Found answer:(<" + latexHolder.slice(u,h) + "> : <" + methodsHolder[q].content + ">)");
 											$("#topic" + i + "question" + t + "part" + count + "span").after(methodsHolder[q].mark + "<i class='material-icons'>check</i>");
-											partPositionings[i][t].push({pos: count,part: q});
-												
+											partPositionings[i][t].push({pos: count,part: q});	
 										}
 									}
 								}
