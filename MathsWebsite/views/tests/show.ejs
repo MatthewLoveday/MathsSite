@@ -154,25 +154,59 @@
 					edit: function() {
 						var latexHolder = newInputs[<%= i %>][<%= t %>][0].latex();
 						$("#itopic<%= i %>question<%= t %>part0").val(latexHolder);
-						if(questionsMethods[<%= i %>][<%= t %>] == -1){
-							var methodsHolder = topicsHolder[<%= i %>].questions[<%= t %>].methods;
+
+						for(var j=0;j<partPositionings[<%= i %>][<%= t %>].length;j++){
+							if(partPositionings[<%= i %>][<%= t %>][j].pos == 0){
+								partPositionings[<%= i %>][<%= t %>].splice(j,1);
+								$("#topic<%= i %>question<%= t %>part0 > span:nth-child(2)").remove();
+								if(!partPositionings[<%= i %>][<%= t %>][0]){
+									questionsMethods[<%= i %>][<%= t %>] = -1;
+								}
+								break;
+							}
+						}
+
+						var methodsHolder = topicsHolder[<%= i %>].questions[<%= t %>].methods;
+
+						if(questionsMethods[<%= i %>][<%= t %>] != -1){
+							methodsHolder = methodsHolder[questionsMethods[<%= i %>][<%= t %>]];
+							markedPartLabel0:
+							for(var q = 0;q < methodsHolder.length;q++){
+								checkingMethodPartLabel:
+								for(var u = 0;u < latexHolder.length;u++){
+									for(var h = latexHolder.length;h > 0;h--){
+										if(latexHolder.slice(u,h) == methodsHolder[q].content){
+											for(var j=0;j<partPositionings[<%= i %>][<%= t %>].length;j++){
+												if(partPositionings[<%= i %>][<%= t %>][j].part == q || (partPositionings[<%= i %>][<%= t %>][j].part < q && partPositionings[<%= i %>][<%= t %>][j].pos > 0) || (partPositionings[<%= i %>][<%= t %>][j].part > q && partPositionings[<%= i %>][<%= t %>][j].pos < 0)){
+													break checkingMethodPartLabel;
+												}
+											}
+											console.log("Found answer:(<" + latexHolder.slice(u,h) + "> : <" + methodsHolder[q].content + ">)");
+											$("#topic<%= i %>question<%= t %>part0span").after("<span>" + methodsHolder[q].mark + "<i class='material-icons'>check</i></span>");
+											partPositionings[<%= i %>][<%= t %>].push({pos: 0,part: q});
+											break markedPartLabel0;
+										}
+									}
+								}
+							}
+						}else{
+							markedPartLabel1:
 							for(var p = 0;p < methodsHolder.length;p++){
 								for(var q = 0;q < methodsHolder[p].length;q++){
 									for(var u = 0;u < latexHolder.length;u++){
 										for(var h = latexHolder.length;h > 0;h--){
 											if(latexHolder.slice(u,h) == methodsHolder[p][q].content){
 												console.log("Found answer:(<" + latexHolder.slice(u,h) + "> : <" + methodsHolder[p][q].content + ">)");
-												$("#topic<%= i %>question<%= t %>part0").append(methodsHolder[p][q].mark + "<i class='material-icons'>check</i>");
-												questionsMethods[<%= i %>][<%= t %>] = p;
+												$("#topic<%= i %>question<%= t %>part0span").after("<span>" + methodsHolder[p][q].mark + "<i class='material-icons'>check</i></span>");
 												partPositionings[<%= i %>][<%= t %>].push({pos: 0,part: q});
-												
+												questionsMethods[<%= i %>][<%= t %>] = p;
+												break markedPartLabel1;
 											}
 										}
 									}
 								}
-							}
+							}	
 						}
-						
 					}
 				}
 			});
@@ -285,7 +319,7 @@
 				type: "text",
 				readonly: "true"
 			});
-			$("#itopic"+i+"question"+t+"part"+(count-1)).after(newTxtInp)
+			$("#itopic" + i + "question" + t + "part" + (count-1)).after(newTxtInp)
 
 			newInputs[i][t][count] = MQ.MathField(document.getElementById("topic" + i + "question" + t + "part" + count + "span"), {
 				handlers: {
@@ -305,8 +339,13 @@
 						$("#itopic"+i+"question"+t+"part"+count).val(latexHolder);
 
 						for(var j=0;j<partPositionings[i][t].length;j++){
-							if(partPositionings[i][t][j].part == q && partPositionings[i][t][j].pos == count){
+							if(partPositionings[i][t][j].pos == count){
 								partPositionings[i][t].splice(j,1);
+								$("#topic" + i + "question" + t + "part" + count + " > span:nth-child(2)").remove();
+								if(!partPositionings[i][t][0]){
+									questionsMethods[i][t] = -1;
+								}
+								break;
 							}
 						}
 
@@ -314,32 +353,39 @@
 
 						if(questionsMethods[i][t] != -1){
 							methodsHolder = methodsHolder[questionsMethods[i][t]];
+							markedPartLabel0:
 							for(var q = 0;q < methodsHolder.length;q++){
 								checkingMethodPartLabel:
 								for(var u = 0;u < latexHolder.length;u++){
 									for(var h = latexHolder.length;h > 0;h--){
 										if(latexHolder.slice(u,h) == methodsHolder[q].content){
-											for(var j=0;j<partPositionings[i][t].length;j++){
+											for(var j = 0;j < partPositionings[i][t].length;j++){
+												console.log("(" + partPositionings[i][t][j].part + " : " + q + ")");
 												if(partPositionings[i][t][j].part == q || (partPositionings[i][t][j].part < q && partPositionings[i][t][j].pos > count) || (partPositionings[i][t][j].part > q && partPositionings[i][t][j].pos < count)){
+													console.log("Answer already found");
 													break checkingMethodPartLabel;
 												}
 											}
 											console.log("Found answer:(<" + latexHolder.slice(u,h) + "> : <" + methodsHolder[q].content + ">)");
-											$("#topic" + i + "question" + t + "part" + count + "span").after(methodsHolder[q].mark + "<i class='material-icons'>check</i>");
-											partPositionings[i][t].push({pos: count,part: q});	
+											$("#topic" + i + "question" + t + "part" + count + "span").after("<span>" + methodsHolder[q].mark + "<i class='material-icons'>check</i></span>");
+											partPositionings[i][t].push({pos: count,part: q});
+											break markedPartLabel0;
 										}
 									}
 								}
 							}
 						}else{
+							markedPartLabel1:
 							for(var p = 0;p < methodsHolder.length;p++){
 								for(var q = 0;q < methodsHolder[p].length;q++){
 									for(var u = 0;u < latexHolder.length;u++){
 										for(var h = latexHolder.length;h > 0;h--){
 											if(latexHolder.slice(u,h) == methodsHolder[p][q].content){
 												console.log("Found answer:(<" + latexHolder.slice(u,h) + "> : <" + methodsHolder[p][q].content + ">)");
-												$("#topic" + i + "question" + t + "part" + count + "span").after(methodsHolder[p][q].mark + "<i class='material-icons'>check</i>");
+												$("#topic" + i + "question" + t + "part" + count + "span").after("<span>" + methodsHolder[p][q].mark + "<i class='material-icons'>check</i></span>");
 												partPositionings[i][t].push({pos: count,part: q});
+												questionsMethods[i][t] = p;
+												break markedPartLabel1;
 											}
 										}
 									}
@@ -367,9 +413,6 @@
 </script>
 
 <style>
-	p span{
-		font-size: 100pt;
-	}
 	img{
 		width:100%;
 		height:100%;
