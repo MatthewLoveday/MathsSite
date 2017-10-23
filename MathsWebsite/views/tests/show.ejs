@@ -6,34 +6,29 @@
 		<h3>timer</h3>
 		<hr>
 	</div>
-
 	<div id="inputPad" class="col s6 offset-s3 z-depth-2">
 		<h4>Input Pad</h4>
 		<hr>
-		<table>
-			<tr>
-				<td>
-					<span id="inpPad00">\sqrt{x}</span>
-				</td>
-				<td>
-					<span id="inpPad01">\sqrt{x}</span>
-				</td>
-				<td>
-					<span id="inpPad02">\sqrt{x}</span>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<span id="inpPad10">\sqrt{x}</span>
-				</td>
-				<td>
-					<span id="inpPad11">\sqrt{x}</span>
-				</td>
-				<td>
-					<span id="inpPad12">ax^2 + bx + c = 0</span>
-				</td>
-			</tr>
-		</table>
+		<div class="row">
+			<div class="col s1 offset-s2"><span id="inpPad00">\sqrt{x}</span></div>
+			<div class="col s1"><span id="inpPad01">\sqrt{x}</span></div>
+			<div class="col s1"><span id="inpPad02">\sqrt{x}</span></div>
+			<div class="col s1"><span id="inpPad03">\sqrt{x}</span></div>
+			<div class="col s1"><span id="inpPad04">\sqrt{x}</span></div>
+			<div class="col s1"><span id="inpPad05">\sqrt{x}</span></div>
+			<div class="col s1"><span id="inpPad06">\sqrt{x}</span></div>
+			<div class="col s1"><span id="inpPad07">\sqrt{x}</span></div>
+		</div>
+		<div class="row">
+			<div class="col s1 offset-s2"><span id="inpPad10">\sqrt{x}</span></div>
+			<div class="col s1"><span id="inpPad11">\sqrt{x}</span></div>
+			<div class="col s1"><span id="inpPad12">\sqrt{x}</span></div>
+			<div class="col s1"><span id="inpPad13">\sqrt{x}</span></div>
+			<div class="col s1"><span id="inpPad14">\sqrt{x}</span></div>
+			<div class="col s1"><span id="inpPad15">\sqrt{x}</span></div>
+			<div class="col s1"><span id="inpPad16">\sqrt{x}</span></div>
+			<div class="col s1"><span id="inpPad17">\sqrt{x}</span></div>
+		</div>
 	</div>
 
 	<div class="col s8 offset-s2">
@@ -67,10 +62,10 @@
 <script>
 	$(document).ready(function() {
 		var id;
-		console.log($("#inputPad table tr").length);
-		for(var i = 0;i < $("#inputPad  table  tr").length;i++){
-			console.log($("#inputPad  table  tr:nth-child(" + (i + 1) + ") td").length);
-			for(var t = 0;t < $("#inputPad table tr:nth-child(" + (i + 1) + ") td").length;t++){
+		console.log($("#inputPad > div").length);
+		for(var i = 0;i < $("#inputPad > div").length;i++){
+			console.log($("#inputPad div div").length / $("#inputPad > div").length);
+			for(var t = 0;t < $("#inputPad div div").length / $("#inputPad > div").length;t++){
 				console.log("inpPad" + i + t);
 				MQ.StaticMath(document.getElementById("inpPad" + i + t));
 			}
@@ -464,6 +459,7 @@
 	#inputPad{
 		position: fixed;
 		bottom: 0;
+		background-color:white;
 	}
 	.highlighted{
 		background-color: #d3e4ff;
