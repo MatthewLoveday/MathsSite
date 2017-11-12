@@ -61,16 +61,28 @@
 
 <script>
 	$(document).ready(function() {
-		var id;
-		console.log($("#inputPad > div").length);
+        
 		for(var i = 0;i < $("#inputPad > div").length;i++){
-			console.log($("#inputPad div div").length / $("#inputPad > div").length);
 			for(var t = 0;t < $("#inputPad div div").length / $("#inputPad > div").length;t++){
-				console.log("inpPad" + i + t);
 				MQ.StaticMath(document.getElementById("inpPad" + i + t));
 			}
 		}
 
+		$("form > div:last").append("<input id='testData' name='testData' type='text' readonly: ''true'>");
+		
+		var testData = {
+			examBoard: "<%= testData.examBoard %>",
+			module: "<%= testData.module %>",
+            topics: []
+		};
+
+
+        $("#endTest").change(() => {
+            $("#testData").val(JSON.stringify(testData));
+            setTimeout(() => {
+                $("#endTest").prop("checked", false);
+            }, 5000);
+        });
 
 		var topicsHolder = <%- JSON.stringify(testData.topics) %>;
 
@@ -82,51 +94,13 @@
 		var questionsMethods = [];
 		var partPositionings = [];
 
-		var examBoard = $("<input>").attr({
-			name: "examBoard",
-			type: "text",
-			value: "<%= testData.examBoard %>",
-			readonly: "true"
-		});
-		$("form > div:last").append(examBoard);
-
-		var module = $("<input>").attr({
-			name: "module",
-			type: "text",
-			value: "<%= testData.module %>",
-			readonly: "true"
-		});
-		$("form > div:last").append(module);
-
-		var numberOfTopics = $("<input>").attr({
-			name: "numberOfTopics",
-			type: "text",
-			value: "<%= testData.topics.length %>",
-			readonly: "true"
-		});
-		$("form > div:last").append(numberOfTopics);
-
 	<% for(var i = 0;i < testData.topics.length;i++){ %>
 	
 		partPositionings.push([]);
 		questionsMethods.push([]);
 		newInputs.push([]);
 
-		var newTopic = $("<input>").attr({
-			name: "topic<%= i %>",
-			type:  "text",
-			value: "<%= testData.topics[i].name %>",
-			readonly: "true"
-		});
-		$("form > div:last").append(newTopic);
-
-		var numberOfQuestions = $("<input>").attr({
-			name: "topic<%= i %>numberOfQuestions",
-			type: "text",
-			value: "<%= testData.topics[i].questions.length %>",
-			readonly: "true"
-		});
-		$("form > div:last").append(numberOfQuestions);
+		testData.topics.push({name: "<%= testData.topics[i]._id %>", questions: []});
 
 		$("body > .row > div:nth-child(3) > div:nth-child(2)").append("<div id='topic<%= i %>OnScreen' class='row section scrollspy'><% if(testData.options.topicNames){ %><h3><%= testData.topics[i].name %></h3><% } %></div>");
 
@@ -136,46 +110,20 @@
 		
 		<% for(var t=0;t< testData.topics[i].questions.length;t++){ %>
 
-			partPositionings[<%= i %>].push([]);
+			partPositionings[<%= i %>].push([""]);
 			questionsMethods[<%= i %>].push(-1);
 			
-			var newQuestion = $("<input>").attr({
-				name:"topic<%= i %>question<%= t %>",
-				type:"text",
-				value:"<%= testData.topics[i].questions[t]._id %>",
-				readonly: "true"
-			});
-			$("form > div:last").append(newQuestion);
-
+			testData.topics[<%= i %>].questions.push({id: "<%= testData.topics[i].questions[t]._id %>", parts: [""]});
 		
 			newInputs[<%= i %>].push([]);
 
-			var numberOfParts = $("<input>").attr({
-				id: "topic<%= i %>question<%= t %>numberOfParts",
-				name: "topic<%= i %>question<%= t %>numberOfParts",
-				type: "number",
-				value: "1",
-				readonly: "true"
-			});
-			$("form > div:last").append(numberOfParts);
-		
-			var newTxtInp = $("<input>").attr({
-				id:"itopic<%= i %>question<%= t %>part0",
-				name:"itopic<%= i %>question<%= t %>part0",
-				type:"text",
-				readonly: "true"
-			});
-			$("form > div:last").append(newTxtInp);
-
 			$("#topic<%= i %>OnScreen").append("<div class='row'><div id='topic<%= i %>Question<%= t %>OnScreen' class='questionInfo col s6 offset-s3'><img src='<%= testData.topics[i].questions[t].content %>'><% if(testData.options.questionLength){ %><p>Number of markable parts:<% for(var u=0;u<testData.topics[i].questions[t].methods.length - 2;u++){ %><%= testData.topics[i].questions[t].methods[u].length %>,<% } %> <%= testData.topics[i].questions[t].methods[testData.topics[i].questions[t].methods.length - 2].length %> and <%= testData.topics[i].questions[t].methods[testData.topics[i].questions[t].methods.length - 1].length %></p><% } %></div><div class='col s8 offset-s2'><p id='topic<%= i %>question<%= t %>part0'><span id='topic<%= i %>question<%= t %>part0span'></span></p></div><hr class='col s8 offset-s2'></div>");
 			
-
 			newInputs[<%= i %>][<%= t %>][0] = MQ.MathField(document.getElementById("topic<%= i %>question<%= t %>part0span"), {
 				handlers: {
 					enter: function() {
 						if(newInputs[<%= i %>][<%= t %>].length == 1)
 						{
-							$("#topic<%= i %>question<%= t %>numberOfParts").val(2);
 							newInp(<%= i %>,<%= t %>,1);
 						}
 						else
@@ -185,32 +133,36 @@
 					},
 					edit: function() {
 						var latexHolder = newInputs[<%= i %>][<%= t %>][0].latex();
-						$("#itopic<%= i %>question<%= t %>part0").val(latexHolder);
-
-						for(var j=0;j<partPositionings[<%= i %>][<%= t %>].length;j++){
-							if(partPositionings[<%= i %>][<%= t %>][j].pos == 0){
-								partPositionings[<%= i %>][<%= t %>].splice(j,1);
-								$("#topic<%= i %>question<%= t %>part0 > span:nth-child(2)").remove();
-								if(!partPositionings[<%= i %>][<%= t %>][0]){
-									questionsMethods[<%= i %>][<%= t %>] = -1;
-								}
-								break;
-							}
-						}
-
+						testData.topics[<%= i %>].questions[<%= t %>].parts = latexHolder;
+                        //---------------------checks if contains answer, if so unchecks this input as containing an answer---------------------
+                        if ($("#topic<%= i %>question<%= t %>part0 > span:nth-child(2)").length) {//if the element denoting this as correct exists
+                            $("#topic<%= i %>question<%= t %>part0 > span:nth-child(2)").remove();
+                            for (var j = 0; j < partPositionings[<%= i %>][<%= t %>].length; j++) {//loop through till finding part belonging to this input
+                                if (partPositionings[<%= i %>][<%= t %>][j].pos == 0) {
+                                    partPositionings[<%= i %>][<%= t %>].splice(j, j + 1);
+                                    break;
+                                }
+                            }
+                            if (!partPositionings[<%= i %>][<%= t %>][0]){//if partPositionings[i][t][0] is empty then partPositionings[i][t] is empty
+                                questionsMethods[<%= i %>][<%= t %>] = -1;
+                            }
+                        }
+                        //----------------------------------------------------------------------------------------------------------------------
 						var methodsHolder = topicsHolder[<%= i %>].questions[<%= t %>].methods;
 
-						if(questionsMethods[<%= i %>][<%= t %>] != -1){
-							methodsHolder = methodsHolder[questionsMethods[<%= i %>][<%= t %>]];
+                        if (questionsMethods[<%= i %>][<%= t %>] != -1){//if method already existys for question
+                            methodsHolder = methodsHolder[questionsMethods[<%= i %>][<%= t %>]];//select method used in this question
+
 							markedPartLabel0:
-							for(var q = 0;q < methodsHolder.length;q++){
+							for(var q = 0;q < methodsHolder.length;q++){//looping through parts in question
 								checkingMethodPartLabel:
-								for(var u = 0;u < latexHolder.length;u++){
-									for(var h = latexHolder.length;h > 0;h--){
-										if(latexHolder.slice(u,h) == methodsHolder[q].content){
+								for(var u = 0;u < latexHolder.length;u++){//moving front pointer
+									for(var h = latexHolder.length;h > 0;h--){//moving back pointer
+                                        if (latexHolder.slice(u, h) == methodsHolder[q].content) {//if substring of user answer = methodsHolder[q].content
 											for(var j=0;j<partPositionings[<%= i %>][<%= t %>].length;j++){
-												if(partPositionings[<%= i %>][<%= t %>][j].part == q || (partPositionings[<%= i %>][<%= t %>][j].part < q && partPositionings[<%= i %>][<%= t %>][j].pos > 0) || (partPositionings[<%= i %>][<%= t %>][j].part > q && partPositionings[<%= i %>][<%= t %>][j].pos < 0)){
-													break checkingMethodPartLabel;
+                                                if (partPositionings[<%= i %>][<%= t %>][j].pos > 0 && partPositionings[<%= i %>][<%= t %>][j].part < q || partPositionings[<%= i %>][<%= t %>][j].part == q){
+                                                    console.log("Answer already exists or is out of order");
+                                                    break checkingMethodPartLabel;
 												}
 											}
 											console.log("Found answer:(<" + latexHolder.slice(u,h) + "> : <" + methodsHolder[q].content + ">)");
@@ -306,28 +258,28 @@
 			<% for(var i = 0;i < testData.topics.length;i++){ %>
 				<% for(var t = 0;t < testData.topics[i].questions.length;t++){ %>
 					timeLeft.mins += <%= testData.topics[i].questions[t].mark %>;
-					if(timeLeft.mins >= 60){
-						timeLeft.mins -= 60;
-						timeLeft.hrs++;
-					}
+                    if (timeLeft.mins >= 60) {
+                        timeLeft.mins -= 60;
+                        timeLeft.hrs++;
+                    }
 				<% } %>
 			<% } %>
 			$("#timeHolder > h3").text(timeLeft.hrs + ":" + timeLeft.mins + ":" + timeLeft.secs);
 			//------------------------------------------------------------------------------------------------------------------------
-			var timer = setInterval(() => {
-				if(timeLeft.secs == 0){
-					timeLeft.secs = 59;
-					if(timeLeft.mins == 0){
-						timeLeft.mins = 59;
-						timeLeft.hrs--;
-					}else{
-						timeLeft.mins--;
-					}
-				}else{
-					timeLeft.secs--;
-				}
-				$("#timeHolder > h3").text(timeLeft.hrs + ":" + timeLeft.mins + ":" + timeLeft.secs);
-			}, 1000);
+            var timer = setInterval(() => {
+                if (timeLeft.secs == 0) {
+                    timeLeft.secs = 59;
+                    if (timeLeft.mins == 0) {
+                        timeLeft.mins = 59;
+                        timeLeft.hrs--;
+                    } else {
+                        timeLeft.mins--;
+                    }
+                } else {
+                    timeLeft.secs--;
+                }
+                $("#timeHolder > h3").text(timeLeft.hrs + ":" + timeLeft.mins + ":" + timeLeft.secs);
+            }, 1000);
 			//------------------------------------------------------------------------------------------------------------------------
 		<% } %>
 
@@ -339,101 +291,90 @@
 		function newInp(i,t,count)
 		{
 			$("#topic" + i + "question" + t + "part" + (count - 1)).after("<p id='topic" + i + "question" + t + "part" + count + "'><span id='topic" + i + "question" + t + "part" + count + "span'></span></p>");
-
-			var newTxtInp = $("<input>").attr({
-				id: "itopic" + i + "question" + t + "part" + count,
-				name: "itopic" + i + "question" + t + "part" + count,
-				type: "text",
-				readonly: "true"
-			});
-			$("#itopic" + i + "question" + t + "part" + (count-1)).after(newTxtInp)
+            testData.topics[i].questions[t].parts.push("");
 
 			newInputs[i][t][count] = MQ.MathField(document.getElementById("topic" + i + "question" + t + "part" + count + "span"), {
 				handlers: {
 					enter: function() {
-						if(newInputs[i][t].length == count + 1 && newInputs[i][t].length <= 60){
-							$("#topic"+i+"question"+t+"numberOfParts").val((i, val) => {
-								return +val+1;
-							});
-							newInp(i,t,(count+1));
-						}
-						else{
-							newInputs[i][t][count+1].focus()	
-						}
+                        if (newInputs[i][t].length == count + 1 && newInputs[i][t].length <= 60) {
+                            newInp(i, t, (count + 1));
+                        }
+                        else {
+                            newInputs[i][t][count + 1].focus()
+                        }
 					},
 					edit: function() {
 						var latexHolder = newInputs[i][t][count].latex();
-						$("#itopic"+i+"question"+t+"part"+count).val(latexHolder);
+                        testData.topics[i].questions[t].parts[count] = latexHolder;
 
-						for(var j=0;j<partPositionings[i][t].length;j++){
-							if(partPositionings[i][t][j].pos == count){
-								partPositionings[i][t].splice(j,1);
-								$("#topic" + i + "question" + t + "part" + count + " > span:nth-child(2)").remove();
-								if(!partPositionings[i][t][0]){
-									questionsMethods[i][t] = -1;
-								}
-								break;
-							}
-						}
-
+                        //---------------------checks if contains answer, if so unchecks this input as containing an answer---------------------
+                        if ($("#topic" + i + "question" + t + "part" + count + " > span:nth-child(2)").length) {//if the element denoting this as correct exists
+                            $("#topic" + i + "question" + t + "part" + count + " > span:nth-child(2)").remove();
+                            for (var j = 0; j < partPositionings[i][t].length; j++) {//loop through till finding part belonging to this input
+                                if (partPositionings[i][t][j].pos == count) {
+                                    partPositionings[i][t].splice(j, j + 1);
+                                    break;
+                                }
+                            }
+                            if (!partPositionings[i][t][0]) {//if partPositionings[i][t][0] is empty then partPositionings[i][t] is empty
+                                questionsMethods[i][t] = -1;
+                            }
+                        }
+                        //----------------------------------------------------------------------------------------------------------------------
 						var methodsHolder = topicsHolder[i].questions[t].methods;
 
-						if(questionsMethods[i][t] != -1){
-							methodsHolder = methodsHolder[questionsMethods[i][t]];
-							markedPartLabel0:
-							for(var q = 0;q < methodsHolder.length;q++){
-								checkingMethodPartLabel:
-								for(var u = 0;u < latexHolder.length;u++){
-									for(var h = latexHolder.length;h > 0;h--){
-										if(latexHolder.slice(u,h) == methodsHolder[q].content){
-											for(var j = 0;j < partPositionings[i][t].length;j++){
-												console.log("(" + partPositionings[i][t][j].part + " : " + q + ")");
-												if(partPositionings[i][t][j].part == q || (partPositionings[i][t][j].part < q && partPositionings[i][t][j].pos > count) || (partPositionings[i][t][j].part > q && partPositionings[i][t][j].pos < count)){
-													console.log("Answer already found");
-													break checkingMethodPartLabel;
-												}
-											}
-											console.log("Found answer:(<" + latexHolder.slice(u,h) + "> : <" + methodsHolder[q].content + ">)");
-											$("#topic" + i + "question" + t + "part" + count + "span").after("<span>" + methodsHolder[q].mark + "<i class='material-icons'>check</i></span>");
-											partPositionings[i][t].push({pos: count,part: q});
-											break markedPartLabel0;
-										}
-									}
-								}
-							}
-						}else{
-							markedPartLabel1:
-							for(var p = 0;p < methodsHolder.length;p++){
-								for(var q = 0;q < methodsHolder[p].length;q++){
-									for(var u = 0;u < latexHolder.length;u++){
-										for(var h = latexHolder.length;h > 0;h--){
-											if(latexHolder.slice(u,h) == methodsHolder[p][q].content){
-												console.log("Found answer:(<" + latexHolder.slice(u,h) + "> : <" + methodsHolder[p][q].content + ">)");
-												$("#topic" + i + "question" + t + "part" + count + "span").after("<span>" + methodsHolder[p][q].mark + "<i class='material-icons'>check</i></span>");
-												partPositionings[i][t].push({pos: count,part: q});
-												questionsMethods[i][t] = p;
-												break markedPartLabel1;
-											}
-										}
-									}
-								}
-							}	
-						}
-
-
-						if(!(newInputs[i][t][count].latex()) && !(newInputs[i][t][count+1])){
-							$("#topic"+i+"question"+t+"part"+count).remove();
-							$("#itopic"+i+"question"+t+"part"+count).remove();
-							$("#topic"+i+"question"+t+"numberOfParts").val(function( i, val ) {
-								return +val-1;
-							});
-							newInputs[i][t].splice(count,1);
-							newInputs[i][t][(count-1)].focus();
-						}
+                        if (questionsMethods[i][t] != -1) {
+                            methodsHolder = methodsHolder[questionsMethods[i][t]];
+                            markedPartLabel0:
+                            for (var q = 0; q < methodsHolder.length; q++) {
+                                checkingMethodPartLabel:
+                                for (var u = 0; u < latexHolder.length; u++) {
+                                    for (var h = latexHolder.length; h > 0; h--) {
+                                        if (latexHolder.slice(u, h) == methodsHolder[q].content) {
+                                            for (var j = 0; j < partPositionings[i][t].length; j++) {
+                                                console.log("(" + partPositionings[i][t][j].part + " : " + q + ")");
+                                                if (partPositionings[i][t][j].pos > count && partPositionings[i][t][j].part < q || partPositionings[i][t][j].pos < count && partPositionings[i][t][j].part > q || partPositionings[i][t][j].part == q) {
+                                                    console.log("Answer already exists or is out of order");
+                                                    break checkingMethodPartLabel;
+                                                }
+                                            }
+                                            console.log("Found answer:(<" + latexHolder.slice(u, h) + "> : <" + methodsHolder[q].content + ">)");
+                                            $("#topic" + i + "question" + t + "part" + count + "span").after("<span>" + methodsHolder[q].mark + "<i class='material-icons'>check</i></span>");
+                                            partPositionings[i][t].push({ pos: count, part: q });
+                                            break markedPartLabel0;
+                                        }
+                                    }
+                                }
+                            }
+                        } else {
+                            markedPartLabel1:
+                            for (var p = 0; p < methodsHolder.length; p++) {
+                                for (var q = 0; q < methodsHolder[p].length; q++) {
+                                    for (var u = 0; u < latexHolder.length; u++) {
+                                        for (var h = latexHolder.length; h > 0; h--) {
+                                            if (latexHolder.slice(u, h) == methodsHolder[p][q].content) {
+                                                console.log("Found answer:(<" + latexHolder.slice(u, h) + "> : <" + methodsHolder[p][q].content + ">)");
+                                                $("#topic" + i + "question" + t + "part" + count + "span").after("<span>" + methodsHolder[p][q].mark + "<i class='material-icons'>check</i></span>");
+                                                partPositionings[i][t].push({ pos: count, part: q });
+                                                questionsMethods[i][t] = p;
+                                                break markedPartLabel1;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        
+                        if (!(newInputs[i][t][count].latex() || newInputs[i][t][count + 1])) {//if input is empty and there is not a next input, then remove current input
+                            $("#topic" + i + "question" + t + "part" + count).remove();
+                            testData.topics[i].questions[t].parts.splice(count, 1);
+                            newInputs[i][t].splice(count, 1);
+                            newInputs[i][t][count - 1].focus();
+                        }
 					}
 				}
 			});
-			newInputs[i][t][count].focus();
+			newInputs[i][t][count].focus();//focus on newly created input
 		}
 		
 	});

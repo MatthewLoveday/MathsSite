@@ -18,10 +18,10 @@ var examboardData=
                 { name: "PlaceholderD1", topics: [{ name: "Placeholder1D1" }, { name: "Placeholder2D1" }, { name: "Placeholder3D1" }, { name: "Placeholder4D1" }, { name: "Placeholder5D1" }, { name: "Placeholder6D1" }, { name: "Placeholder7D1" }] }]
         }, {
             name: "Placeholder2", modules: [
-            { name: "PlaceholderA2", topics: [{ name: "Placeholder1A2" }, { name: "Placeholder2A2" }, { name: "Placeholder3A2" }, { name: "Placeholder4A2" }] },
-            { name: "PlaceholderB2", topics: [{ name: "Placeholder1B2" }, { name: "Placeholder2B2" }, { name: "Placeholder3B2" }, { name: "Placeholder4B2" }, { name: "Placeholder5B2" }, { name: "Placeholder6B2" }] },
-            { name: "PlaceholderC2", topics: [{ name: "Placeholder1C2" }, { name: "Placeholder2C2" }, { name: "Placeholder3C2" }, { name: "Placeholder4C2" }, { name: "Placeholder5C2" }, { name: "Placeholder6C2" }] },
-            { name: "PlaceholderD2", topics: [{ name: "Placeholder1D2" }, { name: "Placeholder2D2" }, { name: "Placeholder3D2" }, { name: "Placeholder4D2" }, { name: "Placeholder5D2" }, { name: "Placeholder6D2" }, { name: "Placeholder7D2" }] }]
+                { name: "PlaceholderA2", topics: [{ name: "Placeholder1A2" }, { name: "Placeholder2A2" }, { name: "Placeholder3A2" }, { name: "Placeholder4A2" }] },
+                { name: "PlaceholderB2", topics: [{ name: "Placeholder1B2" }, { name: "Placeholder2B2" }, { name: "Placeholder3B2" }, { name: "Placeholder4B2" }, { name: "Placeholder5B2" }, { name: "Placeholder6B2" }] },
+                { name: "PlaceholderC2", topics: [{ name: "Placeholder1C2" }, { name: "Placeholder2C2" }, { name: "Placeholder3C2" }, { name: "Placeholder4C2" }, { name: "Placeholder5C2" }, { name: "Placeholder6C2" }] },
+                { name: "PlaceholderD2", topics: [{ name: "Placeholder1D2" }, { name: "Placeholder2D2" }, { name: "Placeholder3D2" }, { name: "Placeholder4D2" }, { name: "Placeholder5D2" }, { name: "Placeholder6D2" }, { name: "Placeholder7D2" }] }]
         }, {
             name: "Placeholder3", modules: [
                 { name: "PlaceholderA3", topics: [{ name: "Placeholder1A3" }, { name: "Placeholder2A3" }, { name: "Placeholder3A3" }, { name: "Placeholder4A3" }] },
