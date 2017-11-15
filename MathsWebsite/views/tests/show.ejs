@@ -60,13 +60,49 @@
 
 
 <script>
-	$(document).ready(function() {
+    $(document).ready(function () {
+
+        /*
+        var showFocus = setInterval(() => {
+            console.log("focus id: " + $(":focus").parent().parent().parent().prop("id"));
+            console.log("\nhtml: " + $(":focus").parent().parent().parent().html());
+            console.log("\nhtml: " + $(":focus").parent().parent().html());
+            console.log("\nhtml: " + $(":focus").parent().html());
+            console.log("\nhtml: " + $(":focus").html());
+            
+        }, 10000);
+        */
+
+        var lastFocussed;
+
+        $("#inputPad > .row > div > span").click(function () {//this cannot be an arrow function since arrow functions do not have 'this'
+            /*
+            console.log("triggered click");
+            console.log("$(this).length: " + $(this).length);
+            console.log("$(this).prop(id): " + $(this).prop("id"));
+            console.log("$(this): " + $(this));
+            console.log("$(this).html(): " + $(this).html());
+            */
+            for (var i = 0; i < 2; i++) {
+                for (var t = 0; t < 7; t++) {
+                    if ($("#inpPad" + i + t).is($(this))) {
+                        newInputs[lastFocussed.charAt(5)][lastFocussed.charAt(14)][lastFocussed.charAt(19)].write(inputButtons[(3 * i) + t].latex());
+                        newInputs[lastFocussed.charAt(5)][lastFocussed.charAt(14)][lastFocussed.charAt(19)].focus();
+                        //console.log("lastFocussed: " + lastFocussed);
+                        break;
+                    }
+                }
+            }
+        });
+
         
+
+        var inputButtons = [];
 		for(var i = 0;i < $("#inputPad > div").length;i++){
-			for(var t = 0;t < $("#inputPad div div").length / $("#inputPad > div").length;t++){
-				MQ.StaticMath(document.getElementById("inpPad" + i + t));
+            for (var t = 0; t < $("#inputPad div div").length / $("#inputPad > div").length; t++){
+                inputButtons.push(MQ.StaticMath(document.getElementById("inpPad" + i + t)));
 			}
-		}
+        }
 
 		$("form > div:last").append("<input id='testData' name='testData' type='text' readonly: ''true'>");
 		
@@ -117,7 +153,7 @@
 		
 			newInputs[<%= i %>].push([]);
 
-			$("#topic<%= i %>OnScreen").append("<div class='row'><div id='topic<%= i %>Question<%= t %>OnScreen' class='questionInfo col s6 offset-s3'><img src='<%= testData.topics[i].questions[t].content %>'><% if(testData.options.questionLength){ %><p>Number of markable parts:<% for(var u=0;u<testData.topics[i].questions[t].methods.length - 2;u++){ %><%= testData.topics[i].questions[t].methods[u].length %>,<% } %> <%= testData.topics[i].questions[t].methods[testData.topics[i].questions[t].methods.length - 2].length %> and <%= testData.topics[i].questions[t].methods[testData.topics[i].questions[t].methods.length - 1].length %></p><% } %></div><div class='col s8 offset-s2'><p id='topic<%= i %>question<%= t %>part0'><span id='topic<%= i %>question<%= t %>part0span'></span></p></div><hr class='col s8 offset-s2'></div>");
+			$("#topic<%= i %>OnScreen").append("<div class='row'><div id='topic<%= i %>Question<%= t %>OnScreen' class='questionInfo col s6 offset-s3'><img src='<%= testData.topics[i].questions[t].content %>'><% if(testData.options.questionLength){ %><p>Number of markable parts:<% for(var u=0;u<testData.topics[i].questions[t].methods.length - 2;u++){ %><%= testData.topics[i].questions[t].methods[u].length %>,<% } %> <%= testData.topics[i].questions[t].methods[testData.topics[i].questions[t].methods.length - 2].length %> and <%= testData.topics[i].questions[t].methods[testData.topics[i].questions[t].methods.length - 1].length %></p><% } %></div><div class='col s8 offset-s2'><p id='topic<%= i %>question<%= t %>part0'><span class='inputField' id='topic<%= i %>question<%= t %>part0span'></span></p></div><hr class='col s8 offset-s2'></div>");
 			
 			newInputs[<%= i %>][<%= t %>][0] = MQ.MathField(document.getElementById("topic<%= i %>question<%= t %>part0span"), {
 				handlers: {
@@ -132,8 +168,9 @@
 						}
 					},
 					edit: function() {
+                        console.log("triggered edit");
 						var latexHolder = newInputs[<%= i %>][<%= t %>][0].latex();
-						testData.topics[<%= i %>].questions[<%= t %>].parts = latexHolder;
+						testData.topics[<%= i %>].questions[<%= t %>].parts[0] = latexHolder;
                         //---------------------checks if contains answer, if so unchecks this input as containing an answer---------------------
                         if ($("#topic<%= i %>question<%= t %>part0 > span:nth-child(2)").length) {//if the element denoting this as correct exists
                             $("#topic<%= i %>question<%= t %>part0 > span:nth-child(2)").remove();
@@ -194,6 +231,9 @@
 					}
 				}
 			});
+            $("#topic<%= i %>question<%= t %>part0span").on("focus", "span", function () {
+                lastFocussed = $(this).parent().parent().prop("id");
+            });
 		<% } %> 
 	<% } %>
 		
@@ -291,6 +331,14 @@
 		function newInp(i,t,count)
 		{
 			$("#topic" + i + "question" + t + "part" + (count - 1)).after("<p id='topic" + i + "question" + t + "part" + count + "'><span id='topic" + i + "question" + t + "part" + count + "span'></span></p>");
+            /*
+            console.log("testData:\n" + testData);
+            console.log("\ntestData.topcis:\n" + testData.topics);
+            console.log("\ntestData.topcis[" + i + "]:\n" + testData.topics[i]);
+            console.log("\ntestData.topcis[" + i + "].questions:\n" + testData.topics[i].questions);
+            console.log("\ntestData.topcis[" + i + "].questions[" + t + "]:\n" + testData.topics[i].questions[t]);
+            console.log("\ntestData.topcis[" + i + "].questions[" + t + "].parts:\n" + testData.topics[i].questions[t].parts);
+            */
             testData.topics[i].questions[t].parts.push("");
 
 			newInputs[i][t][count] = MQ.MathField(document.getElementById("topic" + i + "question" + t + "part" + count + "span"), {
@@ -306,6 +354,7 @@
 					edit: function() {
 						var latexHolder = newInputs[i][t][count].latex();
                         testData.topics[i].questions[t].parts[count] = latexHolder;
+                        //console.log("testData.topics[" + i + "].questions[" + t + "].parts: " + testData.topics[i].questions[t].parts);
 
                         //---------------------checks if contains answer, if so unchecks this input as containing an answer---------------------
                         if ($("#topic" + i + "question" + t + "part" + count + " > span:nth-child(2)").length) {//if the element denoting this as correct exists
@@ -373,11 +422,16 @@
                         }
 					}
 				}
-			});
+            });
+            $("#topic" + i + "question" + t + "part" + count + "span").on("focus", "span", function () {
+                lastFocussed = $(this).parent().parent().prop("id");
+            });
 			newInputs[i][t][count].focus();//focus on newly created input
 		}
-		
 	});
+    
+    
+
 </script>
 
 <style>
