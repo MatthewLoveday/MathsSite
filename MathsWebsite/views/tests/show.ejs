@@ -6,26 +6,26 @@
 		<h3>timer</h3>
 		<hr>
 	</div>
-	<div id="inputPad" class="col s12 m8 offset-m2 l6 offset-l3 z-depth-2">
+	<div id="inputPad" class="col s12 m10 offset-m1 l6 offset-l3 z-depth-2">
 		<h4>Input Pad</h4>
 		<hr>
 		<div class="row">
-			<a class="waves-effect waves-light btn col s4 m2 l1"><span id="inpPad0">\sqrt{x}</span></a>
-			<a class="waves-effect waves-light btn col s4 m2 l1"><span id="inpPad1">\sqrt{x}</span></a>
-			<a class="waves-effect waves-light btn col s4 m2 l1"><span id="inpPad2">\sqrt{x}</span></a>
-			<a class="waves-effect waves-light btn col s4 m2 l1"><span id="inpPad3">\sqrt{x}</span></a>
-			<a class="waves-effect waves-light btn col s4 m2 l1"><span id="inpPad4">\sqrt{x}</span></a>
-			<a class="waves-effect waves-light btn col s4 m2 l1"><span id="inpPad5">\sqrt{x}</span></a>
-			<a class="waves-effect waves-light btn col s4 m2 l1"><span id="inpPad6">\sqrt{x}</span></a>
-			<a class="waves-effect waves-light btn col s4 m2 l1"><span id="inpPad7">\sqrt{x}</span></a>
-			<a class="waves-effect waves-light btn col s4 m2 l1"><span id="inpPad8">\sqrt{x}</span></a>
-			<a class="waves-effect waves-light btn col s4 m2 l1"><span id="inpPad9">\sqrt{x}</span></a>
-			<a class="waves-effect waves-light btn col s4 m2 l1"><span id="inpPad10">\sqrt{x}</span></a>
-			<a class="waves-effect waves-light btn col s4 m2 l1"><span id="inpPad11">\sqrt{x}</span></a>
-			<a class="waves-effect waves-light btn col s4 m2 l1"><span id="inpPad12">\sqrt{x}</span></a>
-			<a class="waves-effect waves-light btn col s4 m2 l1"><span id="inpPad13">\sqrt{x}</span></a>
-			<a class="waves-effect waves-light btn col s4 m2 l1"><span id="inpPad14">\sqrt{x}</span></a>
-			<a class="waves-effect waves-light btn col s4 m2 l1"><span id="inpPad15">\sqrt{x}</span></a>
+            <a class="waves-effect waves-light btn inputButton"><span id="inpPad0">\sqrt{x}</span></a>
+		    <a class="waves-effect waves-light btn inputButton"><span id="inpPad1">\sqrt{x}</span></a>
+            <a class="waves-effect waves-light btn inputButton"><span id="inpPad2">\sqrt{x}</span></a>
+			<a class="waves-effect waves-light btn inputButton"><span id="inpPad3">\sqrt{x}</span></a>
+            <a class="waves-effect waves-light btn inputButton"><span id="inpPad4">\sqrt{x}</span></a>
+            <a class="waves-effect waves-light btn inputButton"><span id="inpPad5">\sqrt{x}</span></a>
+            <a class="waves-effect waves-light btn inputButton"><span id="inpPad6">\sqrt{x}</span></a>
+            <a class="waves-effect waves-light btn inputButton"><span id="inpPad7">\sqrt{x}</span></a>
+            <a class="waves-effect waves-light btn inputButton"><span id="inpPad8">\sqrt{x}</span></a>
+            <a class="waves-effect waves-light btn inputButton"><span id="inpPad9">\sqrt{x}</span></a>
+            <a class="waves-effect waves-light btn inputButton"><span id="inpPad10">\sqrt{x}</span></a>
+            <a class="waves-effect waves-light btn inputButton"><span id="inpPad11">\sqrt{x}</span></a>
+            <a class="waves-effect waves-light btn inputButton"><span id="inpPad12">\sqrt{x}</span></a>
+            <a class="waves-effect waves-light btn inputButton"><span id="inpPad13">\sqrt{x}</span></a>
+            <a class="waves-effect waves-light btn inputButton"><span id="inpPad14">\sqrt{x}</span></a>
+            <a class="waves-effect waves-light btn inputButton"><span id="inpPad15">\sqrt{x}</span></a>
 		</div>
 	</div>
 
@@ -73,7 +73,7 @@
 
         var lastFocussed;
 
-        $("#inputPad > .row > a > span").click(function () {//this cannot be an arrow function since arrow functions do not have 'this'
+        $("#inputPad > .row > a").click(function () {//this cannot be an arrow function since arrow functions do not have 'this'
             /*
             console.log("triggered click");
             console.log("$(this).length: " + $(this).length);
@@ -82,7 +82,7 @@
             console.log("$(this).html(): " + $(this).html());
             */
             for (var i = 0; i < 16; i++) {
-                if ($("#inpPad" + i).is($(this))) {
+                if ($("#inpPad" + i).parent().is($(this))) {
                     newInputs[lastFocussed.charAt(5)][lastFocussed.charAt(14)][lastFocussed.charAt(19)].write(inputButtons[i].latex());
                     newInputs[lastFocussed.charAt(5)][lastFocussed.charAt(14)][lastFocussed.charAt(19)].focus();
                     //console.log("lastFocussed: " + lastFocussed);
@@ -98,13 +98,7 @@
             inputButtons.push(MQ.StaticMath(document.getElementById("inpPad" + i)));
         }
 
-        $(window).resize(() => {
-            console.log("resize triggered");
-            for (var i = 0; i < $("#inputPad div a").length; i++) {
-                inputButtons[i].reflow();
-                console.log("latex: " + inputButtons[i].latex());
-            }
-        });
+        
 
 		$("form > div:last").append("<input id='testData' name='testData' type='text' readonly: ''true'>");
 		
@@ -170,7 +164,6 @@
 						}
 					},
 					edit: function() {
-                        console.log("triggered edit");
 						var latexHolder = newInputs[<%= i %>][<%= t %>][0].latex();
 						testData.topics[<%= i %>].questions[<%= t %>].parts[0] = latexHolder;
                         //---------------------checks if contains answer, if so unchecks this input as containing an answer---------------------
