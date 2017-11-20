@@ -310,69 +310,57 @@ app.post("/users/:id/tests/results", function (req, res) {
             path: 'modules.topics.questions',
             model: 'question'
         }).then((populatedExams) => {
+            var indexsHolderOne;
+            var indexsHolderTwo;
             for (var i = 0; i < populatedExams.modules.length; i++)//looping through all modules in examboard in database
             {
                 if (populatedExams.modules[i].name == testData.module)//if module matches
                 {
-                    for (var z = 0; z < testData.topics.length; z++)//looping through all topics in module in exmaboard in test
+                    indexsHolderOne = searchByPropertyValue(testData.topics, "name", populatedExams.modules[i].topics, "name");
+                    if (indexsHolderOne)
                     {
-                        for (var t = 0; t < populatedExams.modules[i].topics.length; t++)//looping through all topics in module in exmaboard in database
-                        {
-                            if (testData.topics[z].name == populatedExams.modules[i].topics[t].name)//if topics match
+                        indexsHolderTwo = searchByPropertyValue(testData.topics[indexsHolderOne.dataIndex].questions, "id", populatedExams.modules[i].topics[indexsHolderOne.searchIndex].questions, "_id");
+                        if (indexsHolderTwo) {
+                            answerLocationsTemp = [];
+                            for (var x = 0; x < populatedExams.modules[i].topics[indexsHolderOne.searchIndex].questions[indexsHolderTwo.searchIndex].methods.length; x++)//looping through all methods for question in topic in module in examboard in database
                             {
-                                for (var q = 0; q < testData.topics[z].questions.length; q++)//looping through all questions in topic in module in test
+                                answerLocationsTemp.push([]);
+                                methodMarks.push(0);
+                                for (var c = 0; c < populatedExams.modules[i].topics[indexsHolderOne.searchIndex].questions[indexsHolderTwo.searchIndex].methods[x].length; c++)//looping through all parts in method in question in topic in module in exmaboard in database
                                 {
-                                    for (var p = 0; p < populatedExams.modules[i].topics[t].questions.length; p++)//looping through all questions in topic in module in examboard in database
+                                    for (var e = 0; e < testData.topics[indexsHolderOne.dataIndex].questions[indexsHolderTwo.dataIndex].parts.length; e++)//looping through all parts in question in topic in module in examboard in test
                                     {
-                                        if (populatedExams.modules[i].topics[t].questions[p]._id == testData.topics[z].questions[q].id)//if questions match
+                                        var posOfAnswer = markPart(testData.topics[indexsHolderOne.dataIndex].questions[indexsHolderTwo.dataIndex].parts[e], populatedExams.modules[i].topics[indexsHolderOne.searchIndex].questions[indexsHolderTwo.searchIndex].methods[x][c].content);
+                                        if (posOfAnswer > -1)//startIndex will be -1 if not found and index of start of string if found
                                         {
-                                            answerLocationsTemp = [];
-                                            for (var x = 0; x < populatedExams.modules[i].topics[t].questions[p].methods.length; x++)//looping through all methods for question in topic in module in examboard in database
-                                            {
-                                                answerLocationsTemp.push([]);
-                                                methodMarks.push(0);
-                                                for (var c = 0; c < populatedExams.modules[i].topics[t].questions[p].methods[x].length; c++)//looping through all parts in method in question in topic in module in exmaboard in database
-                                                {
-                                                    for (var e = 0; e < testData.topics[z].questions[q].parts.length; e++)//looping through all parts in question in topic in module in examboard in test
-                                                    {
-                                                        var posOfAnswer = markPart(testData.topics[z].questions[q].parts[e], populatedExams.modules[i].topics[t].questions[p].methods[x][c].content);
-                                                        if (posOfAnswer > -1)//startIndex will be -1 if not found and index of start of string if found
-                                                        {
-                                                            methodMarks[x] += populatedExams.modules[i].topics[t].questions[p].methods[x][c].mark;
-                                                            answerLocationsTemp[x][c] = { partNumber: e, startIndex: posOfAnswer, endIndex: posOfAnswer + populatedExams.modules[i].topics[t].questions[p].methods[x][c].content.length - 1, mark: populatedExams.modules[i].topics[t].questions[p].methods[x][c].mark };
-                                                            break;//this is neccessary so if the same part exists twice in the answer, the user doesnt get marks for both
-                                                        }
-                                                    }
-                                                }
-                                                if (methodMarks[x] == populatedExams.modules[i].topics[t].questions[p].mark)//checks if user got full marks for a method
-                                                {
-                                                    break;//if user got full marks in one method, there is no point checking other methods
-                                                }
-                                            }
-                                            bestMarkIndex = 0;
-                                            for (var x = 0; x < methodMarks.length; x++)//looping through all partial methods found in users answer
-                                            {
-                                                if (methodMarks[x] > methodMarks[bestMarkIndex])//finds method that acheived best marks
-                                                {
-                                                    bestMarkIndex = x;//sets index to that of the method that acheived most marks
-                                                }    
-                                            }
-                                            if (methodMarks[bestMarkIndex] > 0)
-                                            {
-                                                testData.topics[z].questions[q].solution = populatedExams.modules[i].topics[t].questions[p].methods[bestMarkIndex];
-                                                testData.topics[z].questions[q].answers = answerLocationsTemp[bestMarkIndex];
-                                                testData.topics[z].percentageMark += methodMarks[bestMarkIndex] / populatedExams.modules[i].topics[t].questions[p].mark;
-                                            }
-                                            break;//already found qeustion in database so pointless looking for the same question further, breaks to next iteration of questions in test
+                                            methodMarks[x] += populatedExams.modules[i].topics[indexsHolderOne.searchIndex].questions[indexsHolderTwo.searchIndex].methods[x][c].mark;
+                                            answerLocationsTemp[x][c] = { partNumber: e, startIndex: posOfAnswer, endIndex: posOfAnswer + populatedExams.modules[i].topics[indexsHolderOne.searchIndex].questions[indexsHolderTwo.searchIndex].methods[x][c].content.length - 1, mark: populatedExams.modules[i].topics[indexsHolderOne.searchIndex].questions[indexsHolderTwo.searchIndex].methods[x][c].mark };
+                                            break;//this is neccessary so if the same part exists twice in the answer, the user doesnt get marks for both
                                         }
                                     }
                                 }
-                                testData.topics[z].percentageMark /= testData.topics[z].questions.length;
-                                break;//already found topic in database so pointless looking for the same topic further, breaks to next iteration of topics in test
+                                if (methodMarks[x] == populatedExams.modules[i].topics[indexsHolderOne.searchIndex].questions[p].mark)//checks if user got full marks for a method
+                                {
+                                    break;//if user got full marks in one method, there is no point checking other methods
+                                }
                             }
-                        }       
+                            bestMarkIndex = 0;
+                            for (var x = 0; x < methodMarks.length; x++)//looping through all partial methods found in users answer
+                            {
+                                if (methodMarks[x] > methodMarks[bestMarkIndex])//finds method that acheived best marks
+                                {
+                                    bestMarkIndex = x;//sets index to that of the method that acheived most marks
+                                }
+                            }
+                            if (methodMarks[bestMarkIndex] > 0) {
+                                testData.topics[indexsHolderOne.dataIndex].questions[q].solution = populatedExams.modules[i].topics[indexsHolderOne.searchIndex].questions[p].methods[bestMarkIndex];
+                                testData.topics[indexsHolderOne.dataIndex].questions[q].answers = answerLocationsTemp[bestMarkIndex];
+                                testData.topics[indexsHolderOne.dataIndex].percentageMark += methodMarks[bestMarkIndex] / populatedExams.modules[i].topics[indexsHolderOne.searchIndex].questions[p].mark;
+                            }
+                        }
+                        testData.topics[indexsHolderOne.dataIndex].percentageMark /= testData.topics[indexsHolderOne.dataIndex].questions.length;
                     }
-                    break;//already found module in database so pointless looking for the same module further, breaks out of marking    
+                    break;
                 }        
             }
             user.findById(req.params.id, (err, user) => {//finding user in database
@@ -645,6 +633,7 @@ app.post("/users/:id/users/:userId/update", function (req, res) {
                 user.examBoard.name = req.body.examBoard;
                 user.examBoard.modules.splice(0, user.examBoard.modules.length);
                 examBoard.findOne({ name: req.body.examBoard }, function (err, examboard) {
+                    //---------------------------------------------
                     for (var i = 0; i < req.body.modules; i++) {
                         user.examBoard.modules.push({ name: req.body.modules[i], progress: 0, topics: [], results: [] });
                         for (var t = 0; t < examBoard.modules.length; t++) {
@@ -655,6 +644,7 @@ app.post("/users/:id/users/:userId/update", function (req, res) {
                             }
                         }
                     }
+                    //---------------------------------------------
                 });
             }
             user.save(function (err, updateUser) {
@@ -750,9 +740,6 @@ function getTopicQuestions(topic, topicTime)
 {
 
     var timesPerQuestions=[];
-    
-
-
     if(topicTime < 8)//Find the times of each question in this topic
     {
         timesPerQuestions[0] = topicTime;
@@ -805,7 +792,7 @@ function getTopicQuestions(topic, topicTime)
     for (var i = 0; i < 2; i++) {
         for (var t = 0; t < questionCounter[i]; t++) {
             random = getRandomIntInclusive(0, ((questionsOfProperLength[i].length) - 1));
-            if (searchArray(questionsAlreadyPicked[i], random)) {
+            if (questionsAlreadyPicked[i].includes(random)) {
                 t--;
                 continue;
             }
@@ -827,13 +814,15 @@ function getRandomIntInclusive(min, max) {
 //JWL functions
 //---------------------------------------------------------------------
 
-function searchArray(array, value)
-{
-    for (var i = 0; i < array.length; i++)
-    {
-        if (array[i] == value)
-        {
-            return true;
+/*  takes either an array or value and searchs for said value of any value in 'data' in 'searchArray'
+    returns indexs of matched data in 'data' and in 'searchArray'
+*/
+function searchByPropertyValue(data, dataProperty, searchArray, searchProperty) {
+    for (var i = 0; i < data.length; i++) {
+        for (var t = 0; t < searchArray.length; t++) {
+            if (data[i][dataProperty] === searchArray[t][searchProperty]) {
+                return {dataIndex: i, searchIndex: t};
+            }
         }
     }
     return false;
