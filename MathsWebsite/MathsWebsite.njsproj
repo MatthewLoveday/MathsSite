@@ -51,7 +51,6 @@
     <Content Include="other_modules\mathquill-0.10.1\mathquill.css" />
     <Content Include="package.json" />
     <Content Include="README.md" />
-    <Content Include="views\examboards\show.ejs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="other_modules\" />

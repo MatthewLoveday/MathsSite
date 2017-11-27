@@ -1,12 +1,18 @@
 <% include ../partials/header %>
 
-<h3>Examboards</h3>
-<% for(var i=0;i<examBoards.length;i++){ %>
-        <h4><a href="/users/<%= userId %>/examboards/<%= examBoards[i].id %>"><%= examBoards[i].name %></a></h4>
-        <h5>Modules</h5>
-		<% for(var t=0;t<examBoards[i].modules.length;t++){ %>
-			<li><%= examBoards[i].modules[t].name %></li>
-		<% } %>
-<% } %>
+<nav>
+    <div class="nav-wrapper">
+        <div class="col s12">
+        <a href="" class="breadcrumb">Examboards</a>
+        </div>
+    </div>
+</nav>
+
+<ul class="collection with-header">
+    <li class="collection-header"><h2>Examboards</h2></li>
+    <% for(var i = 0;i < examBoards.length; i++){ %>
+        <a href="/users/<%= userId %>/examboards/<%= examBoards[i]._id %>/modules" class="collection-item"><h4><%= examBoards[i].name %></h4></a>
+    <% } %>
+</ul>
 
 <% include ../partials/footer %>

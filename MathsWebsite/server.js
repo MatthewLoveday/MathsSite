@@ -421,25 +421,65 @@ app.post("/users/:id/tests/results", function (req, res) {
 //examboard routes
 //----------------------------------------------
 
-app.get("/users/:id/examboards", isLoggedIn, isAdmin, function(req,res)
-{
-    examBoard.find({}, function (err, examBoards)
-    {
-        res.render("examboards/index", {examBoards:examBoards, userId:req.params.id}); 
+app.get("/users/:id/examboards", isLoggedIn, isAdmin, (req, res) => {
+    examBoard.find({}, (err, examBoards) => {
+        if (err) {
+            console.log("Could not find examboards:\n" + err);
+        }
+        res.render("examboards/index", {examBoards: examBoards, userId: req.params.id}); 
     });
 });
 
-app.get("/users/:id/examboards/:examId", isLoggedIn, isAdmin, function (req, res) {
+app.get("/users/:id/examboards/:examId/modules", isLoggedIn, isAdmin, (req, res) => {
+    examBoard.findById(req.params.examId, (err, examBoard) => {
+        if (err) {
+            console.log("Could not find modules:\n" + err);
+        }
+        res.render("examboards/modules/index", { examBoard: examBoard, userId: req.params.id });
+    });
+});
+
+app.get("/users/:id/examboards/:examId/modules/:moduleId", isLoggedIn, isAdmin, (req, res) => {
+    examBoard.findById(req.params.examId, (err, examBoard) => {
+        if (err) {
+            console.log("Could not find topics:\n" + err);
+        }
+        for (var i = 0; i < examBoard.modules.length; i++) {
+            if (examBoard.modules[i]._id == req.params.moduleId) {
+                res.render("examboards/modules/topics/index", {
+                    module: examBoard.modules[i],
+                    userId: req.params.id,
+                    examId: examBoard._id,
+                    examName: examBoard.name
+                });
+            }
+        }
+    });
+});
+
+app.get("/users/:id/examboards/:examId/modules/:moduleId/topics/:topicId", isLoggedIn, isAdmin, function (req, res) {
     examBoard.find({ _id: req.params.examId }).exec().then((exam) => {
         examBoard.populate(exam, {
             path: 'modules.topics.questions',
             model: 'question'
         })
             .then((populatedExam) => {
-                console.log("populatedExam[0]: " + populatedExam[0]);
-                console.log("populatedExam[0].name: " + populatedExam[0].name);
-                console.log("populatedExam[0].modules[0].topics[0].questions: " + populatedExam[0].modules[0].topics[0].questions);
-                res.render("examboards/show", { examBoard: populatedExam[0] });
+                for (var i = 0; i < populatedExam[0].modules.length; i++) {
+                    if (populatedExam[0].modules[i]._id == req.params.moduleId) {
+                        for (var t = 0; t < populatedExam[0].modules[i].topics.length; t++) {
+                            if (populatedExam[0].modules[i].topics[t]._id == req.params.topicId) {
+                                res.render("examboards/modules/topics/show",{
+                                        topic: populatedExam[0].modules[i].topics[t],
+                                        userId: req.params.id,
+                                        examId: populatedExam[0]._id,
+                                        examName: populatedExam[0].name,
+                                        moduleId: populatedExam[0].modules[i]._id,
+                                        moduleName: populatedExam[0].modules[i].name
+                                    });
+                            }
+                        }
+                    }
+                }
             });
     });
 });

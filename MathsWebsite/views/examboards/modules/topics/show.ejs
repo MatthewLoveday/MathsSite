@@ -1,0 +1,67 @@
+<% include ../../../partials/header %>
+
+<nav>
+    <div class="nav-wrapper">
+        <div class="col s12">
+            <a href="/users/<%= userId %>/examboards" class="breadcrumb">Examboards</a>
+            <a href="/users/<%= userId %>/examboards/<%= examId %>/modules" class="breadcrumb"><%= examName %></a>
+            <a href="/users/<%= userId %>/examboards/<%= examId %>/modules/<%= moduleId %>" class="breadcrumb"><%= moduleName %></a>
+            <a href="" class="breadcrumb"><%= topic.name %></a>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    
+    <div class="row">
+        <% var methodMarksHolder; %>
+        <% for(var i = 0; i < topic.questions.length; i++) { %>
+
+            <div class="col l3 m6 s12">
+
+                <div class="card sticky-action">
+                    <div class="card-image waves-effect waves-block waves-light">
+                        <img class="activator" src="<%= topic.questions[i].content %>">
+                    </div>
+                    <div class="card-content">
+                        <span class="card-title activator grey-text text-darken-4"><%= topic.questions[i]._id %></span>
+                    </div>
+                    <div class="card-reveal">
+                        <span class="card-title grey-text text-darken-4"><%= topic.questions[i]._id %><i class="material-icons right">close</i></span>
+                        <p> 
+                            Marks: <%= topic.questions[i].mark %>
+                            <br>
+                            Methods
+                            <table>
+                            <thead>
+                                <tr>
+                                    <th>Total marks</th>
+                                    <th>Parts</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    <% for(var t = 0; t < topic.questions[i].methods.length; t++) { %>
+                                        <tr>
+                                            <% methodMarksHolder = 0; %>
+                                            <% for(var u = 0; u < topic.questions[i].methods[t].length; u++) { %>
+                                                <% methodMarksHolder += topic.questions[i].methods[t][u].mark; %>
+                                            <% } %>
+                                            <td><%= methodMarksHolder %></td>
+                                            <td><%= topic.questions[i].methods[t].length %></td>
+                                        </tr>
+                                    <% } %>
+                                </tbody>
+                          </table>
+                        </p>
+                    </div>
+              </div>
+
+            </div>
+
+        <% } %>
+
+    </div>
+
+</div>
+
+<% include ../../../partials/footer %>
