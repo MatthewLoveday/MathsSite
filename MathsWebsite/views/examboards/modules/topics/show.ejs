@@ -17,21 +17,24 @@
         <% var methodMarksHolder; %>
         <% for(var i = 0; i < topic.questions.length; i++) { %>
 
-            <div class="col l3 m6 s12">
+            <div class="col l4 m6 s12">
 
-                <div class="card sticky-action">
+                <div class="card medium sticky-action">
                     <div class="card-image waves-effect waves-block waves-light">
                         <img class="activator" src="<%= topic.questions[i].content %>">
                     </div>
                     <div class="card-content">
                         <span class="card-title activator grey-text text-darken-4"><%= topic.questions[i]._id %></span>
                     </div>
+                    <div class="card-action">
+                      <a href="/users/<%= userId %>/questions/<%= topic.questions[i]._id %>">Edit</a>
+                    </div>
                     <div class="card-reveal">
-                        <span class="card-title grey-text text-darken-4"><%= topic.questions[i]._id %><i class="material-icons right">close</i></span>
+                        <span class="card-title grey-text text-darken-4"><%= topic.questions[i]._id %></span>
                         <p> 
-                            Marks: <%= topic.questions[i].mark %>
-                            <br>
-                            Methods
+                            <h5>Marks: <%= topic.questions[i].mark %></h5>
+                            <hr>
+                            <h5>Methods</h5>
                             <table>
                             <thead>
                                 <tr>
@@ -63,5 +66,12 @@
     </div>
 
 </div>
+
+<style>
+    .card-title {
+        font-size: 20px !important;
+    }
+</style>
+
 
 <% include ../../../partials/footer %>

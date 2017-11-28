@@ -425,8 +425,10 @@ app.get("/users/:id/examboards", isLoggedIn, isAdmin, (req, res) => {
     examBoard.find({}, (err, examBoards) => {
         if (err) {
             console.log("Could not find examboards:\n" + err);
+        } else {
+            res.render("examboards/index", { examBoards: examBoards, userId: req.params.id }); 
         }
-        res.render("examboards/index", {examBoards: examBoards, userId: req.params.id}); 
+        
     });
 });
 
@@ -434,8 +436,10 @@ app.get("/users/:id/examboards/:examId/modules", isLoggedIn, isAdmin, (req, res)
     examBoard.findById(req.params.examId, (err, examBoard) => {
         if (err) {
             console.log("Could not find modules:\n" + err);
+        } else {
+            res.render("examboards/modules/index", { examBoard: examBoard, userId: req.params.id });
         }
-        res.render("examboards/modules/index", { examBoard: examBoard, userId: req.params.id });
+        
     });
 });
 
@@ -443,17 +447,19 @@ app.get("/users/:id/examboards/:examId/modules/:moduleId", isLoggedIn, isAdmin, 
     examBoard.findById(req.params.examId, (err, examBoard) => {
         if (err) {
             console.log("Could not find topics:\n" + err);
-        }
-        for (var i = 0; i < examBoard.modules.length; i++) {
-            if (examBoard.modules[i]._id == req.params.moduleId) {
-                res.render("examboards/modules/topics/index", {
-                    module: examBoard.modules[i],
-                    userId: req.params.id,
-                    examId: examBoard._id,
-                    examName: examBoard.name
-                });
+        } else {
+            for (var i = 0; i < examBoard.modules.length; i++) {
+                if (examBoard.modules[i]._id == req.params.moduleId) {
+                    res.render("examboards/modules/topics/index", {
+                        module: examBoard.modules[i],
+                        userId: req.params.id,
+                        examId: examBoard._id,
+                        examName: examBoard.name
+                    });
+                }
             }
         }
+        
     });
 });
 
@@ -501,11 +507,11 @@ app.post("/examboards", function(req,res)
 
 app.get("/users/:id/questions", isLoggedIn, isAdmin, function(req,res)
 {
-    question.find({}, function (err, quests) {
+    question.find({}, function (err, questions) {
         if (err) {
             console.log("Could not find questions\n" + err);
         } else {
-            res.render("questions/index", { questions: quests });
+            res.render("questions/index", { questions: questions, userId: req.params.id });
         }
     });
            
@@ -516,16 +522,14 @@ app.get("/users/:id/questions/new", isLoggedIn, isAdmin, function(req,res)
     res.render("questions/new");
 });
 
-app.get("/users/:id/questions/:questId", isLoggedIn, isAdmin, function(req,res)
+app.get("/users/:id/questions/:questionId", isLoggedIn, isAdmin, function(req,res)
 {
-    question.findById(req.params.questId,function(err,quest)
+    question.findById(req.params.questionId,function(err,question)
     {
-        if(err)
-        {
-            console.log("Could not find questions\n"+err);
-        }else
-        {
-            res.render("questions/show",{question:quest});
+        if (err) {
+            console.log("Could not find questions\n" + err);
+        } else {
+            res.render("questions/show", { question: question });
         }
     });    
 });

@@ -1,13 +1,66 @@
 <% include ../partials/header %>
 
-<h3>Questions</h3>
-<% for(var i=0;i<questions.length;i++){ %>
-    <li>
-        <p>Question: <%= i %></p>
-        <p>Content: <%= questions[i].content %></p>
-        <a href="questions/<%= questions[i]._id %>">See methods</a>
-    </li>
-<% } %>
+<div class="container">
+    
+    <div class="row">
+        <% var methodMarksHolder; %>
+        <% for(var i = 0; i < questions.length; i++) { %>
+
+            <div class="col l4 m6 s12">
+
+                <div class="card medium sticky-action">
+                    <div class="card-image waves-effect waves-block waves-light">
+                        <img class="activator" src="<%= questions[i].content %>">
+                    </div>
+                    <div class="card-content">
+                        <span class="card-title activator grey-text text-darken-4"><%= questions[i]._id %></span>
+                    </div>
+                    <div class="card-action">
+                      <a href="/users/<%= userId %>/questions/<%= questions[i]._id %>">Edit</a>
+                    </div>
+                    <div class="card-reveal">
+                        <span class="card-title grey-text text-darken-4"><%= questions[i]._id %></span>
+                        <p> 
+                            <h5>Marks: <%= questions[i].mark %></h5>
+                            <hr>
+                            <h5>Methods</h5>
+                            <table>
+                            <thead>
+                                <tr>
+                                    <th>Total marks</th>
+                                    <th>Parts</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    <% for(var t = 0; t < questions[i].methods.length; t++) { %>
+                                        <tr>
+                                            <% methodMarksHolder = 0; %>
+                                            <% for(var u = 0; u < questions[i].methods[t].length; u++) { %>
+                                                <% methodMarksHolder += questions[i].methods[t][u].mark; %>
+                                            <% } %>
+                                            <td><%= methodMarksHolder %></td>
+                                            <td><%= questions[i].methods[t].length %></td>
+                                        </tr>
+                                    <% } %>
+                                </tbody>
+                          </table>
+                        </p>
+                    </div>
+              </div>
+
+            </div>
+
+        <% } %>
+
+    </div>
+
+</div>
+
+<style>
+    .card-title {
+        font-size: 20px !important;
+    }
+</style>
 
 
 <% include ../partials/footer %>

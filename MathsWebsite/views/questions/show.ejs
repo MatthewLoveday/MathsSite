@@ -1,16 +1,59 @@
 <% include ../partials/header %>
 
-<p>Content: <%= question.content %></p>
-<p>Mark: <%= question.mark %></p>
-<% for(var i=0;i<question.methods.length;i++){ %>
-    <h4>Method <%= i %></h4>
-    <% for(var t=0;t<question.methods[i].length;t++){ %>
-        <h5>Part <%= t %></h5>
-            <ul>
-                <li>content: <%= question.methods[i][t].content %></li>
-                <li>mark: <%= question.methods[i][t].mark %></li>
-            </ul>       
-    <% } %>   
-<% } %>
+<div class="container">
+    <div class="row">
+        <div class="col l6 offset-l3 m8 offset-m2 s12">
+            <img class="materialboxed responsive-img" data-caption="<%= question.content %>" width="650" src="<%= question.content %>">
+        </div>
+        
+    </div>
+    <div class="row">
+        <div class="col offset-l3 offset-m2">
+            <h5>Marks: <%= question.mark %></h5>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col l6 offset-l3 m8 offset-m2 s12">
+            <ul class="tabs">
+                <% for(var i = 0; i <question.methods.length; i++){ %>
+                    <li class="tab col s<%= question.methods.length / 12 %>"><a href="#method<%= i %>">Method <%= i %></a></li>
+                <% } %>
+            </ul>
+        
+            <% for(var i = 0; i < question.methods.length; i++){ %>
+                <div id="method<%= i %>" class="col s12">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Marks</th>
+                                <th>Content</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% for(var t = 0; t < question.methods[i].length; t++){ %>
+                                <tr>
+                                    <td><%= question.methods[i][t].mark %></td>
+                                    <td><span id="content<%= i %><%= t %>"><%= question.methods[i][t].content %></span></td>
+                                </tr>
+                            <% } %>
+                        </tbody>
+                    </table>
+                </div>
+            <% } %>
+        </div>
+    </div>
+</div>
+
+<script>
+    <% for(var i = 0; i < question.methods.length; i++) { %>
+        <% for(var t = 0; t < question.methods[i].length; t++){ %>
+            MQ.StaticMath(document.getElementById("content<%= i %><%= t %>"));
+        <% } %>
+    <% } %>
+    
+</script>>
 
 <% include ../partials/footer %>
+
+
