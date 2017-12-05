@@ -68,7 +68,7 @@ passport.deserializeUser(user.deserializeUser());
 //landing route
 //----------------------------------------------
 seedDB();
-app.get("/",function(req,res)
+app.get("/",(req, res) =>
 {
     examBoard.find({}, function (err, examboard)
     {
@@ -77,7 +77,7 @@ app.get("/",function(req,res)
     });
 });
 
-app.get("/loginFailure", function (req, res)//this is probably a way better way of doing this,  this screams inefficiency
+app.get("/loginFailure", (req, res) =>//this is probably a way better way of doing this,  this screams inefficiency
 {
     examBoard.find({}, function (err, examBoard) {
         console.log("examBoard.length: " + examBoard.length);
@@ -89,7 +89,7 @@ app.get("/loginFailure", function (req, res)//this is probably a way better way 
 //home route
 //----------------------------------------------
 
-app.get("/users/:id", isLoggedIn, function(req,res)
+app.get("/users/:id", isLoggedIn, (req, res) =>
 {
     user.findById(req.params.id,function(err,userData)
     {
@@ -107,7 +107,7 @@ app.get("/users/:id", isLoggedIn, function(req,res)
 //login routes
 //----------------------------------------------
 
-app.get("/login",function(req,res)
+app.get("/login",(req, res) =>
 {
     console.log("got here");
     res.render("login");
@@ -135,7 +135,7 @@ app.post('/login', function(req, res, next)
     })(req, res, next);
 });
 
-app.get("/logout", function (req, res) {
+app.get("/logout", (req, res) => {
     req.logout();
     res.redirect("/")
 });
@@ -144,12 +144,12 @@ app.get("/logout", function (req, res) {
 //register routes
 //----------------------------------------------
 
-app.get("/register",function(req,res)
+app.get("/register",(req, res) =>
 {
     res.render("register", { userNameTaken: false }); 
 });
 
-app.post("/register",function(req,res)
+app.post("/register",(req, res) =>
 {
     user.findOne({ "username": req.body.username }, function (err, sameName) {
         if (err)
@@ -237,7 +237,7 @@ app.post("/register",function(req,res)
 //test routes
 //----------------------------------------------
 
-app.get("/users/:id/tests/new", isLoggedIn, function(req,res)
+app.get("/users/:id/tests/new", isLoggedIn, (req, res) =>
 {
     user.findById(req.params.id, function (err, userData) {
         if (err)
@@ -252,7 +252,7 @@ app.get("/users/:id/tests/new", isLoggedIn, function(req,res)
     });  
 });
 
-app.post("/users/:id/tests", function(req,res)//when seed program ready this should be changed to "/tests" which should redirect to a "/tests/:seed" route 
+app.post("/users/:id/tests", (req, res) =>//when seed program ready this should be changed to "/tests" which should redirect to a "/tests/:seed" route 
 {
     var topicsTemp = req.body.topics;
     var topicsToBeParsed = [];
@@ -293,7 +293,7 @@ app.post("/users/:id/tests", function(req,res)//when seed program ready this sho
     });
 });
 
-app.post("/users/:id/tests/results", function (req, res) {
+app.post("/users/:id/tests/results", (req, res) => {
 
     
     var testData = JSON.parse(req.body.testData);
@@ -331,7 +331,7 @@ app.post("/users/:id/tests/results", function (req, res) {
                                     for (var e = 0; e < testData.topics[indexsHolderOne.dataIndex].questions[indexsHolderTwo.dataIndex].parts.length; e++)//looping through all parts in question in topic in module in examboard in test
                                     {
                                         var posOfAnswer = markPart(testData.topics[indexsHolderOne.dataIndex].questions[indexsHolderTwo.dataIndex].parts[e], populatedExams.modules[i].topics[indexsHolderOne.searchIndex].questions[indexsHolderTwo.searchIndex].methods[x][c].content);
-                                        if (posOfAnswer > -1)//startIndex will be -1 if not found and index of start of string if found
+                                        if (posOfAnswer != -1)//startIndex will be -1 if not found and index of start of string if found
                                         {
                                             methodMarks[x] += populatedExams.modules[i].topics[indexsHolderOne.searchIndex].questions[indexsHolderTwo.searchIndex].methods[x][c].mark;
                                             answerLocationsTemp[x][c] = { partNumber: e, startIndex: posOfAnswer, endIndex: posOfAnswer + populatedExams.modules[i].topics[indexsHolderOne.searchIndex].questions[indexsHolderTwo.searchIndex].methods[x][c].content.length - 1, mark: populatedExams.modules[i].topics[indexsHolderOne.searchIndex].questions[indexsHolderTwo.searchIndex].methods[x][c].mark };
@@ -347,7 +347,11 @@ app.post("/users/:id/tests/results", function (req, res) {
                             bestMarkIndex = 0;
                             for (var x = 0; x < methodMarks.length; x++)//looping through all partial methods found in users answer
                             {
-                                if (methodMarks[x] > methodMarks[bestMarkIndex])//finds method that acheived best marks
+                                if (methodMarks[x] == populatedExams.modules[i].topics[indexsHolderOne.searchIndex].questions[p].mark)
+                                {
+                                    break;//if one method has full marks no point checking other methods
+                                }
+                                else if (methodMarks[x] > methodMarks[bestMarkIndex])//finds method that acheived best marks
                                 {
                                     bestMarkIndex = x;//sets index to that of the method that acheived most marks
                                 }
@@ -355,12 +359,12 @@ app.post("/users/:id/tests/results", function (req, res) {
                             if (methodMarks[bestMarkIndex] > 0) {
                                 testData.topics[indexsHolderOne.dataIndex].questions[q].solution = populatedExams.modules[i].topics[indexsHolderOne.searchIndex].questions[p].methods[bestMarkIndex];
                                 testData.topics[indexsHolderOne.dataIndex].questions[q].answers = answerLocationsTemp[bestMarkIndex];
-                                testData.topics[indexsHolderOne.dataIndex].percentageMark += methodMarks[bestMarkIndex] / populatedExams.modules[i].topics[indexsHolderOne.searchIndex].questions[p].mark;
+                                testData.topics[indexsHolderOne.dataIndex].percentageMark += methodMarks[bestMarkIndex] / populatedExams.modules[i].topics[indexsHolderOne.searchIndex].questions[p].mark;//this does not need to be in the if statement, if it where outside it, it would be doing '+= 0' which is a waste of proccessing
                             }
                         }
                         testData.topics[indexsHolderOne.dataIndex].percentageMark /= testData.topics[indexsHolderOne.dataIndex].questions.length;
                     }
-                    break;
+                    break;//no point looping through other modules in examboard after finding the one
                 }        
             }
             user.findById(req.params.id, (err, user) => {//finding user in database
@@ -371,12 +375,12 @@ app.post("/users/:id/tests/results", function (req, res) {
                 else
                 {
                     console.log("Found user");
-                    user.examBoard.progress = 0;
+                    user.examBoard.progress.push(0);
                     for (var i = 0; i < user.examBoard.modules.length; i++)//looping through user's modules
                     {
                         if (user.examBoard.modules[i].name == req.body.module)//if user's module matches module in test
                         {
-                            user.examBoard.modules[i].progress = 0;
+                            user.examBoard.modules[i].progress.push(0);
                             for (var t = 0; t < user.examBoard.modules[i].topics.length; t++)//looping through user's topics in selected module
                             {
                                 for (var z = 0; z < testData.topics.length; z++)//looping through topics in test
@@ -384,25 +388,24 @@ app.post("/users/:id/tests/results", function (req, res) {
                                     if (user.examBoard.modules[i].topics[t]._id == testData.topics[z].id)//if topics match
                                     {
                                         user.examBoard.modules[i].topics[t].results.push(testData.topics[z].percentageMark)//adding results for each topic
-                                        user.examBoard.modules[i].topics[t].progress = math.mean(user.examBoard.modules[i].topics[t].results) - (math.std(user.examBoard.modules[i].topics[t].results) / 3) - Math.pow(((user.examBoard.modules[i].topics[t].results.length / 30) + 0.105), -2);//changing progress in topic
-                                        if (user.examBoard.modules[i].topics[t].progress < 0)
-                                        {
-                                            user.examBoard.modules[i].topics[t].progress = 0;
-                                        }
                                         break;//already found topic from test in user's topics thus pointless looking for same topic further, breaks to next iteration of topics in test
                                     }
                                 }
-                                user.examBoard.modules[i].progress += user.examBoard.modules[i].topics[t].progress;
+                                user.examBoard.modules[i].progress[user.examBoard.modules[i].progress.length - 1] += user.examBoard.modules[i].topics[t].results[user.examBoard.modules[i].topics[t].results.length - 1];
                             }
-                            user.examBoard.modules[i].progress /= user.examBoard.modules[i].topics.length;
+                            user.examBoard.modules[i].progress[user.examBoard.modules[i].progress.length - 1] /= user.examBoard.modules[i].topics.length;
                         }
-                        user.examBoard.progress += user.examBoard.modules[i].progress;
+                        user.examBoard.progress[user.examBoard.progress.length - 1] += user.examBoard.modules[i].progress[user.examBoard.modules[i].progress.length - 1];
                     }
-                    user.examBoard.progress /= user.examBoard.modules.length;
+                    user.examBoard.progress[user.examBoard.progress.length - 1] /= user.examBoard.modules.length;
+
                     user.save((err, updatedUser) => {
-                        if (err) {
+                        if (err)
+                        {
                             console.log("Could not update user results:\n" + err);
-                        } else {
+                        }
+                        else
+                        {
                             var objectToBeParsed = { userData: updatedUser, markingData: testData };
                             console.log("finished setting stuff");
                             res.render("tests/results", { data: objectToBeParsed });
@@ -443,19 +446,28 @@ app.get("/users/:id/examboards/:examId/modules", isLoggedIn, isAdmin, (req, res)
     });
 });
 
-app.get("/users/:id/examboards/:examId/modules/:moduleId", isLoggedIn, isAdmin, (req, res) => {
-    examBoard.findById(req.params.examId, (err, examBoard) => {
-        if (err) {
+app.get("/users/:id/examboards/:examId/modules/:moduleId", isLoggedIn, isAdmin, (req, res) =>
+{
+    examBoard.findById(req.params.examId, (err, examBoard) =>
+    {
+        if (err)
+        {
             console.log("Could not find topics:\n" + err);
-        } else {
-            for (var i = 0; i < examBoard.modules.length; i++) {
-                if (examBoard.modules[i]._id == req.params.moduleId) {
-                    res.render("examboards/modules/topics/index", {
-                        module: examBoard.modules[i],
-                        userId: req.params.id,
-                        examId: examBoard._id,
-                        examName: examBoard.name
-                    });
+        }
+        else
+        {
+            for (var i = 0; i < examBoard.modules.length; i++)
+            {
+                if (examBoard.modules[i]._id == req.params.moduleId)
+                {
+                    res.render("examboards/modules/topics/index",
+                        {
+                            module: examBoard.modules[i],
+                            userId: req.params.id,
+                            examId: examBoard._id,
+                            examName: examBoard.name
+                        }
+                    );
                 }
             }
         }
@@ -463,39 +475,50 @@ app.get("/users/:id/examboards/:examId/modules/:moduleId", isLoggedIn, isAdmin, 
     });
 });
 
-app.get("/users/:id/examboards/:examId/modules/:moduleId/topics/:topicId", isLoggedIn, isAdmin, function (req, res) {
-    examBoard.find({ _id: req.params.examId }).exec().then((exam) => {
-        examBoard.populate(exam, {
-            path: 'modules.topics.questions',
-            model: 'question'
-        })
-            .then((populatedExam) => {
-                for (var i = 0; i < populatedExam[0].modules.length; i++) {
-                    if (populatedExam[0].modules[i]._id == req.params.moduleId) {
-                        for (var t = 0; t < populatedExam[0].modules[i].topics.length; t++) {
-                            if (populatedExam[0].modules[i].topics[t]._id == req.params.topicId) {
-                                res.render("examboards/modules/topics/show",{
-                                        topic: populatedExam[0].modules[i].topics[t],
-                                        userId: req.params.id,
-                                        examId: populatedExam[0]._id,
-                                        examName: populatedExam[0].name,
-                                        moduleId: populatedExam[0].modules[i]._id,
-                                        moduleName: populatedExam[0].modules[i].name
-                                    });
-                            }
+app.get("/users/:id/examboards/:examId/modules/:moduleId/topics/:topicId", isLoggedIn, isAdmin, (req, res) =>
+{
+    examBoard.find({ _id: req.params.examId }).exec().then((exam) =>
+    {
+        examBoard.populate(exam,
+            {
+                path: 'modules.topics.questions',
+                model: 'question'
+            }
+        )
+        .then((populatedExam) =>
+        {
+            for (var i = 0; i < populatedExam[0].modules.length; i++)
+            {
+                if (populatedExam[0].modules[i]._id == req.params.moduleId)
+                {
+                    for (var t = 0; t < populatedExam[0].modules[i].topics.length; t++)
+                    {
+                        if (populatedExam[0].modules[i].topics[t]._id == req.params.topicId)
+                        {
+                            res.render("examboards/modules/topics/show",
+                                {
+                                    topic: populatedExam[0].modules[i].topics[t],
+                                    userId: req.params.id,
+                                    examId: populatedExam[0]._id,
+                                    examName: populatedExam[0].name,
+                                    moduleId: populatedExam[0].modules[i]._id,
+                                    moduleName: populatedExam[0].modules[i].name
+                                }
+                            );
                         }
                     }
                 }
-            });
+            }
+        });
     });
 });
 
-app.get("/users/:id/examboards/new", isLoggedIn, isAdmin, function(req,res)
+app.get("/users/:id/examboards/new", isLoggedIn, isAdmin, (req, res) =>
 {
     //render new examboard form     
 });
 
-app.post("/examboards", function(req,res)
+app.post("/examboards", (req, res) =>
 {
     //create new examboard
     res.redirect("/examboards");        
@@ -505,36 +528,43 @@ app.post("/examboards", function(req,res)
 //question routes
 //----------------------------------------------
 
-app.get("/users/:id/questions", isLoggedIn, isAdmin, function(req,res)
+app.get("/users/:id/questions", isLoggedIn, isAdmin, (req, res) =>
 {
-    question.find({}, function (err, questions) {
-        if (err) {
+    question.find({}, function (err, questions)
+    {
+        if (err)
+        {
             console.log("Could not find questions\n" + err);
-        } else {
+        }
+        else
+        {
             res.render("questions/index", { questions: questions, userId: req.params.id });
         }
     });
            
 });
 
-app.get("/users/:id/questions/new", isLoggedIn, isAdmin, function(req,res)
+app.get("/users/:id/questions/new", isLoggedIn, isAdmin, (req, res) =>
 {
     res.render("questions/new");
 });
 
-app.get("/users/:id/questions/:questionId", isLoggedIn, isAdmin, function(req,res)
+app.get("/users/:id/questions/:questionId", isLoggedIn, isAdmin, (req, res) =>
 {
-    question.findById(req.params.questionId,function(err,question)
+    question.findById(req.params.questionId, function(err, question)
     {
-        if (err) {
+        if (err)
+        {
             console.log("Could not find questions\n" + err);
-        } else {
+        }
+        else
+        {
             res.render("questions/show", { question: question });
         }
     });    
 });
 
-app.post("/users/:id/questions",function(req,res)
+app.post("/users/:id/questions",(req, res) =>
 {
     var numOfParts=[req.body.m1parts,req.body.m2parts,req.body.m3parts,req.body.m4parts];
     var parts = 
@@ -574,22 +604,24 @@ app.post("/users/:id/questions",function(req,res)
         methodsArray.push([]);
         for(var t = 0; t< numOfParts[i]; t++)
         {
-            methodsArray[i].push({
-                content: parts[i][t].content,
-                mark: parts[i][t].mark
-            });
+            methodsArray[i].push(
+                {
+                    content: parts[i][t].content,
+                    mark: parts[i][t].mark
+                }
+            );
         }
     }
     var topicName=[req.body.topic1,req.body.topic2,req.body.topic3,req.body.topic4,req.body.topic5];
-    question.create({content:req.body.content,methods:methodsArray,mark:req.body.mark},function(err,quest)
+    question.create({content:req.body.content,methods:methodsArray,mark:req.body.mark},function(err, quest)
     {
         if(err)
         {
-            console.log("Could not create new question.\n"+err);
+            console.log("Could not create new question.\n" + err);
         }    
         else
         {
-            examBoard.find({name:req.body.examBoardName},function(err,exam)
+            examBoard.findOne({name: req.body.examBoardName},function(err, exam)
             {
                 if(err)
                 {
@@ -597,21 +629,21 @@ app.post("/users/:id/questions",function(req,res)
                 }
                 else
                 {
-                    for(var i=0;i<exam[0].modules.length;i++)
+                    for(var i = 0; i < exam.modules.length; i++)
                     {
-                        if(exam[0].modules[i].name==req.body.moduleName)
+                        if(exam.modules[i].name == req.body.moduleName)
                         {
-                            for(var t=0;t<exam[0].modules[i].topics.length;t++)
+                            for(var t = 0; t < exam.modules[i].topics.length; t++)
                             {
-                                for(var u=0;u<topicName.length;u++)
+                                for(var u = 0; u < topicName.length; u++)
                                 {
-                                    if(topicName[u]==exam[0].modules[i].topics[t].name)
+                                    if(topicName[u] == exam.modules[i].topics[t].name)
                                     {
-                                        exam[0].modules[i].topics[t].questions.push(quest);
+                                        exam.modules[i].topics[t].questions.push(quest);
                                     }
                                 }
                             }
-                            exam[0].save();
+                            exam.save();
                             break;
                         }
                     } 
@@ -626,26 +658,40 @@ app.post("/users/:id/questions",function(req,res)
 //user routes
 //----------------------------------------------
 
-app.get("/users/:id/users", isLoggedIn, isAdmin, function (req, res) {
-    user.find({}, function (err, users) {
-        if (err) {
+app.get("/users/:id/users", isLoggedIn, isAdmin, (req, res) =>
+{
+    user.find({}, function (err, users)
+    {
+        if (err)
+        {
             console.log("Could not find users\n" + err);
-        } else {
+        }
+        else
+        {
             var objectToBeParsed = { users: users, admin: req.params.id};
             res.render("users/index", { data: objectToBeParsed });
         }
     });
 });
 
-app.get("/users/:id/users/:userId", isLoggedIn, isAdmin, function (req, res) {
-    user.findById(req.params.userId, function (err, userData) {
-        if (err) {
+app.get("/users/:id/users/:userId", isLoggedIn, isAdmin, (req, res) =>
+{
+    user.findById(req.params.userId, function (err, userData)
+    {
+        if (err)
+        {
             console.log("Could not find user\n" + err);
-        } else {
-            examBoard.find({}, function (err, examBoards) {
-                if (err) {
+        }
+        else
+        {
+            examBoard.find({}, function (err, examBoards)
+            {
+                if (err)
+                {
                     console.log("Could not find examboard\n" + err);
-                } else {
+                }
+                else
+                {
                     var objectToBeParsed = { user: userData, admin: req.params.id, examboard: examBoards };
                     res.render("users/show", { data: objectToBeParsed });
                 }
@@ -656,33 +702,46 @@ app.get("/users/:id/users/:userId", isLoggedIn, isAdmin, function (req, res) {
     });
 });
 
-app.post("/users/:id/users/:userId/update", function (req, res) {
+app.post("/users/:id/users/:userId/update", (req, res) => {
     user.findById(req.params.userId, function (err, user) {
-        if (err) {
+        if (err)
+        {
             console.log("Couldn't find user\n" + err);
-        } else {
-            if (req.body.username) {
+        }
+        else
+        {
+            if (req.body.username)
+            {
                 user.username = req.body.username;
             }
-            if (req.body.email) {
+            if (req.body.email)
+            {
                 user.email = req.body.email;
             }
-            if (req.body.targetGrade) {
+            if (req.body.targetGrade)
+            {
                 user.targertGrade = req.body.targetGrade;
             }
-            if (req.body.score) {
+            if (req.body.score)
+            {
                 user.score.push(req.body.score);
             }
-            if (req.body.examBoard) {
+            if (req.body.examBoard)
+            {
                 user.examBoard.name = req.body.examBoard;
                 user.examBoard.modules.splice(0, user.examBoard.modules.length);
-                examBoard.findOne({ name: req.body.examBoard }, function (err, examboard) {
+                examBoard.findOne({ name: req.body.examBoard }, function (err, examboard)
+                {
                     //---------------------------------------------
-                    for (var i = 0; i < req.body.modules; i++) {
+                    for (var i = 0; i < req.body.modules; i++)
+                    {
                         user.examBoard.modules.push({ name: req.body.modules[i], progress: 0, topics: [], results: [] });
-                        for (var t = 0; t < examBoard.modules.length; t++) {
-                            if (examBoard.modules[t].name == req.body.modules[i]) {
-                                for (var q = 0; q < examBoard.modules[t].topics.length; q++) {
+                        for (var t = 0; t < examBoard.modules.length; t++)
+                        {
+                            if (examBoard.modules[t].name == req.body.modules[i])
+                            {
+                                for (var q = 0; q < examBoard.modules[t].topics.length; q++)
+                                {
                                     user.examBoard.modules[i].topics.push({ name: examBoard.modules[t].topics[q].name, progress: 0, results: [] });
                                 }
                             }
@@ -691,14 +750,22 @@ app.post("/users/:id/users/:userId/update", function (req, res) {
                     //---------------------------------------------
                 });
             }
-            user.save(function (err, updateUser) {
-                if (err) {
+            user.save(function (err, updateUser)
+            {
+                if (err)
+                {
                     console.log("Could not save updated user\n" + err);
-                } else {
-                    examBoard.find({}, function (err, examBoards) {
-                        if (err) {
+                }
+                else
+                {
+                    examBoard.find({}, function (err, examBoards)
+                    {
+                        if (err)
+                        {
                             console.log("Could not find examboard\n" + err);
-                        } else {
+                        }
+                        else
+                        {
                             var objectToBeParsed = { user: updateUser, admin: req.params.id, examboard: examBoards };
                             res.render("users/show", { data: objectToBeParsed });
                         }
@@ -712,9 +779,9 @@ app.post("/users/:id/users/:userId/update", function (req, res) {
 //---------------------------------------------------------------------
 //bottom stuff
 //---------------------------------------------------------------------
-function isLoggedIn(req,res,next)
+function isLoggedIn(req, res, next)
 {
-    if(req.isAuthenticated())
+    if (req.isAuthenticated())
     {
         return next();
     }
@@ -722,7 +789,8 @@ function isLoggedIn(req,res,next)
 }
 
 function isAdmin(req, res, next) {
-    user.findById(req.params.id, function (err, user) {
+    user.findById(req.params.id, function (err, user)
+    {
         if (err)
         {
             console.log("Could not find user\n" + err);
@@ -741,12 +809,14 @@ function isAdmin(req, res, next) {
 //test functions
 //---------------------------------------------------------------------
 
-function markPart(part, answer)//had to write this since base string search function has problems with escape characters
-{
+
+
+function markPart(part, answer)
+{//had to write this since base string search function has problems with escape characters
     var t = 0;
     for (var i = 0; i < part.length; i++)
     {
-        if (t == (answer.length -1))
+        if (t == (answer.length - 1))
         {
             return (i-t);
         }
@@ -762,7 +832,7 @@ function markPart(part, answer)//had to write this since base string search func
     return -1;
 }
 
-function GenerateTest(time, topics) //Random Seed, Time of the Test, Array of the Topics
+function GenerateTest(time, topics) //Time in Test, Array of the Topics
 { 
     var returnTopics=[]; //Topics array to be returned.
 
@@ -848,7 +918,8 @@ function getTopicQuestions(topic, topicTime)
     return questions;
 }
 
-function getRandomIntInclusive(min, max) {
+function getRandomIntInclusive(min, max)
+{
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -858,13 +929,27 @@ function getRandomIntInclusive(min, max) {
 //JWL functions
 //---------------------------------------------------------------------
 
+function calculateProgress(results)
+{
+    var holder = math.mean(results) - (math.std(results) / 3) - Math.pow((results.length / 30) + 0.105, -2);
+    if (holder >= 0)
+    {
+        return holder;
+    }
+    return 0;
+}
+
 /*  takes either an array or value and searchs for said value of any value in 'data' in 'searchArray'
     returns indexs of matched data in 'data' and in 'searchArray'
 */
-function searchByPropertyValue(data, dataProperty, searchArray, searchProperty) {
-    for (var i = 0; i < data.length; i++) {
-        for (var t = 0; t < searchArray.length; t++) {
-            if (data[i][dataProperty] === searchArray[t][searchProperty]) {
+function searchByPropertyValue(data, dataProperty, searchArray, searchProperty)
+{
+    for (var i = 0; i < data.length; i++)
+    {
+        for (var t = 0; t < searchArray.length; t++)
+        {
+            if (data[i][dataProperty] === searchArray[t][searchProperty])
+            {
                 return {dataIndex: i, searchIndex: t};
             }
         }

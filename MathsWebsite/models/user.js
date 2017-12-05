@@ -4,21 +4,20 @@ var passportLocalMongoose = require("passport-local-mongoose");
 var userTopicsSchema = new mongoose.Schema
 ({
         name: String,
-        progress: Number,
         results: [Number]
 });
 
 var userModulesSchema = new mongoose.Schema
 ({
     name:String,
-    progress: Number,
+    progress: [Number],
     topics: [userTopicsSchema]
 });
 
 var userExamBoardSchema = new mongoose.Schema
 ({
     name:String,
-    progress:Number,
+    progress: [Number],
     modules: [userModulesSchema]
 })
 
@@ -28,7 +27,7 @@ var UserSchema = new mongoose.Schema
     password: String,
     email: String,
     targetGrade: String,
-    examBoard:userExamBoardSchema,
+    examBoard: userExamBoardSchema,
     score: [Number],
     role: String
     
