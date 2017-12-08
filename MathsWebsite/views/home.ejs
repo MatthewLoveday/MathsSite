@@ -30,22 +30,24 @@
         </nav>
 
     </div>
-    <div id="circles" class="row">
-        <div class="container">
-            <div class="circle"><h3><%= user.examBoard.name %></h3></div>
+    <% if(user.examBoard){ %>
+        <div id="circles" class="row">
+            <div class="container">
+                <div class="circle"><h3><%= user.examBoard.name %></h3></div>
+            </div>
         </div>
-        
-    </div>
+    <% } %>
+    
+
+<% if(user.examBoard){ %>
+    <script>
+        $(".circle").click(function () {
+            $(this).addClass("circleAnimate");
+        });=
+    </script>
+<% } %>
 
 
-
-<script>
-
-    $(".circle").click(function () {
-        $(this).addClass("circleAnimate");
-    });
-
-</script>
 
 
 

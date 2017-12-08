@@ -1,0 +1,75 @@
+﻿<% include ../../partials/header %>
+
+<div class="container">
+
+    <div class="row">
+        <div class="col s12">
+            <ul class="tabs">
+                <li class="tab col s4"><a href="#users">Users</a></li>
+                <li class="tab col s4"><a href="#teachers">Teachers</a></li>
+                <li class="tab col s4"><a href="#admins">Admins</a></li>
+            </ul>
+        </div>
+        <div id="users" class="col s12">
+            <table>
+		        <thead>
+			        <tr>
+                        <th>Id</th>
+				        <th>Username</th>
+                        <th>Email</th>
+			        </tr>
+		        </thead>
+
+		        <tbody>
+		        </tbody>
+	        </table>
+        </div>
+        <div id="teachers" class="col s12">
+            <table>
+		        <thead>
+			        <tr>
+                        <th>Id</th>
+				        <th>Username</th>
+                        <th>Email</th>
+			        </tr>
+		        </thead>
+
+		        <tbody>
+		        </tbody>
+	        </table>
+        </div>
+        <div id="admins" class="col s12">
+            <table>
+		        <thead>
+			        <tr>
+                        <th>Id</th>
+				        <th>Username</th>
+                        <th>Email</th>
+			        </tr>
+		        </thead>
+
+		        <tbody>
+		        </tbody>
+	        </table>
+        </div>
+    </div>
+
+	
+</div>
+
+<script>
+    console.log("users.length: " + <%= users.length %>);
+    <% for (var i = 0; i < users.length; i++) { %>
+        <% if (users[i].role == "user") { %>
+            $("#users tbody").append("<td><%= users[i]._id %></td><td><%= users[i].username %></td><td><%= users[i].email %></td>");
+        <% } else if (users[i].role == "teacher") { %>
+            $("#teachers tbody").append("<td><%= users[i]._id %></td><td><%= users[i].username %></td><td><%= users[i].email %></td>");
+        <% } else { %>
+            $("#admins tbody").append("<td><%= users[i]._id %></td><td><%= users[i].username %></td><td><%= users[i].email %></td>");
+        <% } %>
+    <% } %>
+</script>
+
+
+
+<% include ../../partials/footer %>

@@ -51,6 +51,9 @@
     <Content Include="other_modules\mathquill-0.10.1\mathquill.css" />
     <Content Include="package.json" />
     <Content Include="README.md" />
+    <Content Include="views\admins\users\index.ejs">
+      <SubType>Code</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="other_modules\" />
@@ -65,7 +68,9 @@
     <Folder Include="typings\globals\passport-local-mongoose\" />
     <Folder Include="typings\globals\passport\" />
     <Folder Include="views\" />
+    <Folder Include="views\admins\users\" />
     <Folder Include="views\examboards\" />
+    <Folder Include="views\admins\" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="typings\globals\express-session\index.d.ts" />

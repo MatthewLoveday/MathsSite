@@ -68,6 +68,7 @@ passport.deserializeUser(user.deserializeUser());
 //landing route
 //----------------------------------------------
 seedDB();
+
 app.get("/",(req, res) =>
 {
     examBoard.find({}, function (err, examboard)
@@ -79,9 +80,8 @@ app.get("/",(req, res) =>
 
 app.get("/loginFailure", (req, res) =>//this is probably a way better way of doing this,  this screams inefficiency
 {
-    examBoard.find({}, function (err, examBoard) {
-        console.log("examBoard.length: " + examBoard.length);
-        res.render("landing", { examBoard: examBoard, usernameTaken: false, loginFailure: true });
+    examBoard.find({}, (err, examBoard) => {
+        res.render("landing", { examBoard: examBoard, loginFailure: true });
     });
 });
 
@@ -668,8 +668,8 @@ app.get("/users/:id/users", isLoggedIn, isAdmin, (req, res) =>
         }
         else
         {
-            var objectToBeParsed = { users: users, admin: req.params.id};
-            res.render("users/index", { data: objectToBeParsed });
+            console.log("users.length: " + users.length);
+            res.render("admins/users/index", { users: users, admin: req.params.id });
         }
     });
 });
