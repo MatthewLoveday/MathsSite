@@ -17,6 +17,7 @@
                         <th>Id</th>
 				        <th>Username</th>
                         <th>Email</th>
+                        <th></th>
 			        </tr>
 		        </thead>
 
@@ -31,6 +32,7 @@
                         <th>Id</th>
 				        <th>Username</th>
                         <th>Email</th>
+                        <th></th>
 			        </tr>
 		        </thead>
 
@@ -45,6 +47,7 @@
                         <th>Id</th>
 				        <th>Username</th>
                         <th>Email</th>
+                        <th></th>
 			        </tr>
 		        </thead>
 
@@ -61,11 +64,11 @@
     console.log("users.length: " + <%= users.length %>);
     <% for (var i = 0; i < users.length; i++) { %>
         <% if (users[i].role == "user") { %>
-            $("#users tbody").append("<td><%= users[i]._id %></td><td><%= users[i].username %></td><td><%= users[i].email %></td>");
+            $("#users tbody").append("<td><%= users[i]._id %></td><td><%= users[i].username %></td><td><%= users[i].email %></td><td><a class='waves- effect waves- light bt' href='users/<%= admin %>/users/<%= users[i]._id %>'>Edit</a></td>");
         <% } else if (users[i].role == "teacher") { %>
-            $("#teachers tbody").append("<td><%= users[i]._id %></td><td><%= users[i].username %></td><td><%= users[i].email %></td>");
+            $("#teachers tbody").append("<td><%= users[i]._id %></td><td><%= users[i].username %></td><td><%= users[i].email %></td><td><a class='waves- effect waves- light bt' href='users/<%= admin %>/users/<%= users[i]._id %>'>Edit</a></td>");
         <% } else { %>
-            $("#admins tbody").append("<td><%= users[i]._id %></td><td><%= users[i].username %></td><td><%= users[i].email %></td>");
+            $("#admins tbody").append("<td><%= users[i]._id %></td><td><%= users[i].username %></td><td><%= users[i].email %></td><td><a class='waves- effect waves- light bt' href='users/<%= admin %>/users/<%= users[i]._id %>'>Edit</a></td>");
         <% } %>
     <% } %>
 </script>

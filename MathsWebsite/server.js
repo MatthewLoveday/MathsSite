@@ -692,8 +692,8 @@ app.get("/users/:id/users/:userId", isLoggedIn, isAdmin, (req, res) =>
                 }
                 else
                 {
-                    var objectToBeParsed = { user: userData, admin: req.params.id, examboard: examBoards };
-                    res.render("users/show", { data: objectToBeParsed });
+                    var objectToBeParsed = { user: userData, admin: req.params.id};
+                    res.render("admins/users/show", { data: objectToBeParsed });
                 }
             });
             
