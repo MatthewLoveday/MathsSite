@@ -3,8 +3,11 @@
         passport                = require("passport"),
         bodyParser              = require("body-parser"),
         LocalStrategy           = require("passport-local"),
+        session                 = require("express-session"),
+        MongoDBStore            = require("connect-mongodb-session")(session),
         passportLocalMongoose   = require("passport-local-mongoose"),
         math                    = require("mathjs"),
+        bcrypt                  = require("bcrypt"),
 
         seedDB                  = require("./seed"),
         question                = require("./models/question"),
@@ -19,7 +22,19 @@
 
 //------------------------------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------------------
+const saltRounds = 10;
+
 const app = express();
+
+var store = new MongoDBStore({
+    uri: 'mongodb://localhost/sessionStorage',
+    collection: 'mySessions'
+});
+
+store.on("error", function(error) {
+    assert.ifError(error);
+    assert.ok(false);
+});
 
 const   uri = 'mongodb://localhost/MathsWebsite',
         options = { useMongoClient: true };
@@ -29,18 +44,36 @@ mongoose.set('debug', true);
 
 app.set('view engine','ejs');
 app.use(bodyParser.urlencoded({extended:true}));
-app.use(require("express-session")({
-    secret:"fanatical beaver",
+
+app.use(session({
+    secret:"YHEFa86uangOnMPRboST",
+    cookies: {
+        maxAge: 1000*60*60*7
+    },
+    store: store,
     resave: false,
     saveUninitialized: false
 }));
 app.use(passport.initialize());
 app.use(passport.session());
 
-passport.use(new LocalStrategy(user.authenticate()));
-passport.serializeUser(user.serializeUser());
-passport.deserializeUser(user.deserializeUser());
-
+passport.use(new LocalStrategy({
+        usernameField: "email",
+        passwordField: "password"
+    },
+    function (username, password, done) {
+        user.findOne({ email: username }, (err, user) => {
+            if (err) { return done(err); }
+            if (!user) { return done(null, false, { message: "Invalid username" }); }
+            bcrypt.compare(password, user.password, (err, response) => {
+                if (err) { return done(err); }
+                if (response) {
+                    return done(null, user);
+                } else { return done(null, false, { message: "Invalid password"}); }
+            });
+        });
+    }
+));
 //-----------------------
 //routes
 //-----------------------
@@ -91,14 +124,14 @@ app.get("/loginFailure", (req, res) =>//this is probably a way better way of doi
 
 app.get("/users/:id", isLoggedIn, (req, res) =>
 {
-    user.findById(req.params.id,function(err,userData)
+    user.findById(req.params.id, function(err, user)
     {
         if(err)
         {
             console.log("Could not find user data\n"+err);
         }else
         {
-            res.render("home", { user: userData });
+            res.render("home", { user: user });
         }
     });
 });
@@ -113,30 +146,15 @@ app.get("/login",(req, res) =>
     res.render("login");
 });
 
-app.post('/login', function(req, res, next)
-{
-    passport.authenticate("local", function(err, user, info)
-    {
-        if (err) { 
-            return next(err); 
-        }
-        if (!user)
-        {
-            return res.redirect("/loginFailure"); 
-        }
-        req.logIn(user, function(err)
-        {
-            if (err)
-            { 
-                return next(err); 
-            }
-            return res.redirect("/users/"+user._id);
-        });
-    })(req, res, next);
+
+app.post("/login", passport.authenticate("local"), function(req, res) {
+    console.log("Did we get here?")
+    res.redirect("/users/" + req.user._id);
 });
 
 app.get("/logout", (req, res) => {
     req.logout();
+    req.session.destroy();
     res.redirect("/")
 });
 
@@ -144,13 +162,12 @@ app.get("/logout", (req, res) => {
 //register routes
 //----------------------------------------------
 
-app.get("/register",(req, res) =>
-{
+app.get("/register",(req, res) => {
     res.render("register", { userNameTaken: false }); 
 });
 
-app.post("/register",(req, res) =>
-{
+app.post("/register", (req, res) => {
+    if(req.body.username && req.body.email && req.body.password && req.body.examBoard)
     user.findOne({ "username": req.body.username }, function (err, sameName) {
         if (err)
         {
@@ -167,22 +184,13 @@ app.post("/register",(req, res) =>
 
                 examBoard.find({ name: req.body.examBoard }, function (err, examBoard)
                 {
-                    if (err)
-                    {
+                    if (err) {
                         console.log("Could not find examBoard\n" + err);
-                    }
-                    else
-                    {
-                        console.log("examBoard[0].modules[0].topics[0].name: " + examBoard[0].modules[0].topics[0].name);
-                        console.log("examBoard[0].modules[1].topics[0].name: " + examBoard[0].modules[1].topics[0].name);
-                        console.log("examBoard[0].modules[2].topics[0].name: " + examBoard[0].modules[2].topics[0].name);
+                    } else {
                         for (var t = 0; t < tempModules.length; t++) {
-                            for (var i = 0; i < examBoard[0].modules.length; i++)
-                            {
-                                if (tempModules[t] == examBoard[0].modules[i].name)
-                                {
-                                    for (var u = 0; u < examBoard[0].modules[i].topics.length; u++)
-                                    {
+                            for (var i = 0; i < examBoard[0].modules.length; i++) {
+                                if (tempModules[t] == examBoard[0].modules[i].name) {
+                                    for (var u = 0; u < examBoard[0].modules[i].topics.length; u++) {
                                         tempTopics.push({ name: examBoard[0].modules[i].topics[u].name, progress: 0, results: [] });
                                     }
                                     modules.push({ name: tempModules[t], progress: 0, topics: tempTopics });
@@ -191,9 +199,10 @@ app.post("/register",(req, res) =>
                                 }
                             }
                         }
-                        user.register(new user
-                            ({
+                        bcrypt.hash(req.body.password, saltRounds, function (err, hash) {
+                            user.create({
                                 username: req.body.username,
+                                password: hash,
                                 email: req.body.email,
                                 targetGrade: req.body.targetGrade,
                                 examBoard:
@@ -204,21 +213,25 @@ app.post("/register",(req, res) =>
                                 },
                                 score: 0,
                                 role: "user"
-                            }),
-                            req.body.password, function (err, user) {
+                            }, function(err, user){
                                 if (err)
                                 {
                                     console.log("Failed to add new user\n" + err);
-                                    return res.redirect("/");
+                                    res.redirect("/");
                                 }
                                 else
                                 {
-                                    passport.authenticate("local")(req, res, function ()
-                                    {
+                                    req.login(user._id, function (err) {
+                                        if(err) {
+                                            console.log("Failed to login new user\n" + err);
+                                            res.redirect("/");
+                                        }
                                         res.redirect("/users/" + user._id);
                                     });
                                 }
-                            });
+                            }); 
+                        });
+                        
                     }
                 });
             }
@@ -416,6 +429,44 @@ app.post("/users/:id/tests/results", (req, res) => {
         });
     });
 });
+
+//----------------------------------------------
+//user routes
+//----------------------------------------------
+
+app.get("/users/:id/users", isLoggedIn, (req, res) => {
+    user.find({}, function (err, users) {
+        if (err) {
+            console.log("Could not find users\n" + err);
+        }
+        else {
+            console.log("users.length: " + users.length);
+            res.render("users/index", { users: users, userId: req.params.id });
+        }
+    });
+});
+
+app.get("/users/:id/users/:userId", isLoggedIn, (req, res) => {
+    user.findById(req.params.userId, function (err, userData) {
+        if (err) {
+            console.log("Could not find user\n" + err);
+        }
+        else {
+            examBoard.find({}, function (err, examBoards) {
+                if (err) {
+                    console.log("Could not find examboard\n" + err);
+                }
+                else {
+                    res.render("users/show", { user: userData, userId: req.params.id });
+                }
+            });
+
+        }
+
+    });
+});
+
+
 //---------------------------------------------------------------------
 //admin routes
 //---------------------------------------------------------------------
@@ -658,7 +709,7 @@ app.post("/users/:id/questions",(req, res) =>
 //user routes
 //----------------------------------------------
 
-app.get("/users/:id/users", isLoggedIn, isAdmin, (req, res) =>
+app.get("/admins/:id/users", isLoggedIn, isAdmin, (req, res) =>
 {
     user.find({}, function (err, users)
     {
@@ -674,7 +725,7 @@ app.get("/users/:id/users", isLoggedIn, isAdmin, (req, res) =>
     });
 });
 
-app.get("/users/:id/users/:userId", isLoggedIn, isAdmin, (req, res) =>
+app.get("/admins/:id/users/:userId", isLoggedIn, isAdmin, (req, res) =>
 {
     user.findById(req.params.userId, function (err, userData)
     {
@@ -702,7 +753,7 @@ app.get("/users/:id/users/:userId", isLoggedIn, isAdmin, (req, res) =>
     });
 });
 
-app.post("/users/:id/users/:userId/update", (req, res) => {
+app.post("/admins/:id/users/:userId/update", (req, res) => {
     user.findById(req.params.userId, function (err, user) {
         if (err)
         {
@@ -779,26 +830,19 @@ app.post("/users/:id/users/:userId/update", (req, res) => {
 //---------------------------------------------------------------------
 //bottom stuff
 //---------------------------------------------------------------------
-function isLoggedIn(req, res, next)
-{
-    if (req.isAuthenticated())
-    {
+function isLoggedIn(req, res, next) {
+    if (req.isAuthenticated()) {
         return next();
     }
     res.redirect("/login");
 }
 
 function isAdmin(req, res, next) {
-    user.findById(req.params.id, function (err, user)
-    {
-        if (err)
-        {
+    user.findById(req.params.id, function (err, user) {
+        if (err) {
             console.log("Could not find user\n" + err);
-        }
-        else
-        {
-            if (user.role == "admin")
-            {
+        } else {
+            if (user.role == "admin"){
                 return next();
             }
             res.redirect("/users/" + user._id);
@@ -956,6 +1000,13 @@ function searchByPropertyValue(data, dataProperty, searchArray, searchProperty)
     }
     return false;
 }
+
+passport.serializeUser(function(userId, done){
+    done(null, userId);
+});
+passport.deserializeUser(function(userId, done){
+    done(null, userId);
+});
 
 //---------------------------------------------------------------------
 //start server listening

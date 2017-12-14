@@ -39,7 +39,7 @@
     <% } %>
     
 
-<% if(user.examBoard){ %>
+<% if(user.role != "admin"){ %>
     <script>
         $(".circle").click(function () {
             $(this).addClass("circleAnimate");

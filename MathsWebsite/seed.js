@@ -6,7 +6,8 @@ const   mongoose = require("mongoose"),
         passport = require("passport"),
         bodyParser = require("body-parser"),
         LocalStrategy = require("passport-local"),
-        passportLocalMongoose = require("passport-local-mongoose");
+        passportLocalMongoose = require("passport-local-mongoose"),
+        bcrypt = require("bcrypt");
     
 var examboardData=
 [
@@ -222,20 +223,16 @@ async function seedDB() {
         [user, examBoard, question].map(data => data.remove({}))
     );
 
-    
-    user.register(new user({
-        username: "admin",
-        email: "jonathanwoollettlight@gmail.com",
-        role: "admin"
-    }), "lu134r7n75q5psbzwgch", function (err, user) {
-        if (err) {
-            console.log("Failed to add admin\n" + err);
-        }
-        else {
-            console.log("Admin added:");
-        }
+    bcrypt.hash("lu134r7n75q5psbzwgch", 10, function (err, hash) {
+        user.create({
+            username: "admin",
+            password: hash,
+            email: "jonathanwoollettlight@gmail.com",
+            role: "admin"
+        });
     });
-    
+
+
     Promise.all([
         examBoard.create(examboardData),
         question.create(questionData)
