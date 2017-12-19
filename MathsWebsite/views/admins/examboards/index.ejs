@@ -1,4 +1,4 @@
-<% include ../partials/header %>
+<% include ../../partials/header %>
 
 <nav>
     <div class="nav-wrapper">
@@ -11,8 +11,8 @@
 <ul class="collection with-header">
     <li class="collection-header"><h2>Examboards</h2></li>
     <% for(var i = 0;i < examBoards.length; i++){ %>
-        <a href="/users/<%= userId %>/examboards/<%= examBoards[i]._id %>/modules" class="collection-item"><h4><%= examBoards[i].name %></h4></a>
+        <a href="/admins/<%= userId %>/examboards/<%= examBoards[i]._id %>/modules" class="collection-item"><h4><%= examBoards[i].name %></h4></a>
     <% } %>
 </ul>
 
-<% include ../partials/footer %>
+<% include ../../partials/footer %>

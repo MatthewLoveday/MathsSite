@@ -1,105 +1,109 @@
 <% include ../partials/header %>
+<div class="row">
+    <nav>
+	    <div class="nav-wrapper">
+		    <a href="/" class="brand-logo"><span>-1^(1/2) 2^3 sigma pi</span></a>
+		    <ul id="nav-mobile" class="right hide-on-med-and-down">
+			    <li>
+				    <a href="/users/<%= user._id %>">
+					    <i class="material-icons left">dashboard</i>
+					    <span>Home</span>
+				    </a>
+			    </li>
+			    <li class="active">
+				    <a href="/users/<%= user._id %>/tests/new">
+					    <i class="material-icons left">assignment</i>
+					    <span>Test</span>
+				    </a>
+			    </li>
+                <li>
+				    <a href="/users/<%= user._id %>/users">
+					    <i class="material-icons left">contacts</i>
+					    <span>Find users</span>
+				    </a>
+			    </li>
+			    <li>
+				    <a href="/logout">
+					    <i class="material-icons left">pause</i>
+					    <span>Logout</span>
+				    </a>
+			    </li>
+		    </ul>
+	    </div>
+    </nav>
+</div>
 
-	<nav>
-		<div class="nav-wrapper">
-			<a href="/" class="brand-logo">-1^(1/2) 2^3 sigma pi</a>
-			<ul id="nav-mobile" class="right hide-on-med-and-down">
-				<li>
-					<a href="/users/<%= user._id %>">
-						<i class="material-icons left">dashboard</i>
-						Home
-					</a>
-				</li>
-				<li class="active">
-					<a href="/users/<%= user._id %>/tests/new">
-						<i class="material-icons left">assignment</i>
-						Test
-					</a>
-				</li>
-				<li>
-					<a href="/logout">
-						<i class="material-icons left">pause</i>
-						Logout
-					</a>
-				</li>
-			</ul>
-		</div>
-	</nav>
 
-	
-
-
-
-	<div class="container">
-		<div class="row">
-			<h1 class="col s6 offset-s3">New test page</h1>
-		</div>
-		<div class="row">
-			<form action="/users/<%= user._id %>/tests" method="POST">
-				<div class="row">
-					<p class="range-field col s8"><input id="timeRange" type="range" min="4" max="180" required/></p>
-					<div class="input-field col s4">
-						<input id="time" class="validate" type="number" min="4" max="180" name="time" required>
-						<label for="time" data-error="Time outside appropriate range">Time</label>
-					</div>
-				</div>
-				<div class="row">
-					<div class="input-field col s4">
-						<select name="moduleName" id="modules" required>
-							<option value="" disabled selected>Choose your module</option>
-							<% for(var i=0;i<user.examBoard.modules.length;i++){ %>
-								<option value="<%= user.examBoard.modules[i].name %>"><%= user.examBoard.modules[i].name %></option>
-							<% } %>
-						</select>
-						<label>Module</label>
-					</div>
-					<div class="input-field col s6">
-						<select multiple name="topics" id="topics" required disabled>
-							<option value="" disabled selected>Choose your topics</option>
-						</select>
-						<label>Topics</label>
-					</div>
-					<div class="input-field col s2">
-						<select name="settings" id="settings" required>
-							<option value="" disabled>Choose your settings</option>
-							<option value="easier">Easier</option>
-							<option value="standard" selected>Standard</option>
-							<option value="harder">Harder</option>
-							<option value="custom">Custom</option>
-						</select>
-						<label>Settings</label>
-					</div>
-				</div>
-				<div class="row">
-						<div class="col s6">
-							<div class="row">
-								<input type="checkbox" id="timer" name="timer" checked="true"/><label for="timer">Show timer</label>
-							</div>
-							<div class="row">
-								<input type="checkbox" id="topicTimer" name="topicTimer"/><label for="topicTimer">Timer per topic</label>
-							</div>
-						</div>
-						<div class="col s6">
-							<div class="row">
-								<input type="checkbox" id="topicNames" name="topicNames" checked="true"/><label for="topicNames">Show question topic</label>
-							</div>
-							<div class="row">
-								<input type="checkbox" id="questionLength" name="questionLength"/><label for="questionLength">Show number of parts in question</label>
-							</div>
-							<div class="row">
-								<input type="checkbox" id="dynamicMarking" name="dynamicMarking"/><label for="dynamicMarking">Dynamic marking</label>
-							</div>
-						</div>
-					</div>
-				<div class="row">
-					<button class="btn waves-effect waves-light" type="submit" name="action">Submit
-						<i class="material-icons right">send</i>
-					</button>
-				</div>
-			</form>
-		</div>
-		
+<div class="container">
+	<div class="row">
+		<h1 class="col s6 offset-s3">New test page</h1>
 	</div>
+	<div class="row">
+		<form action="/users/<%= user._id %>/tests" method="POST">
+			<div class="row">
+				<p class="range-field col s8"><input id="timeRange" type="range" min="4" max="180" required/></p>
+				<div class="input-field col s4">
+					<input id="time" class="validate" type="number" min="4" max="180" name="time" required>
+					<label for="time" data-error="Time outside appropriate range">Time</label>
+				</div>
+			</div>
+			<div class="row">
+				<div class="input-field col s4">
+					<select name="moduleName" id="modules" required>
+						<option value="" disabled selected>Choose your module</option>
+						<% for(var i=0;i<user.examBoard.modules.length;i++){ %>
+							<option value="<%= user.examBoard.modules[i].name %>"><%= user.examBoard.modules[i].name %></option>
+						<% } %>
+					</select>
+					<label>Module</label>
+				</div>
+				<div class="input-field col s6">
+					<select multiple name="topics" id="topics" required disabled>
+						<option value="" disabled selected>Choose your topics</option>
+					</select>
+					<label>Topics</label>
+				</div>
+				<div class="input-field col s2">
+					<select name="settings" id="settings" required>
+						<option value="" disabled>Choose your settings</option>
+						<option value="easier">Easier</option>
+						<option value="standard" selected>Standard</option>
+						<option value="harder">Harder</option>
+						<option value="custom">Custom</option>
+					</select>
+					<label>Settings</label>
+				</div>
+			</div>
+			<div class="row">
+					<div class="col s6">
+						<div class="row">
+							<input type="checkbox" id="timer" name="timer" checked="true"/><label for="timer">Show timer</label>
+						</div>
+						<div class="row">
+							<input type="checkbox" id="topicTimer" name="topicTimer"/><label for="topicTimer">Timer per topic</label>
+						</div>
+					</div>
+					<div class="col s6">
+						<div class="row">
+							<input type="checkbox" id="topicNames" name="topicNames" checked="true"/><label for="topicNames">Show question topic</label>
+						</div>
+						<div class="row">
+							<input type="checkbox" id="questionLength" name="questionLength"/><label for="questionLength">Show number of parts in question</label>
+						</div>
+						<div class="row">
+							<input type="checkbox" id="dynamicMarking" name="dynamicMarking"/><label for="dynamicMarking">Dynamic marking</label>
+						</div>
+					</div>
+				</div>
+			<div class="row">
+				<button class="btn waves-effect waves-light" type="submit" name="action">Submit
+					<i class="material-icons right">send</i>
+				</button>
+			</div>
+		</form>
+	</div>
+		
+</div>
 
 	<script>
 		$(document).ready(function() {

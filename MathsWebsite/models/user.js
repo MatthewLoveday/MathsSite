@@ -4,20 +4,30 @@ var passportLocalMongoose = require("passport-local-mongoose");
 var userTopicsSchema = new mongoose.Schema
 ({
         name: String,
-        results: [Number]
+        results: [{
+            date: Date,
+            score: Number
+        }],
+        time: Number
 });
 
 var userModulesSchema = new mongoose.Schema
 ({
-    name:String,
-    progress: [Number],
+    name: String,
+    results: [{
+        date: Date,
+        score: Number
+    }],
     topics: [userTopicsSchema]
 });
 
 var userExamBoardSchema = new mongoose.Schema
 ({
-    name:String,
-    progress: [Number],
+    name: String,
+    results: [{
+        date: Date,
+        score: Number
+    }],
     modules: [userModulesSchema]
 })
 
@@ -28,9 +38,7 @@ var UserSchema = new mongoose.Schema
     email: String,
     targetGrade: String,
     examBoard: userExamBoardSchema,
-    score: [Number],
     role: String
-    
 });
 
 UserSchema.plugin(passportLocalMongoose);

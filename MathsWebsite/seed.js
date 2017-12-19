@@ -1,29 +1,32 @@
 const   mongoose = require("mongoose"),
-        examBoard = require("./models/examBoard"),
-        question = require("./models/question"),
-        user = require("./models/user"),
         math = require("mathjs"),
+        bcrypt = require("bcrypt"),
         passport = require("passport"),
         bodyParser = require("body-parser"),
         LocalStrategy = require("passport-local"),
         passportLocalMongoose = require("passport-local-mongoose"),
-        bcrypt = require("bcrypt");
+        
+
+        examBoard = require("./models/examBoard"),
+        question = require("./models/question"),
+        user = require("./models/user");
     
-var examboardData=
-[
+var examboardData = [
         {
             name: "Placeholder1", modules: [
                 { name: "PlaceholderA1", topics: [{ name: "Placeholder1A1" }, { name: "Placeholder2A1" }, { name: "Placeholder3A1" }, { name: "Placeholder4A1" }] },
                 { name: "PlaceholderB1", topics: [{ name: "Placeholder1B1" }, { name: "Placeholder2B1" }, { name: "Placeholder3B1" }, { name: "Placeholder4B1" }, { name: "Placeholder5B1" }, { name: "Placeholder6B1" }] },
                 { name: "PlaceholderC1", topics: [{ name: "Placeholder1C1" }, { name: "Placeholder2C1" }, { name: "Placeholder3C1" }, { name: "Placeholder4C1" }, { name: "Placeholder5C1" }, { name: "Placeholder6C1" }] },
                 { name: "PlaceholderD1", topics: [{ name: "Placeholder1D1" }, { name: "Placeholder2D1" }, { name: "Placeholder3D1" }, { name: "Placeholder4D1" }, { name: "Placeholder5D1" }, { name: "Placeholder6D1" }, { name: "Placeholder7D1" }] }]
-        }, {
+        }, 
+        {
             name: "Placeholder2", modules: [
                 { name: "PlaceholderA2", topics: [{ name: "Placeholder1A2" }, { name: "Placeholder2A2" }, { name: "Placeholder3A2" }, { name: "Placeholder4A2" }] },
                 { name: "PlaceholderB2", topics: [{ name: "Placeholder1B2" }, { name: "Placeholder2B2" }, { name: "Placeholder3B2" }, { name: "Placeholder4B2" }, { name: "Placeholder5B2" }, { name: "Placeholder6B2" }] },
                 { name: "PlaceholderC2", topics: [{ name: "Placeholder1C2" }, { name: "Placeholder2C2" }, { name: "Placeholder3C2" }, { name: "Placeholder4C2" }, { name: "Placeholder5C2" }, { name: "Placeholder6C2" }] },
                 { name: "PlaceholderD2", topics: [{ name: "Placeholder1D2" }, { name: "Placeholder2D2" }, { name: "Placeholder3D2" }, { name: "Placeholder4D2" }, { name: "Placeholder5D2" }, { name: "Placeholder6D2" }, { name: "Placeholder7D2" }] }]
-        }, {
+        }, 
+        {
             name: "Placeholder3", modules: [
                 { name: "PlaceholderA3", topics: [{ name: "Placeholder1A3" }, { name: "Placeholder2A3" }, { name: "Placeholder3A3" }, { name: "Placeholder4A3" }] },
                 { name: "PlaceholderB3", topics: [{ name: "Placeholder1B3" }, { name: "Placeholder2B3" }, { name: "Placeholder3B3" }, { name: "Placeholder4B3" }, { name: "Placeholder5B3" }, { name: "Placeholder6B3" }] },
@@ -32,8 +35,7 @@ var examboardData=
         }
 ];
 
-var questionData=
-[
+var questionData = [
     {
         content: "https://image.ibb.co/gDevEF/rate_Of_Change_15marks_0.png",
         mark: 4,
@@ -223,7 +225,7 @@ async function seedDB() {
         [user, examBoard, question].map(data => data.remove({}))
     );
 
-    bcrypt.hash("lu134r7n75q5psbzwgch", 10, function (err, hash) {
+    bcrypt.hash("lu134r7n75q5psbzwgch", 10, (err, hash) => {
         user.create({
             username: "admin",
             password: hash,
@@ -231,7 +233,531 @@ async function seedDB() {
             role: "admin"
         });
     });
+    
+    bcrypt.hash("user", 10, (err, hash) => {
+        user.create({
+            username: "user1",
+            password: hash,
+            email: "1@a",
+            targetGrade: "A*",
+            examBoard: {
+                name: "Placeholder1",
+                results: [
+                    {
+                        date: "2015-03-15T12:03:45Z",
+                        score: 12
+                    },
+                    {
+                        date: "2015-03-25T12:02:15Z",
+                        score: 21
+                    },
+                    {
+                        date: "2015-04-25T12:12:30Z",
+                        score: 32
+                    },
+                    {
+                        date: "2015-04-25T12:12:30Z",
+                        score: 34
+                    },
+                    {
+                        date: "2015-05-28T12:08:30Z",
+                        score: 18
+                    },
+                    {
+                        date: "2016-04-25T12:12:30Z",
+                        score: 26
+                    },
+                ],
+                modules: [
+                    {
+                        name: "PlaceholderA1",
+                        results: [
+                            {
+                                date: "2015-03-15T12:03:45Z",
+                                score: 12
+                            },
+                            {
+                                date: "2015-03-25T12:02:15Z",
+                                score: 21
+                            },
+                            {
+                                date: "2015-04-25T12:12:30Z",
+                                score: 32
+                            }
+                        ],
+                        topics: [
+                            {
+                                name: "Placeholder1A1",
+                                results: [
+                                    {
+                                        date: "2015-03-15T12:03:45Z",
+                                        score: 12
+                                    },
+                                    {
+                                        date: "2015-03-25T12:02:15Z",
+                                        score: 21
+                                    },
+                                    {
+                                        date: "2015-04-25T12:12:30Z",
+                                        score: 32
+                                    }
+                                ],
+                                time: 28,
+                            },
+                            {
+                                name: "Placeholder2A1",
+                                results: [
+                                    {
+                                        date: "2015-03-15T12:03:45Z",
+                                        score: 12
+                                    },
+                                    {
+                                        date: "2015-03-25T12:02:15Z",
+                                        score: 21
+                                    },
+                                    {
+                                        date: "2015-04-25T12:12:30Z",
+                                        score: 32
+                                    }
+                                ],
+                                time: 38,
+                            },
+                            {
+                                name: "Placeholder3A1",
+                                results: [
+                                    {
+                                        date: "2015-03-15T12:03:45Z",
+                                        score: 12
+                                    },
+                                    {
+                                        date: "2015-03-25T12:02:15Z",
+                                        score: 21
+                                    },
+                                    {
+                                        date: "2015-04-25T12:12:30Z",
+                                        score: 32
+                                    }
+                                ],
+                                time: 43,
+                            }
+                        ]
+                    },
+                    {
+                        name: "PlaceholderB1",
+                        results: [
+                            {
+                                date: "2015-03-15T12:03:45Z",
+                                score: 12
+                            },
+                            {
+                                date: "2015-03-25T12:02:15Z",
+                                score: 21
+                            },
+                            {
+                                date: "2015-04-25T12:12:30Z",
+                                score: 32
+                            }
+                        ],
+                        topics: [
+                            {
+                                name: "Placeholder1B1",
+                                results: [
+                                    {
+                                        date: "2015-03-15T12:03:45Z",
+                                        score: 12
+                                    },
+                                    {
+                                        date: "2015-03-25T12:02:15Z",
+                                        score: 21
+                                    },
+                                    {
+                                        date: "2015-04-25T12:12:30Z",
+                                        score: 32
+                                    }
+                                ],
+                                time: 13,
+                            },
+                            {
+                                name: "Placeholder2B1",
+                                results: [
+                                    {
+                                        date: "2015-03-15T12:03:45Z",
+                                        score: 12
+                                    },
+                                    {
+                                        date: "2015-03-25T12:02:15Z",
+                                        score: 21
+                                    },
+                                    {
+                                        date: "2015-04-25T12:12:30Z",
+                                        score: 32
+                                    }
+                                ],
+                                time: 62,
+                            },
+                            {
+                                name: "Placeholder3B1",
+                                results: [
+                                    {
+                                        date: "2015-03-15T12:03:45Z",
+                                        score: 12
+                                    },
+                                    {
+                                        date: "2015-03-25T12:02:15Z",
+                                        score: 21
+                                    },
+                                    {
+                                        date: "2015-04-25T12:12:30Z",
+                                        score: 32
+                                    }
+                                ],
+                                time: 57,
+                            }
+                        ]
+                    }
+                ]
+            },
+            role: "user"
+        });
+    });
 
+    bcrypt.hash("user", 10, (err, hash) => {
+        user.create({
+            username: "user1",
+            password: hash,
+            email: "2@a",
+            targetGrade: "A*",
+            examBoard: {
+                name: "Placeholder1",
+                results: [
+                    {
+                        date: "2015-03-15T12:03:45Z",
+                        score: 12
+                    },
+                    {
+                        date: "2015-03-25T12:02:15Z",
+                        score: 21
+                    },
+                    {
+                        date: "2015-04-25T12:12:30Z",
+                        score: 32
+                    }
+                ],
+                modules: [
+                    {
+                        name: "PlaceholderA1",
+                        results: [
+                            {
+                                date: "2015-03-15T12:03:45Z",
+                                score: 12
+                            },
+                            {
+                                date: "2015-03-25T12:02:15Z",
+                                score: 21
+                            },
+                            {
+                                date: "2015-04-25T12:12:30Z",
+                                score: 32
+                            }
+                        ],
+                        topics: [
+                            {
+                                name: "Placeholder1A1",
+                                results: [
+                                    {
+                                        date: "2015-03-15T12:03:45Z",
+                                        score: 12
+                                    },
+                                    {
+                                        date: "2015-03-25T12:02:15Z",
+                                        score: 21
+                                    },
+                                    {
+                                        date: "2015-04-25T12:12:30Z",
+                                        score: 32
+                                    }
+                                ]
+                            },
+                            {
+                                name: "Placeholder2A1",
+                                results: [
+                                    {
+                                        date: "2015-03-15T12:03:45Z",
+                                        score: 12
+                                    },
+                                    {
+                                        date: "2015-03-25T12:02:15Z",
+                                        score: 21
+                                    },
+                                    {
+                                        date: "2015-04-25T12:12:30Z",
+                                        score: 32
+                                    }
+                                ]
+                            },
+                            {
+                                name: "Placeholder3A1",
+                                results: [
+                                    {
+                                        date: "2015-03-15T12:03:45Z",
+                                        score: 12
+                                    },
+                                    {
+                                        date: "2015-03-25T12:02:15Z",
+                                        score: 21
+                                    },
+                                    {
+                                        date: "2015-04-25T12:12:30Z",
+                                        score: 32
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        name: "PlaceholderB1",
+                        results: [
+                            {
+                                date: "2015-03-15T12:03:45Z",
+                                score: 12
+                            },
+                            {
+                                date: "2015-03-25T12:02:15Z",
+                                score: 21
+                            },
+                            {
+                                date: "2015-04-25T12:12:30Z",
+                                score: 32
+                            }
+                        ],
+                        topics: [
+                            {
+                                name: "Placeholder1B1",
+                                results: [
+                                    {
+                                        date: "2015-03-15T12:03:45Z",
+                                        score: 12
+                                    },
+                                    {
+                                        date: "2015-03-25T12:02:15Z",
+                                        score: 21
+                                    },
+                                    {
+                                        date: "2015-04-25T12:12:30Z",
+                                        score: 32
+                                    }
+                                ]
+                            },
+                            {
+                                name: "Placeholder2B1",
+                                results: [
+                                    {
+                                        date: "2015-03-15T12:03:45Z",
+                                        score: 12
+                                    },
+                                    {
+                                        date: "2015-03-25T12:02:15Z",
+                                        score: 21
+                                    },
+                                    {
+                                        date: "2015-04-25T12:12:30Z",
+                                        score: 32
+                                    }
+                                ]
+                            },
+                            {
+                                name: "Placeholder3B1",
+                                results: [
+                                    {
+                                        date: "2015-03-15T12:03:45Z",
+                                        score: 12
+                                    },
+                                    {
+                                        date: "2015-03-25T12:02:15Z",
+                                        score: 21
+                                    },
+                                    {
+                                        date: "2015-04-25T12:12:30Z",
+                                        score: 32
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            role: "user"
+        });
+    });
+
+    bcrypt.hash("user", 10, (err, hash) => {
+        user.create({
+            username: "user2",
+            password: hash,
+            email: "3@a",
+            targetGrade: "A*",
+            examBoard: {
+                name: "Placeholder1",
+                results: [
+                    {
+                        date: "2015-03-15T12:03:45Z",
+                        score: 12
+                    },
+                    {
+                        date: "2015-03-25T12:02:15Z",
+                        score: 21
+                    },
+                    {
+                        date: "2015-04-25T12:12:30Z",
+                        score: 32
+                    }
+                ],
+                modules: [
+                    {
+                        name: "PlaceholderA1",
+                        results: [
+                            {
+                                date: "2015-03-15T12:03:45Z",
+                                score: 12
+                            },
+                            {
+                                date: "2015-03-25T12:02:15Z",
+                                score: 21
+                            },
+                            {
+                                date: "2015-04-25T12:12:30Z",
+                                score: 32
+                            }
+                        ],
+                        topics: [
+                            {
+                                name: "Placeholder1A1",
+                                results: [
+                                    {
+                                        date: "2015-03-15T12:03:45Z",
+                                        score: 12
+                                    },
+                                    {
+                                        date: "2015-03-25T12:02:15Z",
+                                        score: 21
+                                    },
+                                    {
+                                        date: "2015-04-25T12:12:30Z",
+                                        score: 32
+                                    }
+                                ]
+                            },
+                            {
+                                name: "Placeholder2A1",
+                                results: [
+                                    {
+                                        date: "2015-03-15T12:03:45Z",
+                                        score: 12
+                                    },
+                                    {
+                                        date: "2015-03-25T12:02:15Z",
+                                        score: 21
+                                    },
+                                    {
+                                        date: "2015-04-25T12:12:30Z",
+                                        score: 32
+                                    }
+                                ]
+                            },
+                            {
+                                name: "Placeholder3A1",
+                                results: [
+                                    {
+                                        date: "2015-03-15T12:03:45Z",
+                                        score: 12
+                                    },
+                                    {
+                                        date: "2015-03-25T12:02:15Z",
+                                        score: 21
+                                    },
+                                    {
+                                        date: "2015-04-25T12:12:30Z",
+                                        score: 32
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        name: "PlaceholderB1",
+                        results: [
+                            {
+                                date: "2015-03-15T12:03:45Z",
+                                score: 12
+                            },
+                            {
+                                date: "2015-03-25T12:02:15Z",
+                                score: 21
+                            },
+                            {
+                                date: "2015-04-25T12:12:30Z",
+                                score: 32
+                            }
+                        ],
+                        topics: [
+                            {
+                                name: "Placeholder1B1",
+                                results: [
+                                    {
+                                        date: "2015-03-15T12:03:45Z",
+                                        score: 12
+                                    },
+                                    {
+                                        date: "2015-03-25T12:02:15Z",
+                                        score: 21
+                                    },
+                                    {
+                                        date: "2015-04-25T12:12:30Z",
+                                        score: 32
+                                    }
+                                ]
+                            },
+                            {
+                                name: "Placeholder2B1",
+                                results: [
+                                    {
+                                        date: "2015-03-15T12:03:45Z",
+                                        score: 12
+                                    },
+                                    {
+                                        date: "2015-03-25T12:02:15Z",
+                                        score: 21
+                                    },
+                                    {
+                                        date: "2015-04-25T12:12:30Z",
+                                        score: 32
+                                    }
+                                ]
+                            },
+                            {
+                                name: "Placeholder3B1",
+                                results: [
+                                    {
+                                        date: "2015-03-15T12:03:45Z",
+                                        score: 12
+                                    },
+                                    {
+                                        date: "2015-03-25T12:02:15Z",
+                                        score: 21
+                                    },
+                                    {
+                                        date: "2015-04-25T12:12:30Z",
+                                        score: 32
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            role: "user"
+        });
+    });
 
     Promise.all([
         examBoard.create(examboardData),
@@ -252,11 +778,6 @@ async function seedDB() {
             }
         }
     });
-    
-    
-    // Add questions to each exam topic
-    
-    // Add questions to each exam topic
 
     
 

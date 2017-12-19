@@ -1,78 +1,120 @@
 ﻿<% include ../../partials/header %>
 
-<div class="container">
-
-    <div class="row">
-        <div class="col s12">
-            <ul class="tabs">
-                <li class="tab col s4"><a href="#users">Users</a></li>
-                <li class="tab col s4"><a href="#teachers">Teachers</a></li>
-                <li class="tab col s4"><a href="#admins">Admins</a></li>
-            </ul>
-        </div>
-        <div id="users" class="col s12">
-            <table>
-		        <thead>
-			        <tr>
-                        <th>Id</th>
-				        <th>Username</th>
-                        <th>Email</th>
-                        <th></th>
-			        </tr>
-		        </thead>
-
-		        <tbody>
-		        </tbody>
-	        </table>
-        </div>
-        <div id="teachers" class="col s12">
-            <table>
-		        <thead>
-			        <tr>
-                        <th>Id</th>
-				        <th>Username</th>
-                        <th>Email</th>
-                        <th></th>
-			        </tr>
-		        </thead>
-
-		        <tbody>
-		        </tbody>
-	        </table>
-        </div>
-        <div id="admins" class="col s12">
-            <table>
-		        <thead>
-			        <tr>
-                        <th>Id</th>
-				        <th>Username</th>
-                        <th>Email</th>
-                        <th></th>
-			        </tr>
-		        </thead>
-
-		        <tbody>
-		        </tbody>
-	        </table>
+<div class="row">
+    <nav>
+	    <div class="nav-wrapper">
+		    <a href="/" class="brand-logo"><span>-1^(1/2) 2^3 sigma pi</span></a>
+		    <ul id="nav-mobile" class="right hide-on-med-and-down">
+			    <li>
+				    <a href="/admins/<%= userId %>">
+					    <i class="material-icons left">dashboard</i>
+					    <span>Home</span>
+				    </a>
+			    </li>
+                <li class="active">
+				    <a href="/admins/<%= userId %>/users">
+					    <i class="material-icons left">contacts</i>
+					    <span>Find users</span>
+				    </a>
+			    </li>
+			    <li>
+				    <a href="/logout">
+					    <i class="material-icons left">pause</i>
+					    <span>Logout</span>
+				    </a>
+			    </li>
+		    </ul>
+	    </div>
+    </nav>
+</div>
+<div class="row">
+    <div class="container">
+        <div class="row">
+            <div class="input-field col s6">
+                <i class="material-icons prefix">account_circle</i>
+                <input id="usernameInp" type="text" class="validate">
+                <label for="usernameInp">Username</label>
+            </div>
+            <div class="input-field col s6">
+                <i class="material-icons prefix">assignment_ind</i>
+                <input id="idInp" type="tel" class="validate">
+                <label for="idInp">Id</label>
+            </div>
+          </div>
+        <div class="row">
+            <div class="col s12">
+                <ul class="tabs">
+                    <li class="tab col s4"><a href="#users">Users</a></li>
+                    <li class="tab col s4"><a href="#teachers">Teachers</a></li>
+                    <li class="tab col s4"><a href="#admins">Admins</a></li>
+                </ul>
+            </div>
+            <div id="users" class="col s12">
+                <ul class="collection">
+                    <% for(var i = 0; i < users.length; i++) { %>
+                        <% if(users[i].role == "user"){ %>
+                            <li class="collection-item avatar">
+                                <img src="http://www.solidbackgrounds.com/images/2560x1440/2560x1440-davys-grey-solid-color-background.jpg" alt="" class="circle">
+                                <span class="title"><%= users[i].username %></span>
+                                <p><%= users[i]._id %></p>
+                                <a href="/admins/<%= userId %>/users/<%= users[i]._id %>" class="secondary-content"><i class="material-icons">remove_red_eye</i></a>
+                            </li>
+                        <% } %>
+                    <% } %>
+                </ul>
+            </div>
+            <div id="teachers" class="col s12">
+                <ul class="collection">
+                    <% for(var i = 0; i < users.length; i++) { %>
+                        <% if(users[i].role == "teacher"){ %>
+                            <li class="collection-item avatar">
+                                <img src="http://www.solidbackgrounds.com/images/2560x1440/2560x1440-davys-grey-solid-color-background.jpg" alt="" class="circle">
+                                <span class="title"><%= users[i].username %></span>
+                                <p><%= users[i]._id %></p>
+                                <a href="/admins/<%= userId %>/users/<%= users[i]._id %>" class="secondary-content"><i class="material-icons">remove_red_eye</i></a>
+                            </li>
+                        <% } %>
+                    <% } %>
+                </ul>
+            </div>
+            <div id="admins" class="col s12">
+                <ul class="collection">
+                    <% for(var i = 0; i < users.length; i++) { %>
+                        <% if(users[i].role == "admin){ %>
+                            <li class="collection-item avatar">
+                                <img src="http://www.solidbackgrounds.com/images/2560x1440/2560x1440-davys-grey-solid-color-background.jpg" alt="" class="circle">
+                                <span class="title"><%= users[i].username %></span>
+                                <p><%= users[i]._id %></p>
+                                <a href="/admins/<%= userId %>/users/<%= users[i]._id %>" class="secondary-content"><i class="material-icons">remove_red_eye</i></a>
+                            </li>
+                        <% } %>
+                    <% } %>
+                </ul>
+            </div>
         </div>
     </div>
-
-	
 </div>
 
+
 <script>
-    console.log("users.length: " + <%= users.length %>);
-    <% for (var i = 0; i < users.length; i++) { %>
-        <% if (users[i].role == "user") { %>
-            $("#users tbody").append("<td><%= users[i]._id %></td><td><%= users[i].username %></td><td><%= users[i].email %></td><td><a class='waves- effect waves- light bt' href='admins/<%= admin %>/users/<%= users[i]._id %>'>Edit</a></td>");
-        <% } else if (users[i].role == "teacher") { %>
-            $("#teachers tbody").append("<td><%= users[i]._id %></td><td><%= users[i].username %></td><td><%= users[i].email %></td><td><a class='waves- effect waves- light bt' href='admins/<%= admin %>/users/<%= users[i]._id %>'>Edit</a></td>");
-        <% } else { %>
-            $("#admins tbody").append("<td><%= users[i]._id %></td><td><%= users[i].username %></td><td><%= users[i].email %></td><td><a class='waves- effect waves- light bt' href='admins/<%= admin %>/users/<%= users[i]._id %>'>Edit</a></td>");
-        <% } %>
-    <% } %>
+
+    $("#usernameInp, #idInp").keyup(function () {
+        $(".collection-item").show();
+        var usernames = $(".collection-item span");
+        var userIds = $(".collection-item p");
+        for (var i = 0; i < usernames.length; i++) {
+            console.log(users[i]);
+            if (!(usernames[i].innerHTML.includes($("#usernameInp").val()) && userIds[i].innerHTML.includes($("#idInp").val()))) {
+                $(".collection-item:nth-child(" + (i + 1) + ")").hide();
+            }
+        }
+    });
+
 </script>
 
-
-
+<style>
+    .title{
+        font-size: 22px !important;
+    }
+</style>
 <% include ../../partials/footer %>

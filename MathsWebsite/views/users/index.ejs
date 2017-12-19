@@ -1,8 +1,51 @@
 ﻿<% include ../partials/header %>
+<div class="row">
+    <nav>
+	    <div class="nav-wrapper">
+		    <a href="/" class="brand-logo"><span>-1^(1/2) 2^3 sigma pi</span></a>
+		    <ul id="nav-mobile" class="right hide-on-med-and-down">
+			    <li>
+				    <a href="/users/<%= userId %>">
+					    <i class="material-icons left">dashboard</i>
+					    <span>Home</span>
+				    </a>
+			    </li>
+			    <li>
+				    <a href="/users/<%= userId %>/tests/new">
+					    <i class="material-icons left">assignment</i>
+					    <span>Test</span>
+				    </a>
+			    </li>
+                <li class="active">
+				    <a href="/users/<%= userId %>/users">
+					    <i class="material-icons left">contacts</i>
+					    <span>Find users</span>
+				    </a>
+			    </li>
+			    <li>
+				    <a href="/logout">
+					    <i class="material-icons left">pause</i>
+					    <span>Logout</span>
+				    </a>
+			    </li>
+		    </ul>
+	    </div>
+    </nav>
+</div>
 
 <div class="container">
-
-
+    <div class="row">
+        <div class="input-field col s6">
+            <i class="material-icons prefix">account_circle</i>
+            <input id="usernameInp" type="text" class="validate">
+            <label for="usernameInp">Username</label>
+        </div>
+        <div class="input-field col s6">
+            <i class="material-icons prefix">assignment_ind</i>
+            <input id="idInp" type="tel" class="validate">
+            <label for="idInp">Id</label>
+        </div>
+      </div>
     <div class="row">
         <div class="col s12">
             <ul class="tabs">
@@ -14,7 +57,8 @@
             <ul class="collection">
                 <% for(var i = 0; i < users.length; i++) { %>
                     <% if(users[i].role == "user"){ %>
-                        <li class="collection-itme">
+                        <li class="collection-item avatar">
+                            <img src="http://www.solidbackgrounds.com/images/2560x1440/2560x1440-davys-grey-solid-color-background.jpg" alt="" class="circle">
                             <span class="title"><%= users[i].username %></span>
                             <p><%= users[i]._id %></p>
                             <a href="/users/<%= userId %>/users/<%= users[i]._id %>" class="secondary-content"><i class="material-icons">remove_red_eye</i></a>
@@ -27,7 +71,8 @@
             <ul class="collection">
                 <% for(var i = 0; i < users.length; i++) { %>
                     <% if(users[i].role == "teacher"){ %>
-                        <li class="collection-itme">
+                        <li class="collection-item avatar">
+                            <img src="http://www.solidbackgrounds.com/images/2560x1440/2560x1440-davys-grey-solid-color-background.jpg" alt="" class="circle">
                             <span class="title"><%= users[i].username %></span>
                             <p><%= users[i]._id %></p>
                             <a href="/users/<%= userId %>/users/<%= users[i]._id %>" class="secondary-content"><i class="material-icons">remove_red_eye</i></a>
@@ -39,6 +84,27 @@
     </div>
 </div>
 
+<script>
+
+    $("#usernameInp, #idInp").keyup(function() {
+        $(".collection-item").show();
+        var usernames = $(".collection-item span");
+        var userIds = $(".collection-item p");
+        for (var i = 0; i < usernames.length; i++) {
+            console.log(users[i]);
+            if (!(usernames[i].innerHTML.includes($("#usernameInp").val()) && userIds[i].innerHTML.includes($("#idInp").val()))) {
+                $(".collection-item:nth-child(" + (i + 1) + ")").hide();
+            }
+        }
+    });
+
+</script>
+
+<style>
+    .title{
+    font-size: 22px !important;
+}
+</style>
 
 
 <% include ../partials/footer %>

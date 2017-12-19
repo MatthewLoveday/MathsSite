@@ -1,11 +1,11 @@
-<% include ../../../partials/header %>
+<% include ../../../../partials/header %>
 
 <nav>
     <div class="nav-wrapper">
         <div class="col s12">
-            <a href="/users/<%= userId %>/examboards" class="breadcrumb">Examboards</a>
-            <a href="/users/<%= userId %>/examboards/<%= examId %>/modules" class="breadcrumb"><%= examName %></a>
-            <a href="/users/<%= userId %>/examboards/<%= examId %>/modules/<%= moduleId %>" class="breadcrumb"><%= moduleName %></a>
+            <a href="/admins/<%= data.userId %>/examboards" class="breadcrumb">Examboards</a>
+            <a href="/admins/<%= data.userId %>/examboards/<%= data.examId %>/modules" class="breadcrumb"><%= data.examName %></a>
+            <a href="/admins/<%= data.userId %>/examboards/<%= data.examId %>/modules/<%= data.moduleId %>" class="breadcrumb"><%= data.moduleName %></a>
             <a href="" class="breadcrumb"><%= topic.name %></a>
         </div>
     </div>
@@ -24,15 +24,15 @@
                         <img class="activator" src="<%= topic.questions[i].content %>">
                     </div>
                     <div class="card-content">
-                        <span class="card-title activator grey-text text-darken-4"><%= topic.questions[i]._id %></span>
+                        <span class="card-title activator grey-text text-darken-4"><%= data.topic.questions[i]._id %></span>
                     </div>
                     <div class="card-action">
-                      <a href="/users/<%= userId %>/questions/<%= topic.questions[i]._id %>">Edit</a>
+                      <a href="/users/<%= data.userId %>/questions/<%= data.topic.questions[i]._id %>">Edit</a>
                     </div>
                     <div class="card-reveal">
-                        <span class="card-title grey-text text-darken-4"><%= topic.questions[i]._id %></span>
+                        <span class="card-title grey-text text-darken-4"><%= data.topic.questions[i]._id %></span>
                         <p> 
-                            <h5>Marks: <%= topic.questions[i].mark %></h5>
+                            <h5>Marks: <%= data.topic.questions[i].mark %></h5>
                             <hr>
                             <h5>Methods</h5>
                             <table>
@@ -50,7 +50,7 @@
                                                 <% methodMarksHolder += topic.questions[i].methods[t][u].mark; %>
                                             <% } %>
                                             <td><%= methodMarksHolder %></td>
-                                            <td><%= topic.questions[i].methods[t].length %></td>
+                                            <td><%= data.topic.questions[i].methods[t].length %></td>
                                         </tr>
                                     <% } %>
                                 </tbody>
@@ -74,4 +74,4 @@
 </style>
 
 
-<% include ../../../partials/footer %>
+<% include ../../../../partials/footer %>

@@ -1,0 +1,19 @@
+<% include ../../../partials/header %>
+
+<nav>
+    <div class="nav-wrapper">
+        <div class="col s12">
+        <a href="/admins/<%= userId %>/examboards" class="breadcrumb">Examboards</a>
+        <a href="" class="breadcrumb"><%= examBoard.name %></a>
+        </div>
+    </div>
+</nav>
+
+<ul class="collection with-header">
+    <li class="collection-header"><h2>Modules</h2></li>
+    <% for(var i = 0; i < examBoard.modules.length; i++){ %>
+        <a href="/admins/<%= userId %>/examboards/<%= examBoard._id %>/modules/<%= examBoard.modules[i]._id %>" class="collection-item"><h4><%= examBoard.modules[i].name %></h4></a>
+    <% } %>
+</ul>
+
+<% include ../../../partials/footer %>

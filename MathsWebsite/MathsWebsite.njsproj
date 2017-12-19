@@ -51,10 +51,16 @@
     <Content Include="other_modules\mathquill-0.10.1\mathquill.css" />
     <Content Include="package.json" />
     <Content Include="README.md" />
+    <Content Include="views\admins\home.ejs">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="views\admins\users\index.ejs">
       <SubType>Code</SubType>
     </Content>
     <Content Include="views\users\index.ejs">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="views\users\show.ejs">
       <SubType>Code</SubType>
     </Content>
   </ItemGroup>
@@ -72,7 +78,7 @@
     <Folder Include="typings\globals\passport\" />
     <Folder Include="views\" />
     <Folder Include="views\admins\users\" />
-    <Folder Include="views\examboards\" />
+    <Folder Include="views\admins\examboards\" />
     <Folder Include="views\admins\" />
     <Folder Include="views\users\" />
   </ItemGroup>

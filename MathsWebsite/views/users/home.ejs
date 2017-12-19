@@ -1,0 +1,122 @@
+<% include ../partials/header %>
+
+<div class="row">
+    <nav>
+	    <div class="nav-wrapper">
+		    <a href="/" class="brand-logo"><span>-1^(1/2) 2^3 sigma pi</span></a>
+		    <ul id="nav-mobile" class="right hide-on-med-and-down">
+			    <li class="active">
+				    <a href="/users/<%= user._id %>">
+					    <i class="material-icons left">dashboard</i>
+					    <span>Home</span>
+				    </a>
+			    </li>
+			    <li>
+				    <a href="/users/<%= user._id %>/tests/new">
+					    <i class="material-icons left">assignment</i>
+					    <span>Test</span>
+				    </a>
+			    </li>
+                <li>
+				    <a href="/users/<%= user._id %>/users">
+					    <i class="material-icons left">contacts</i>
+					    <span>Find users</span>
+				    </a>
+			    </li>
+			    <li>
+				    <a href="/logout">
+					    <i class="material-icons left">pause</i>
+					    <span>Logout</span>
+				    </a>
+			    </li>
+		    </ul>
+	    </div>
+    </nav>
+</div>
+<div class="row">
+    <div class="container">
+        <div class="row">
+            <canvas id="examChart"></canvas>
+        </div>
+        <div class="row">
+            <div class="col s12 m4">
+                <div class="card-panel white">
+                    <h5>Time spent</h5>
+
+                    <% var timeSpent = 0; %>
+                    <% for(var i = 0; i < user.examBoard.modules.length; i++) { %>
+                        <% for(var t = 0; t < user.examBoard.modules[i].topics.length; t++) { %>
+                            <% timeSpent += user.examBoard.modules[i].topics[t].time; %>
+                        <% } %>
+                    <% } %>
+                    <h3><%= Math.floor(timeSpent/3600) %>h <%= Math.floor((timeSpent % 3600)/60) %>m <%= Math.floor((timeSpent % 60)) %>s</h3>
+                </div>
+            </div>
+            <div class="col s12 m4">
+                <div class="card-panel white">
+                    <h5>Current score</h5>
+                    <h3><%= user.examBoard.results[user.examBoard.results.length - 1].score %></h3>
+                </div>
+            </div>
+            <div class="col s12 m4">
+                <div class="card-panel white">
+                    <h5>Standard Deviation</h5>
+                    <h3 id="std"></h3>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+    
+
+
+<script>
+
+    function stdDev(values) {
+        var avg = average(values);
+        var squareDiffs = values.map((value) => {
+            return (value - avg) * (value - avg);
+        });
+        return Math.round(Math.sqrt(average(squareDiffs))*1000)/1000;
+    }
+    function average(data) {
+        var sum = data.reduce((sum, value) => {
+            return sum + value;
+        }, 0);
+        return sum / data.length;
+    }
+    $("#std").html(stdDev([<%= user.examBoard.results.map((result) => { return result.score }) %>]));
+
+    var examChart = document.getElementById("examChart").getContext("2d");
+    var examLineChart = new Chart(examChart, {
+        type: "line",
+        data: {
+            labels: [
+                <% for(var i = 0; i< user.examBoard.results.length; i++){ %>
+                    new Date("<%= user.examBoard.results[i].date.getFullYear() %>-<%= user.examBoard.results[i].date.getMonth() + 1 %>-<%= user.examBoard.results[i].date.getDate() %> <%= user.examBoard.results[i].date.getHours() %>:<%= user.examBoard.results[i].date.getMinutes() %>").toLocaleString() <% if(i < user.examBoard.results.length - 1) { %>,<% } %>
+                <% } %>
+            ],
+            datasets: [{
+                label: "Examboard progress",
+                data: [
+                    <% for(var i = 0; i< user.examBoard.results.length; i++){ %>
+                        { t: new Date("<%= user.examBoard.results[i].date.getFullYear() %>-<%= user.examBoard.results[i].date.getMonth() + 1 %>-<%= user.examBoard.results[i].date.getDate() %> <%= user.examBoard.results[i].date.getHours() %>:<%= user.examBoard.results[i].date.getMinutes() %> %>"), y: <%= user.examBoard.results[i].score %>}<% if(i < user.examBoard.results.length - 1) { %>,<% } %>
+                    <% } %>
+                ],
+                borderWidth: 1
+            }]
+        }
+    });
+</script>
+
+<style>
+    h3 {
+        text-align: center;
+    }
+    h5 {
+        text-align: center;
+    }
+</style>
+
+<% include ../partials/footer %>
