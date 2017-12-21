@@ -124,6 +124,13 @@ app.get("/users/:id", isLoggedIn, (req, res) => {
             console.log("Could not find user data\n" + err);
         }
         else {
+
+            for (var i = 0; i < user.examBoard.modules.length; i++) {
+                console.log(user.examBoard.modules[i].name);
+                for (var t = 0; t < user.examBoard.modules[i].results.length; t++) {
+                    console.log(user.examBoard.modules[i].results[t].score);
+                }
+            }
             res.render(user.role + "s/home", { user: user });
         }
     });

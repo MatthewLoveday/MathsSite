@@ -72,7 +72,6 @@
 
 
 <script>
-
     function stdDev(values) {
         var avg = average(values);
         var squareDiffs = values.map((value) => {
@@ -88,26 +87,72 @@
     }
     $("#std").html(stdDev([<%= user.examBoard.results.map((result) => { return result.score }) %>]));
 
+    <% var colourArray = ["rgb(227, 227, 93)", "rgb(93, 227, 93)", "rgb(93, 160, 227)", "rgb(227, 160, 93)", "rgb(227, 93, 93)"]; %>
+
     var examChart = document.getElementById("examChart").getContext("2d");
     var examLineChart = new Chart(examChart, {
         type: "line",
         data: {
-            labels: [
-                <% for(var i = 0; i< user.examBoard.results.length; i++){ %>
-                    new Date("<%= user.examBoard.results[i].date.getFullYear() %>-<%= user.examBoard.results[i].date.getMonth() + 1 %>-<%= user.examBoard.results[i].date.getDate() %> <%= user.examBoard.results[i].date.getHours() %>:<%= user.examBoard.results[i].date.getMinutes() %>").toLocaleString() <% if(i < user.examBoard.results.length - 1) { %>,<% } %>
-                <% } %>
-            ],
             datasets: [{
                 label: "Examboard progress",
+                fill: false,
+                lineTension: 0.2,
                 data: [
                     <% for(var i = 0; i< user.examBoard.results.length; i++){ %>
-                        { t: new Date("<%= user.examBoard.results[i].date.getFullYear() %>-<%= user.examBoard.results[i].date.getMonth() + 1 %>-<%= user.examBoard.results[i].date.getDate() %> <%= user.examBoard.results[i].date.getHours() %>:<%= user.examBoard.results[i].date.getMinutes() %> %>"), y: <%= user.examBoard.results[i].score %>}<% if(i < user.examBoard.results.length - 1) { %>,<% } %>
+                        { x: new Date("<%= user.examBoard.results[i].date.getFullYear() %>-<%= user.examBoard.results[i].date.getMonth() + 1 %>-<%= user.examBoard.results[i].date.getDate() %> <%= user.examBoard.results[i].date.getHours() %>:<%= user.examBoard.results[i].date.getMinutes() %> %>"), y: <%= user.examBoard.results[i].score %>}<% if(i < user.examBoard.results.length - 1) { %>,<% } %>
                     <% } %>
-                ],
-                borderWidth: 1
-            }]
+                ]
+            },
+            <% for(var i = 0; i < user.examBoard.modules.length; i++) { %>
+                {
+                    label: "<%= user.examBoard.modules[i].name %>",
+                    fill: false,
+                    lineTension: 0.2,
+                    borderColor: "<%= colourArray[i] %>",
+                    data: [
+                        <% for(var t = 0; t < user.examBoard.modules[i].results.length; t++) { %>
+                            { x: new Date("<%= user.examBoard.modules[i].results[t].date.getFullYear() %>-<%= user.examBoard.modules[i].results[t].date.getMonth() + 1 %>-<%= user.examBoard.modules[i].results[t].date.getDate() %> <%= user.examBoard.modules[i].results[t].date.getHours() %>:<%= user.examBoard.modules[i].results[t].date.getMinutes() %> %>"), y: <%= user.examBoard.modules[i].results[t].score %>}<% if(t < user.examBoard.modules[i].results.length - 1) { %>,<% } %>
+                        <% } %>
+                    ]
+            }<% if(i < user.examBoard.modules.length - 1) { %>,<% } %>
+            <% } %>
+                
+            ]
+        },
+        options: {
+            responsive: true,
+                title:{
+                display: true,
+                    text:"Chart.js Time Point Data"
+            },
+            scales: {
+                xAxes: [{
+                    type: "time",
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Date'
+                    },
+                    ticks: {
+                        major: {
+                            fontStyle: "bold",
+                            fontColor: "#FF0000"
+                        }
+                    }
+                }],
+                    yAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'value'
+                        }
+                    }]
+            }
         }
     });
+
+    
+
 </script>
 
 <style>
