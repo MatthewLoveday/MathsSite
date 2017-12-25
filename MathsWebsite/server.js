@@ -103,7 +103,6 @@ seedDB();
 
 app.get("/",(req, res) => {
     examBoard.find({}, (err, examboard) => {
-        console.log("examboard.length: " + examboard.length); 
         res.render("landing", { examBoard: examboard, emailTaken: false, loginFailure: false });
     });
 });
@@ -124,13 +123,6 @@ app.get("/users/:id", isLoggedIn, (req, res) => {
             console.log("Could not find user data\n" + err);
         }
         else {
-
-            for (var i = 0; i < user.examBoard.modules.length; i++) {
-                console.log(user.examBoard.modules[i].name);
-                for (var t = 0; t < user.examBoard.modules[i].results.length; t++) {
-                    console.log(user.examBoard.modules[i].results[t].score);
-                }
-            }
             res.render(user.role + "s/home", { user: user });
         }
     });
@@ -141,7 +133,7 @@ app.get("/users/:id", isLoggedIn, (req, res) => {
 //----------------------------------------------
 
 app.post("/login", passport.authenticate("local"), (req, res) => {
-    res.redirect("/" + req.user.role + "s/" + req.user._id);
+    res.redirect("/users/" + req.user._id);
 });
 
 app.get("/logout", (req, res) => {
